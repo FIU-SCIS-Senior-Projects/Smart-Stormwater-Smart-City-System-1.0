@@ -1,0 +1,39 @@
+/* For tutorials, this is a good website to look at:
+ https://www.w3schools.com/css/default.asp           */
+
+.title{
+    margin: 10px;
+    color: lightgreen;
+}    
+
+nav{
+    background-color: lightgray;
+    display: inline-block;
+}
+
+nav ul li{
+    list-style-type: none;
+    display: inline-block;
+    float: left;
+    margin: 10px;
+}
+
+.topnav{
+    overflow: hidden;
+    background-color: black;
+}
+
+.topnav a{
+    text-decoration: none;
+    list-style-type: none;
+    padding: 15px 20px;
+    float: left;
+    color: white;
+}
+
+.topnav a:active{
+    background-color: green;
+}
+.topnav a:hover{
+    background-color: lightgreen;
+}
