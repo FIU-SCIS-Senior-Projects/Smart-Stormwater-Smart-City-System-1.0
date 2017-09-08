@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="scApp">
+
+<head>
+    <title> AngularJS Test</title>
+    <script src="angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="mainCtrl">
+        <input type="number" ng-model="dev1" />
+        <input type="number" ng-model="dev2" />
+        <button ng-click="calculate()">Calculate Total Fill</button>
+        <br/> 
+        {{calculation}}
+    </div>
+    <script>
+        var scApp = angular.module("scApp", []);
+
+        scApp.controller("mainCtrl", function($scope) {
+            $scope.dev1 = 1;
+            $scope.dev2 = 3;
+
+            $scope.calculate = function() {
+                $scope.calculation = $scope.dev1 + " + " + $scope.dev2 + " = " + (+$scope.dev1 + +$scope.dev2);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

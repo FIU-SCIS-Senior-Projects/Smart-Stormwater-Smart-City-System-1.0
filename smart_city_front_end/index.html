@@ -1,0 +1,96 @@
+<!-- For tutorials, this is a good website to look at:
+ https://www.w3schools.com/html/default.asp      -->
+
+
+<!DOCTYPE html>
+<html lang="en-US" ng-app="scApp">
+
+<head>
+    <title>Smart City System 1.0</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/JS/angular/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="mainCtrl">
+        <div>
+            <h1 class="title">Smart City Website</h1>
+            <div class="topnav">
+                <a href="#">Products</a>
+                <a href="#" style="float: right">{{username}}</a>
+                <a href="#" style="float: right">Notifications (0)</a>
+            </div>
+        </div>
+        <br/>
+        <div>
+            <p>This is the website for Smart City System....</p>
+
+            <input type="text" ng-model="dev1" />
+            <input type="text" ng-model="dev2" />
+            <button ng-click="calculate()">Calculate Total Fill</button>
+            <br/> {{calculation}}
+            
+            <br />
+            <input type="text" ng-model="Changed" /> 
+            <button ng-click="changeUsername()">Change Username</button>
+        </div>
+    </div>
+    <!--<button data-ng-click="editText()">Change Text</button>
+
+    <p>{{ editText() }}</p>-->
+
+
+
+
+<script>
+    var scApp = angular.module("scApp", []);
+
+    scApp.controller("mainCtrl", function($scope) {
+        $scope.dev1 = 1;
+        $scope.dev2 = 3;
+        $scope.username = "VIPUser";
+        $scope.Changed = "";
+
+        $scope.calculate = function() {
+            $scope.calculation = $scope.dev1 + " + " + $scope.dev2 + " = " + (+$scope.dev1 + +$scope.dev2);
+        }
+        
+        $scope.changeUsername = function(){
+            $scope.username = $scope.Changed;
+        }
+        
+    });
+
+</script>
+</body>
+<!--<script type='text/javascript' src="/JS/angular/angular.min.js"></script>
+<script type='text/javascript' src="/JS/app.js"></script>
+<script type='text/javascript' src="/JS/mainCtrl.js"></script>-->
+
+<!--<script>
+    var scApp = angular.module("scApp", []);
+
+    scApp.controller("mainCtrl", function($scope) {
+        $scope.username = "uname";
+        $scope.password = "pw";
+        $scope.description = "This is the description";
+    });
+
+    scApp.config(['$routeProvider',
+        function($routeProvider) {
+            $routeProvider.
+            when('/', {
+                templateUrl: '../HTML/index.html',
+                controller: 'mainCtrl'
+            })
+        }
+    ]);
+
+</script>-->
+
+<!--<script  type='text/javascript' src="../JS/angular/angular.min.js"></script>
+<script  type='text/javascript' src="../JS/app.js"></script>
+<script  type='text/javascript' src="../JS/mainCtrl.js"></script>-->
+
+</html>
