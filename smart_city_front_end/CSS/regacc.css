@@ -1,0 +1,37 @@
+.main-page{
+    background-color: gray;
+}
+
+.register-grouping{
+    outline-color: firebrick;
+    outline-width: small;
+    margin: 100px 400px;
+    background-color: whitesmoke;
+    border: 5pt solid black;
+    border-radius: 10%;
+    position: absolute;
+    
+    text-align: center;
+}
+
+.registration_entry_combo{
+    text-align: center;
+}
+
+.registration_entry_combo_notif{
+    text-align: center;
+    margin: 40px 30px;
+}
+
+.threshold-input{
+     
+}
+
+#register-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    margin: 0 auto;
+        
+}

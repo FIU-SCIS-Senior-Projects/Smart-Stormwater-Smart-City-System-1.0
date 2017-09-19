@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="scApp">
+
+<head>
+    <title>Smart City System 1.0 - Register Device</title>
+    <link rel="stylesheet" href="../CSS/regdev.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../JS/angular/angular.min.js"></script>
+</head>
+
+<body class="main-page" ng-controller="regdevCtrl">
+    <div>
+        <h2 id="devreg-title">Device Registration</h2>
+    </div>
+    
+    <script>
+        var scApp = angular.module("scApp", []);
+
+        scApp.controller("regdevCtrl", function($scope) {
+            $scope.devSerialNumber = "";
+            $scope.deviceName = "";
+            $scope.location = "";
+
+            $scope.signInUser = function() {
+                $scope.hasSignedIn = $scope.username + ", " + $scope.password;
+            }
+
+        });
+
+    </script>
+    
+</body>
+
+</html>

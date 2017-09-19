@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="scApp">
+
+<head>
+    <title>Smart City System 1.0 - Sign In</title>
+    <link rel="stylesheet" href="../CSS/signin.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../JS/angular/angular.min.js"></script>
+</head>
+
+<body class="main-page" ng-controller="signinCtrl">
+    <div>
+        <div class="signin-grouping">
+            <h2 id="signin-title">Sign In</h2>
+            <h5 class="signin-entry-combo">Username: <input type="text" ng-model="username" /> </h5>
+            <h5 class="signin-entry-combo">Password: <input type="text" ng-model="password" /> </h5>
+            <div class="btn-holder">
+                <button id="signin-btn" ng-click="signInUser()">Sign In</button>
+            </div>
+            {{hasSignedIn}}
+        </div>
+    </div>
+    
+    <script>
+        var scApp = angular.module("scApp", []);
+
+        scApp.controller("signinCtrl", function($scope) {
+            $scope.username = "";
+            $scope.password = "";
+
+            $scope.signInUser = function() {
+                $scope.hasSignedIn = $scope.username + ", " + $scope.password;
+            }
+
+        });
+
+    </script>
+    
+</body>
+
+</html>

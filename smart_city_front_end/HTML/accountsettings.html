@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="scApp">
+
+<head>
+    <title>Smart City System 1.0 - Account Settings</title>
+    <link rel="stylesheet" href="../CSS/accsettings.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../JS/angular/angular.min.js"></script>
+</head>
+
+<body class="main-page" ng-controller="accsetCtrl">
+    <div class="information-grouping">
+        <h2 id="accset-title">Account Settings</h2>
+        <br/>
+        <div class="edit-entry-combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Password: <input type="text" ng-model="password" /> </h4>
+        </div>
+        <div class="edit-entry-combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Contact Email: <input type="text" ng-model="contactEmail" /> </h4>
+        </div>
+        <div class="edit-entry-combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Contact Number: <input type="text" ng-model="contactNumber" /> </h4>
+        </div>
+        <div class="edit-entry-combo">
+            <div class="thresh-only">
+                <!-- combo meaning input box and corresponding label -->
+                <h4>Green-to-Yellow Threshold: <input type="number" class="threshold-input" ng-model="gtythresh" value="30" max="99" /> </h4>
+                <!--Find how to set limit on number-->
+                <!-- combo meaning input box and corresponding label -->
+                <h4>Yellow-To-Red Threshold: <input type="number" class="threshold-input" ng-model="ytrthresh" value="60" max="100" /> </h4>
+            </div>
+        </div>
+        <br/>
+        <div>
+            <button ng-click="updateInfo()">Update Account Information</button>
+        </div>
+        <br/> 
+    </div>
+    <div class="notif-devices-grouping">
+        <h2 id="notifset-title">Notification Settings</h2>
+        <div class="registration_entry_combo_notif">
+            <p>Below you will find all your registered devices. Please select which notification to send to each threshold per device.</p>
+            <br/>
+            <!--Make a fake device and make a table to order things right.-->
+            <h5>CCN Notification: <input type="checkbox" ng-model="ccn" /> </h5>
+            <h5>Email Notification: <input type="checkbox" ng-model="email" /> </h5>
+            <h5>SMS Notification: <input type="checkbox" ng-model="sms" /> </h5>
+        </div>
+    </div>
+    
+    <script>
+        var scApp = angular.module("scApp", []);
+
+        scApp.controller("accsetCtrl", function($scope) {
+            $scope.username = "newComp";
+            $scope.password = "newCompPW";
+            $scope.contactEmail = "ceoguy@newcomp.com";
+            $scope.contactNumber = "7861234567";
+            $scope.gtythresh = 35;
+            $scope.ytrthresh = 75;
+            $scope.ccn = false;
+            $scope.email = false;
+            $scope.sms = false;
+            $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
+
+            $scope.updateInfo = function() {
+                $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
+            }
+
+        });
+
+    </script>
+    
+</body>
+
+</html>

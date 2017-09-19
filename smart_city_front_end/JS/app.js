@@ -1,20 +1,55 @@
 var scApp = angular.module("scApp", []);
 
-scApp.controller("mainCtrl", function($scope){
+scApp.controller("mainCtrl", function ($scope) {
     $scope.dev1 = 1;
     $scope.dev2 = 3;
-    
-    $scope.calculate = function(){
+
+    $scope.calculate = function () {
         $scope.calculation = $scope.dev1 + " + " + $scope.dev2 + " = " + (+$scope.dev1 + +$scope.dev2);
     }
 });
 
+scApp.controller("registerCtrl", function ($scope) {
+    $scope.username = "";
+    $scope.password = "";
+    $scope.contactEmail = "";
+    $scope.contactNumber = "";
+    $scope.gtythresh = 30;
+    $scope.ytrthresh = 60;
+
+    $scope.register = function () {
+        $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh);
+    }
+
+});
+
 scApp.config(['$routeProvider',
-    function($routeProvider){
+    function ($routeProvider) {
         $routeProvider.
         when('/', {
-            templateUrl: '../HTML/index.html',
+            templateUrl: '../index.html',
             controller: 'mainCtrl'
+        }).
+        when('/register', {
+            templateUrl: '../HTML/register.html',
+            controller: 'registerCtrl'
         })
     }
 ]);
+
+scApp.controller("regaccCtrl", function ($scope) {
+    $scope.username = "";
+    $scope.password = "";
+    $scope.contactEmail = "";
+    $scope.contactNumber = "";
+    $scope.gtythresh = 30;
+    $scope.ytrthresh = 60;
+    $scope.ccn = false;
+    $scope.email = false;
+    $scope.sms = false;
+
+    $scope.register = function () {
+        $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
+    }
+
+});

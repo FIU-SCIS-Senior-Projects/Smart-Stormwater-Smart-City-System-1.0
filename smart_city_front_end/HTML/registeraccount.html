@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="scApp">
+
+<head>
+    <title>Smart City System 1.0 - Register Account</title>
+    <link rel="stylesheet" href="../CSS/regacc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="../JS/angular/angular.min.js"></script>
+</head>
+
+<body class="main-page" ng-controller="regaccCtrl">
+    <div class="register-grouping">
+        <h2 style="text-align: center; padding: 20px 0px 0px 0px;">Account Registration</h2>
+        <br/>
+        <div class="registration_entry_combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Username: <input type="text" ng-model="username" /> </h4>
+        </div>
+        <div class="registration_entry_combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Password: <input type="text" ng-model="password" /> </h4>
+        </div>
+        <div class="registration_entry_combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Contact Email: <input type="text" ng-model="contactEmail" /> </h4>
+        </div>
+        <div class="registration_entry_combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Contact Number: <input type="text" ng-model="contactNumber" /> </h4>
+        </div>
+        <div class="registration_entry_combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Green-to-Yellow Threshold: <input type="number" class="threshold-input" ng-model="gtythresh" value="30" max="99" /> </h4>
+            <!--Find how to set limit on number-->
+        </div>
+        <div class="registration_entry_combo">
+            <!-- combo meaning input box and corresponding label -->
+            <h4>Yellow-To-Red Threshold: <input type="number" class="threshold-input" ng-model="ytrthresh" value="60" max="100" /> </h4>
+        </div>
+        <br/>
+        <div class="registration_entry_combo_notif">
+            <h4>Please select the types of notifications you wish to receive when thresholds are met:</h4>
+            <h5>CCN Notification: <input type="checkbox" ng-model="ccn"/> </h5>
+            <h5>Email Notification: <input type="checkbox" ng-model="email"/> </h5>
+            <h5>SMS Notification: <input type="checkbox" ng-model="sms"/> </h5>
+        </div>
+        <div>
+            <button id="register-button" ng-click="register()">Register</button>
+        </div>
+        <br/> {{hasRegistered}}
+    </div>
+
+    <!--<script>
+        var scApp = angular.module("scApp", []);
+
+        scApp.controller("regaccCtrl", function($scope) {
+            $scope.username = "";
+            $scope.password = "";
+            $scope.contactEmail = "";
+            $scope.contactNumber = "";
+            $scope.gtythresh = 30;
+            $scope.ytrthresh = 60;
+            $scope.ccn = false;
+            $scope.email = false;
+            $scope.sms = false;
+
+            $scope.register = function() {
+                $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
+            }
+
+        });
+
+    </script>-->
+</body>
+
+</html>

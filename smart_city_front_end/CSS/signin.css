@@ -1,0 +1,28 @@
+#signin-title{
+    margin: 20px 10px 50px 10px;
+    text-decoration: underline;
+}
+
+.signin-grouping{
+    text-align: center;
+    outline-width: small;
+    border: 3pt solid black;
+    border-radius: 10%;
+    margin: 100px 400px;
+    background-color: whitesmoke;
+}
+
+.signin-entry-combo{
+    margin: 10px 0px;
+}
+
+.btn-holder{
+    margin: 20px 0px;
+}
+
+#signin-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}

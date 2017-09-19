@@ -1,0 +1,41 @@
+.information-grouping{
+    margin: 80px 50px;
+    text-align: center;
+    background-color: lightblue;
+    border: 3pt solid black;
+}
+
+.notif-devices-grouping{
+    margin: 80px 50px;
+    text-align: center;
+    background-color: lightblue;
+    border: 3pt solid black;
+}
+
+.edit-entry-combo{
+    display: inline-block;
+    text-align: center;
+    margin: 10px 40px;    
+}
+
+#accset-title{
+    text-align: center; 
+    text-decoration: underline;
+}
+
+#notifset-title{
+    text-align: center;
+    text-decoration: underline;
+}
+
+.threshold-input{
+    
+}
+
+button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+        
+}
