@@ -1,13 +1,4 @@
-var scApp = angular.module("scApp", []);
-
-scApp.controller("mainCtrl", function ($scope) {
-    $scope.dev1 = 1;
-    $scope.dev2 = 3;
-
-    $scope.calculate = function () {
-        $scope.calculation = $scope.dev1 + " + " + $scope.dev2 + " = " + (+$scope.dev1 + +$scope.dev2);
-    }
-});
+var scApp = angular.module("scApp", ['ngRoute', 'ui.bootstrap']);
 
 scApp.controller("registerCtrl", function ($scope) {
     $scope.username = "";

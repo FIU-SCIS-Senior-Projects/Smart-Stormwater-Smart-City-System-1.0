@@ -1,32 +1,38 @@
 <!DOCTYPE html>
-<html ng-app="scApp">
+<html ng-app="ui.bootstrap.demo">
 
 <head>
-    <title> AngularJS Test</title>
-    <script src="angular.min.js"></script>
+    <title>Testing File</title>
+    <link rel="stylesheet" href="../CSS/test.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/JS/angular/angular.min.js"></script>
+    <script src="./JS/app.js"></script>
+    <script src="JS/angular/angular-route.min.js"></script>
+    
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    
+    <script src="JS/Bootstrap_js/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="../JS/test.js"></script>
 </head>
 
 <body>
-    <div ng-controller="mainCtrl">
-        <input type="number" ng-model="dev1" />
-        <input type="number" ng-model="dev2" />
-        <button ng-click="calculate()">Calculate Total Fill</button>
-        <br/> 
-        {{calculation}}
+    <div ng-controller="CollapseDemoCtrl">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">WebSiteName</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Page 1</a></li>
+                    <li><a href="#">Page 2</a></li>
+                    <li><a href="#">Page 3</a></li>
+                </ul>
+            </div>
+        </nav>
     </div>
-    <script>
-        var scApp = angular.module("scApp", []);
-
-        scApp.controller("mainCtrl", function($scope) {
-            $scope.dev1 = 1;
-            $scope.dev2 = 3;
-
-            $scope.calculate = function() {
-                $scope.calculation = $scope.dev1 + " + " + $scope.dev2 + " = " + (+$scope.dev1 + +$scope.dev2);
-            }
-        });
-
-    </script>
 </body>
 
 </html>

@@ -8,12 +8,34 @@
 <head>
     <title>Smart City System 1.0</title>
     <link rel="stylesheet" href="../CSS/style.css">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/JS/angular/angular.min.js"></script>
+    <script src="./JS/app.js"></script>
+    <script src="JS/angular/angular-route.min.js"></script>
+    <script type="text/javascript" src="JS/Controllers/mainCtrl.js"></script>
+    
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    
+    <script src="JS/Bootstrap_js/ui-bootstrap-tpls-2.5.0.js"></script>
 </head>
 
-<body>
-    <div ng-controller="mainCtrl">
+<body ng-controller="mainCtrl">
+    <div>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar-header"><a class="navbar-brand" href="#">Brand</a></div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li><a href="#" style="float: right">Notifications (0)</a></li>
+                <li><a href="#" style="float: right">{{username}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
         <div>
             <h1 class="title">Smart City Website</h1>
             <div class="topnav">
@@ -30,11 +52,11 @@
             <input type="text" ng-model="dev2" />
             <button ng-click="calculate()">Calculate Total Fill</button>
             <br/> {{calculation}}
-            
+
             <br />
-            <input type="text" ng-model="Changed" /> 
+            <input type="text" ng-model="Changed" />
             <button ng-click="changeUsername()">Change Username</button>
-            
+
         </div>
     </div>
     <!--<button data-ng-click="editText()">Change Text</button>
@@ -44,7 +66,7 @@
 
 
 
-<script>
+    <!--<script>
     var scApp = angular.module("scApp", []);
 
     scApp.controller("mainCtrl", function($scope) {
@@ -63,7 +85,7 @@
         
     });
 
-</script>
+</script>-->
 </body>
 <!--<script type='text/javascript' src="/JS/angular/angular.min.js"></script>
 <script type='text/javascript' src="/JS/app.js"></script>
