@@ -3,15 +3,193 @@
 
 <head lang="en-US" ng-app="scApp">
     <title>Smart City System 1.0 - Notifications</title>
-    <link rel="stylesheet" href="../CSS/notifications.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="../JS/angular/angular.min.js"></script>
+    
+    
+    <!--JS: Angular->App&Controller->Bootstrap -->
+    <script src="../JS/angular/angular.js"></script>
+    <script src="../JS/angular/angular-route.min.js"></script>
+
+    <script type="text/javascript" src="../JS/app.js"></script>
+    <script type="text/javascript" src="../JS/Controllers/notifsetCtrl.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../JS/Bootstrap_js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+
+    <!--CSS: Bootstrap -> Html -->
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../CSS/notifications.css">
 </head>
 
 <body class="main-body" ng-controller="notifsetCtrl">
-    <div>
-        <h2 class="notif-title">Notifications</h2>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">SOP</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-tasks fa-fw glyphicon glyphicon-alert"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 1</strong>
+                                        <span class="pull-right text-muted">40% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw glyphicon glyphicon-bell"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw glyphicon glyphicon-user"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>User Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <!-- /.navbar-static-side -->
+        </nav>
+
+
+        <div class="col-lg-2">
+
+        </div>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">User Settings</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <!-- /.row -->
+            <div class="row">
+                <div class="navigator col-lg-4">
+                    <div class="sidebar-nav-fixed panel panel-default pull-left affix">
+                        <ul class="panel-body">
+                            <a href="#!account-settings" class="selectors col-md-12">Account Settings</a>
+                            <div class="divider"></div>
+                            <a href="#!notification-settings" class="selectors col-md-12">Notification Settings</a>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Notification Settings
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="form-group col-xs-4">
+                                            <label for="password"><span  style="margin-right:5px;"></span>Website Notifications: <input class="form-control" type="checkbox" ng-model="username" name="website" /></label>
+                                        </div>
+
+                                        <div class="form-group col-xs-4">
+                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>Email Notifications: <input class="form-control" type="checkbox" ng-model="username" name="website" /></label>
+                                        </div>
+                                        <div class="form-group col-xs-4">
+                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>SMS Notifications: <input class="form-control" type="checkbox" ng-model="username" name="website" /></label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="form-group col-md-4 col-offset-3 two-in-three">
+                                            <label for="password"><span  style="margin-right:5px;"></span>Contact Email:</label>
+                                            <div class="input-group">
+                                                <input class="form-control for-group-lg col-xs-6 longer-input" id="password" type="email" ng-model="contactEmail" name="userID" placeholder="Email" required/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-4 two-in-three">
+                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>Contact Phone:</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="password" type="number" ng-model="contactPhone" name="password" placeholder="Phone" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Enter Inputs here -->
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                                <div class="col-lg-8">
+                                    <div id="morris-bar-chart"></div>
+                                </div>
+                                <!-- /.col-lg-8 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+                </div>
+                <!-- /.col-lg-8 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
     </div>
+    <!-- /#wrapper -->
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../JS/Bootstrap_js/metisMenu.min.js"></script>
     <div>
         <!--Might have to make a table and display the format that Emilio wants-->
     </div>

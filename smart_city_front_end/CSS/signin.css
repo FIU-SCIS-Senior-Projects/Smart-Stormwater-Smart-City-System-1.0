@@ -30,3 +30,24 @@
 .panel-body{
     background-color: whitesmoke;
 }
+
+.faq-question{
+    font-weight: bold;
+    list-style-type: none;
+}
+
+.faq-answer{
+    list-style-type: none;
+}
+
+.divider{
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
+.navbar.navbar-default.navbar-static-top{
+    display:none;
+}
+

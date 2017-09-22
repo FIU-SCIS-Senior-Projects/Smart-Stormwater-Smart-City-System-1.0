@@ -7,113 +7,110 @@
 
 <head>
     <title>Smart City System 1.0</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="./CSS/style.css">
+    
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="/JS/angular/angular.min.js"></script>
+    <script src="./JS/angular/angular.min.js"></script>
     <script src="./JS/app.js"></script>
-    <script src="JS/angular/angular-route.min.js"></script>
-    <script type="text/javascript" src="JS/Controllers/mainCtrl.js"></script>
+    <script src="./JS/angular/angular-route.min.js"></script>
     
-    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
-    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="./bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     
-    <script src="JS/Bootstrap_js/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="./JS/Bootstrap_js/ui-bootstrap-tpls-2.5.0.js"></script>
+    
+    <!-- CSS -->
+    
+    <!--Controllers-->
+    <script src="JS/Controllers/signinCtrl.js"></script>
+    <script src="./JS/Controllers/regaccCtrl.js"></script>
+    <script src="./JS/Controllers/overviewCtrl.js"></script>
+    <script src="./JS/Controllers/accsetCtrl.js"></script>
+    
 </head>
 
-<body ng-controller="mainCtrl">
-    <div>
-        <div class="navbar navbar-default navbar-fixed-top">
-            <div class="navbar-header"><a class="navbar-brand" href="#">Brand</a></div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Products</a></li>
-            </ul>
-            <ul class="nav navbar-nav pull-right">
-                <li><a href="#" style="float: right">Notifications (0)</a></li>
-                <li><a href="#" style="float: right">{{username}}</a></li>
-            </ul>
-        </div>
-    </div>
-    <div>
-        <div>
-            <h1 class="title">Smart City Website</h1>
-            <div class="topnav">
-                <a href="#">Products</a>
-                <a href="#" style="float: right">{{username}}</a>
-                <a href="#" style="float: right">Notifications (0)</a>
+<body>
+    
+    <!--<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">SOP</a>
             </div>
-        </div>
-        <br/>
-        <div>
-            <p>This is the website for Smart City System....</p>
+            <!-- /.navbar-header 
 
-            <input type="text" ng-model="dev1" />
-            <input type="text" ng-model="dev2" />
-            <button ng-click="calculate()">Calculate Total Fill</button>
-            <br/> {{calculation}}
-
-            <br />
-            <input type="text" ng-model="Changed" />
-            <button ng-click="changeUsername()">Change Username</button>
-
-        </div>
-    </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-tasks fa-fw glyphicon glyphicon-alert"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 1</strong>
+                                        <span class="pull-right text-muted">40% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- /.dropdown
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw glyphicon glyphicon-bell"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                    <!-- /.dropdown-alerts 
+                </li>
+                <!-- /.dropdown
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw glyphicon glyphicon-user"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>User Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user 
+                </li>
+                <!-- /.dropdown 
+            </ul>
+        </nav>-->
+    
+    <div ng-view></div>
     <!--<button data-ng-click="editText()">Change Text</button>
 
     <p>{{ editText() }}</p>-->
 
 
 
-
-    <!--<script>
-    var scApp = angular.module("scApp", []);
-
-    scApp.controller("mainCtrl", function($scope) {
-        $scope.dev1 = 1;
-        $scope.dev2 = 3;
-        $scope.username = "VIPUser";
-        $scope.Changed = "";
-
-        $scope.calculate = function() {
-            $scope.calculation = $scope.dev1 + " + " + $scope.dev2 + " = " + (+$scope.dev1 + +$scope.dev2);
-        }
-        
-        $scope.changeUsername = function(){
-            $scope.username = $scope.Changed;
-        }
-        
-    });
-
-</script>-->
 </body>
-<!--<script type='text/javascript' src="/JS/angular/angular.min.js"></script>
-<script type='text/javascript' src="/JS/app.js"></script>
-<script type='text/javascript' src="/JS/mainCtrl.js"></script>-->
-
-<!--<script>
-    var scApp = angular.module("scApp", []);
-
-    scApp.controller("mainCtrl", function($scope) {
-        $scope.username = "uname";
-        $scope.password = "pw";
-        $scope.description = "This is the description";
-    });
-
-    scApp.config(['$routeProvider',
-        function($routeProvider) {
-            $routeProvider.
-            when('/', {
-                templateUrl: '../HTML/index.html',
-                controller: 'mainCtrl'
-            })
-        }
-    ]);
-
-</script>-->
-
-<!--<script  type='text/javascript' src="../JS/angular/angular.min.js"></script>
-<script  type='text/javascript' src="../JS/app.js"></script>
-<script  type='text/javascript' src="../JS/mainCtrl.js"></script>-->
 
 </html>

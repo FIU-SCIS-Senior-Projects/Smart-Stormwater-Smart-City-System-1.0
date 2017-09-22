@@ -1,6 +1,8 @@
+/* For help on controllers, this website might help:
+    https://www.w3schools.com/angular/angular_controllers.asp    */
 var scApp = angular.module('scApp');
 
-scApp.controller("mainCtrl", function ($scope) {
+scApp.controller("overviewCtrl", function ($scope) {
     $scope.dev1 = 1;
     $scope.dev2 = 3;
     $scope.username = "VIPUser";

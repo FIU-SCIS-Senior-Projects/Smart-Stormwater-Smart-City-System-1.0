@@ -18,29 +18,30 @@ scApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
         when('/', {
-            templateUrl: '../index.html',
-            controller: 'mainCtrl'
-        }).
-        when('/register', {
-            templateUrl: '../HTML/register.html',
-            controller: 'registerCtrl'
+            templateUrl: './HTML/signin.html',
+            controller: 'signinCtrl',
+            css: 'signin.css'
+        })
+        .when('/overview', {
+            templateUrl: './HTML/overview.html',
+            controller: 'overviewCtrl',
+            css: 'overview.css'
+        })
+        .when('/register-account', {
+            templateUrl:'./HTML/registeraccount.html',
+            controller: 'regaccCtrl'
+        })
+        .when('/register-device', {
+            templateUrl: './HTML/registerdevice.html',
+            controller: 'regdevCtrl'
+        })
+        .when('/account-settings',{
+            templateUrl: './HTML/accountsettings.html',
+            controller: 'accsetVtrl'
+        })
+        .when('/notification-settings',{
+            templateUrl: './HTML/notificationsettings.html',
+            controller: 'notifsetVtrl'
         })
     }
 ]);
-
-scApp.controller("regaccCtrl", function ($scope) {
-    $scope.username = "";
-    $scope.password = "";
-    $scope.contactEmail = "";
-    $scope.contactNumber = "";
-    $scope.gtythresh = 30;
-    $scope.ytrthresh = 60;
-    $scope.ccn = false;
-    $scope.email = false;
-    $scope.sms = false;
-
-    $scope.register = function () {
-        $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
-    }
-
-});
