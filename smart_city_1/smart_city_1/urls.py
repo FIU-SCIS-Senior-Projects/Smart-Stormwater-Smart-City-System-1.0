@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from smart_city_main import views
 
 urlpatterns = [
     url(r'^smart_city_main/', include('smart_city_main.urls')),
+    url(r'^$', views.Login.as_view()),
+    url(r'^account-settings$', views.AccountSetDetails.as_view()),
     url(r'^admin/', admin.site.urls),
 ]

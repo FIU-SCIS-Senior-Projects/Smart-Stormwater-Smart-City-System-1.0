@@ -18,29 +18,29 @@ scApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
         when('/', {
-            templateUrl: './HTML/signin.html',
+            templateUrl: './signin.html',
             controller: 'signinCtrl',
             css: 'signin.css'
         })
         .when('/overview', {
-            templateUrl: './HTML/overview.html',
+            templateUrl: './overview.html',
             controller: 'overviewCtrl',
             css: 'overview.css'
         })
         .when('/register-account', {
-            templateUrl:'./HTML/registeraccount.html',
+            templateUrl:'./registeraccount.html',
             controller: 'regaccCtrl'
         })
         .when('/register-device', {
-            templateUrl: './HTML/registerdevice.html',
+            templateUrl: './registerdevice.html',
             controller: 'regdevCtrl'
         })
         .when('/account-settings',{
-            templateUrl: './HTML/accountsettings.html',
+            templateUrl: './accountsettings.html',
             controller: 'accsetVtrl'
         })
         .when('/notification-settings',{
-            templateUrl: './HTML/notificationsettings.html',
+            templateUrl: './notificationsettings.html',
             controller: 'notifsetVtrl'
         })
     }
