@@ -37,11 +37,11 @@ scApp.config(['$routeProvider',
         })
         .when('/account-settings',{
             templateUrl: './accountsettings.html',
-            controller: 'accsetVtrl'
+            controller: 'accsetCtrl'
         })
         .when('/notification-settings',{
             templateUrl: './notificationsettings.html',
-            controller: 'notifsetVtrl'
+            controller: 'notifsetCtrl'
         })
     }
 ]);

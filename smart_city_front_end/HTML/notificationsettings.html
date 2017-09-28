@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-US" ng-app="scApp">
 
-<head lang="en-US" ng-app="scApp">
+<head>
     <title>Smart City System 1.0 - Notifications</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
+
+
     <!--JS: Angular->App&Controller->Bootstrap -->
     <script src="../JS/angular/angular.js"></script>
     <script src="../JS/angular/angular-route.min.js"></script>
@@ -21,10 +21,10 @@
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../CSS/notifications.css">
 </head>
+biorasi, beckman-coulter(biomedical)
 
 <body class="main-body" ng-controller="notifsetCtrl">
     <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -129,38 +129,48 @@
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Notification Settings
+                            <i class="fa fa-bar-chart-o fa-fw" ></i> <h5 class="center-header" style="color: aqua;">Notification Settings</h5>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="row">
-                                        <div class="form-group col-xs-4">
-                                            <label for="password"><span  style="margin-right:5px;"></span>Website Notifications: <input class="form-control" type="checkbox" ng-model="username" name="website" /></label>
-                                        </div>
-
-                                        <div class="form-group col-xs-4">
-                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>Email Notifications: <input class="form-control" type="checkbox" ng-model="username" name="website" /></label>
-                                        </div>
-                                        <div class="form-group col-xs-4">
-                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>SMS Notifications: <input class="form-control" type="checkbox" ng-model="username" name="website" /></label>
-                                        </div>
+                                        <table class="table table-bordered  table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-4 center-header">Notification Types</th>
+                                                    <th class="col-md-4 center-header">Website Notifications</th>
+                                                    <th class="col-md-4 center-header">Email </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="center-header">Green to Yellow Threshold: </td>
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gty_web" /></td>{{checkboxes.gty_web}}{{test}}
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gty_email" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center-header">Yellow to Red Threshold: </td>
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.ytr_web" name="website" /></td>
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.ytr_email" name="website" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center-header">Cleaned Catch Basin: </td>
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.clean_basin_web" name="website" /></td>
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.clean_basin_email" name="website" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center-header">GPS Updates: </td>
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gps_update_web" name="website" /></td>
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gps_update_email" name="website" /></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    
                                     <div class="row">
-                                        <div class="form-group col-md-4 col-offset-3 two-in-three">
-                                            <label for="password"><span  style="margin-right:5px;"></span>Contact Email:</label>
-                                            <div class="input-group">
-                                                <input class="form-control for-group-lg col-xs-6 longer-input" id="password" type="email" ng-model="contactEmail" name="userID" placeholder="Email" required/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-md-4 two-in-three">
-                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>Contact Phone:</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="password" type="number" ng-model="contactPhone" name="password" placeholder="Phone" required/>
-                                            </div>
+                                        <div class="form-group col-xs-12">
+                                            <button class="btn btn-primary" ng-click="saveNotif()" type="submit" style="color: aqua; width: 100%;">Save</button>
                                         </div>
                                     </div>
                                     <!-- Enter Inputs here -->
@@ -193,7 +203,7 @@
     <div>
         <!--Might have to make a table and display the format that Emilio wants-->
     </div>
-    
+
     <script>
         var scApp = angular.module("scApp", []);
 
@@ -206,9 +216,8 @@
             }
 
         });
-
     </script>
-    
+
 </body>
 
 </html>

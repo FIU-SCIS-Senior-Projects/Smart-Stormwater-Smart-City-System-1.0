@@ -35,12 +35,14 @@ class User(models.Model):
 
 class Notifications(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, max_length=50)
-    gty_ccn_alert = models.BooleanField(default = False)
+    gty_web_alert = models.BooleanField(default = False)
     gty_email_alert = models.BooleanField(default = False)
-    gty_sms_alert = models.BooleanField(default = False)
-    ytr_ccn_alert = models.BooleanField(default=False)
+    ytr_web_alert = models.BooleanField(default=False)
     ytr_email_alert = models.BooleanField(default=False)
-    ytr_sms_alert = models.BooleanField(default=False)
+    clean_basin_web_alert = models.BooleanField(default=False)
+    clean_basin_email_alert = models.BooleanField(default=False)
+    gps_update_web_alert = models.BooleanField(default=False)
+    gps_update_email_alert = models.BooleanField(default=False)
 
 
 
