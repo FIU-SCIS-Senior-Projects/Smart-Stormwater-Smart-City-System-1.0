@@ -41,7 +41,18 @@ scApp.config(['$routeProvider',
         })
         .when('/notification-settings',{
             templateUrl: './notificationsettings.html',
-            controller: 'notifsetCtrl'
+            controller: 'notifsetCtrl',
+            resolve: {
+                allNotifications: function($http, $route){
+                    return $http.get("http://127.0.0.1:8000/notification-settings", {params: {
+                        username: "testuser"
+                    }})
+                    .then(function(response){
+                        return response.data;
+                    })
+                }
+            }
+            
         })
     }
 ]);

@@ -141,13 +141,13 @@ biorasi, beckman-coulter(biomedical)
                                                 <tr>
                                                     <th class="col-md-4 center-header">Notification Types</th>
                                                     <th class="col-md-4 center-header">Website Notifications</th>
-                                                    <th class="col-md-4 center-header">Email </th>
+                                                    <th class="col-md-4 center-header">Email Notification</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
                                                     <td class="center-header">Green to Yellow Threshold: </td>
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gty_web" /></td>{{checkboxes.gty_web}}{{test}}
+                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gty_web" /></td>
                                                     <td><input class="form-control" type="checkbox" ng-model="checkboxes.gty_email" /></td>
                                                 </tr>
                                                 <tr>
@@ -171,6 +171,11 @@ biorasi, beckman-coulter(biomedical)
                                     <div class="row">
                                         <div class="form-group col-xs-12">
                                             <button class="btn btn-primary" ng-click="saveNotif()" type="submit" style="color: aqua; width: 100%;">Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12 center-header">
+                                            {{statustext}}
                                         </div>
                                     </div>
                                     <!-- Enter Inputs here -->

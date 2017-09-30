@@ -1,6 +1,6 @@
 var scApp = angular.module('scApp');
 
-scApp.controller("signinCtrl", function ($scope, $http) {
+scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope) {
     $scope.username = "";
     $scope.password = "";
     $scope.decision = "";
@@ -15,7 +15,7 @@ scApp.controller("signinCtrl", function ($scope, $http) {
         $scope.hasSignedIn = $scope.username + ", " + $scope.password;
     }
 
-    $scope.submitLogIn = function ($location) {
+    $scope.submitLogIn = function () {
         $http.post("http://127.0.0.1:8000/", JSON.stringify({
                 username: $scope.username,
                 password: $scope.password
@@ -26,13 +26,14 @@ scApp.controller("signinCtrl", function ($scope, $http) {
 
                 if ($scope.datareceived.username == "nonexistant") {
                     //$location.path('/overview');
-                    $scope.decision = "doesn't exist"
+                    $scope.decision = "doesn't exist";
                 } else if($scope.datareceived.username == "incorrect_password"){
-                    $scope.decision = "wrong password"
+                    $scope.decision = "wrong password";
                 } else {
-                    $scope.decision = "passed!"
-                    window.location = '/HTML/index.html#!/overview'
-                    $scope.$apply()
+                    $scope.decision = $location.path();
+                    $location.url("/overview");
+                    //window.location = '/HTML/index.html#!/overview'
+                    $scope.$apply();
                 }
             })
 

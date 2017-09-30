@@ -82,6 +82,39 @@ class AccountSetDetails(APIView):
 #This can be combined with 'AccountSetDetails' above if they are to be put into one page.
 class NotificationsSet(APIView):
     def get(self, request, *args, **kwargs):
+
+        #This section takes the params that is given in the url as the query string and
+        # takes out the "username=" part to get the actual username of the user to then be able to search with it.
+        #I was initially gonna do it with JSON but nothing I tried worked.
+        #Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
+
+        theMeta = request.META['QUERY_STRING']   #Got the query string, aka "username=(enterusernamehere)"
+
+        cutOff = "username="   #Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
+
+        userID = theMeta[theMeta.index(cutOff) + len(cutOff):]   #This cuts out the "username=" part and just has the actually username left
+
+        #-------------------------------------------------------------------------------------------------
+
+        try:
+            theUser = User.objects.get(username=userID)
+            userNT = Notifications.objects.get(user=theUser)
+            allNotif = {
+                'gty_web': userNT.gty_web_alert,
+                'gty_email': userNT.gty_email_alert,
+                'ytr_web': userNT.ytr_web_alert,
+                'ytr_email': userNT.ytr_email_alert,
+                'clean_basin_web': userNT.clean_basin_web_alert,
+                'clean_basin_email': userNT.clean_basin_email_alert,
+                'gps_update_web': userNT.gps_update_web_alert,
+                'gps_update_email': userNT.gps_update_email_alert
+            }
+            return JsonResponse(allNotif)
+
+        except:
+            pass
+
+
         return JsonResponse()
 
     def post(self, request, *args, **kwargs):
@@ -89,23 +122,23 @@ class NotificationsSet(APIView):
         userID = newInfo['username']
 
         try:
-            theUser = Notifications.objects.get(user= userID)
+            theUserNotif = Notifications.objects.get(user= userID)
 
-            theUser.gty_web_alert = newInfo['gty_web']
-            theUser.gty_email_alert = newInfo['gty_email']
-            theUser.ytr_web_alert = newInfo['ytr_web']
-            theUser.ytr_email_alert = newInfo['ytr_email']
-            theUser.clean_basin_web_alert = newInfo['clean_basin_web']
-            theUser.clean_basin_email_alert = newInfo['clean_basin_email']
-            theUser.gps_update_web_alert = newInfo['gps_update_web']
-            theUser.gps_update_email_alert = newInfo['gps_update_email']
-            theUser.save()
+            theUserNotif.gty_web_alert = newInfo['gty_web']
+            theUserNotif.gty_email_alert = newInfo['gty_email']
+            theUserNotif.ytr_web_alert = newInfo['ytr_web']
+            theUserNotif.ytr_email_alert = newInfo['ytr_email']
+            theUserNotif.clean_basin_web_alert = newInfo['clean_basin_web']
+            theUserNotif.clean_basin_email_alert = newInfo['clean_basin_email']
+            theUserNotif.gps_update_web_alert = newInfo['gps_update_web']
+            theUserNotif.gps_update_email_alert = newInfo['gps_update_email']
+            theUserNotif.save()
 
             return HttpResponse("Information Saved!", status=200)
 
 
-        except User.DoesNotExist:
-            pass
+        except Notifications.DoesNotExist:
+            return HttpResponse("Information could not be saved!", status=417)
 
 
 
