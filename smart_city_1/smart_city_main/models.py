@@ -43,4 +43,3 @@ class Notifications(models.Model):
     ytr_sms_alert = models.BooleanField(default=False)
 
 
-

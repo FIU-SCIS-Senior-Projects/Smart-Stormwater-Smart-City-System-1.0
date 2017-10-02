@@ -27,9 +27,6 @@
     <!-- Website CSS style -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Website Font style -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
@@ -127,13 +124,9 @@
 							</div>
 						</div>
 
-                        <div class="registration_entry_combo_notif">
-                            <h4>Please select the types of notifications you wish to receive when thresholds are met:</h4>
-                            <h5>CCN Notification: <input type="checkbox" ng-model="ccn"/> </h5>
-                            <h5>Email Notification: <input type="checkbox" ng-model="email"/> </h5>
-                            <h5>SMS Notification: <input type="checkbox" ng-model="sms"/> </h5>
-                        </div>
-
+						<div style="visibility: hidden;">
+							<h6>This is dumb and removing this div causes format issues.</h6>
+						</div>
 
 						<div class="form-group ">
 							<type="button" id="button" ng-click="register()" class="btn btn-primary btn-lg btn-block login-button"/>Register
@@ -156,7 +149,6 @@
                 $scope.userID = "";
                 $scope.username = "";
                 $scope.password = "";
-                $scope.confirmPassword
                 $scope.contactEmail = "";
                 $scope.contactNumber = "";
                 $scope.gtythresh = 30;
@@ -166,7 +158,7 @@
                 $scope.sms = false;
 
                 $scope.register = function() {
-                    $scope.hasRegistered = $scope.userID + ", " + $scope.username + ", " + $scope.password + ", " + $scope.confirmPassword + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
+                    $scope.hasRegistered = $scope.userID + ", " + $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
                 }
 
             });
