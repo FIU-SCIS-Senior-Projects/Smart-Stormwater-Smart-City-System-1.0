@@ -14,6 +14,7 @@ def index(request):
 #Might have to be a get() method instead to return user account data needed for the following page.
 class Login(APIView):
     def post(self, request, *args, **kwargs):
+        print("inside API")
         user = json.loads(request.body.decode('utf-8'))
         userID = user['username']
         userPass = user['password']
