@@ -63,7 +63,8 @@ class RegisterAccount(APIView):
             newAcc.save()
 
             #creates default notifications with web notifications set to true, email and sms set to false
-            newAccNotif = Notifications(user = newAcc, gty_ccn_alert = True, gty_email_alert = False, gty_sms_alert = False, ytr_ccn_alert = True, ytr_email_alert = False, ytr_sms_alert = False)
+            newAccNotif = Notifications(user = newAcc, gty_web_alert = True, gty_email_alert = False, ytr_web_alert = True, ytr_email_alert = False,
+                                        clean_basin_web_alert = True, clean_basin_email_alert = False, gps_update_web_alert = True, gps_update_email_alert = False)
             newAccNotif.save()
 
             # delete the account after testing that it works
@@ -75,7 +76,7 @@ class RegisterAccount(APIView):
             deleteTest.delete()
 
             #accountCreated = {'username' : 'accID'}
-            JsonResponse(deleteTest)
+            return JsonResponse(deleteTest)
             #return HttpResponse("Account created and deleted", status=200)
 
         except account.cannotbecreated:
