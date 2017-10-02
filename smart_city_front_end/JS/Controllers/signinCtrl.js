@@ -1,8 +1,10 @@
 var scApp = angular.module('scApp');
 
-scApp.controller("signinCtrl", function ($scope, $http) {
-    $scope.username = "";
-    $scope.password = "";
+scApp.controller("signinCtrl", function ($scope, $http, Authentication) {
+    
+    
+    $scope.username = "testuser";
+    $scope.password = "testpassword";
     $scope.decision = "";
 
     $scope.toBeSent = {
@@ -11,11 +13,20 @@ scApp.controller("signinCtrl", function ($scope, $http) {
     }
 
 
+    /*(function initController() {
+        // reset login status
+        Authentication.ClearCredentials();
+        console.log("Clear")
+    })();*/
+
+    
     $scope.signInUser = function () {
         $scope.hasSignedIn = $scope.username + ", " + $scope.password;
     }
 
     $scope.submitLogIn = function ($location) {
+        console.log("about to http")
+        console.log($http.defaults.headers.common['Authorization'])
         $http.post("http://127.0.0.1:8000/", JSON.stringify({
                 username: $scope.username,
                 password: $scope.password
@@ -27,12 +38,13 @@ scApp.controller("signinCtrl", function ($scope, $http) {
                 if ($scope.datareceived.username == "nonexistant") {
                     //$location.path('/overview');
                     $scope.decision = "doesn't exist"
-                } else if($scope.datareceived.username == "incorrect_password"){
+                } else if ($scope.datareceived.username == "incorrect_password") {
                     $scope.decision = "wrong password"
                 } else {
                     $scope.decision = "passed!"
+                    Authentication.SetCredentials($scope.username, $scope.password);
                     window.location = '/HTML/index.html#!/overview'
-                    $scope.$apply()
+                    //$scope.$apply()
                 }
             })
 
