@@ -116,11 +116,33 @@ class AccountSetDetails(APIView):
 
 #this is for the notifications page where the get method is for retrieving the devices and the notifications per device. The post method is used to update the notifications for each device
 #This can be combined with 'AccountSetDetails' above if they are to be put into one page.
-class NotificationsList(APIView):
+class NotificationsSet(APIView):
     def get(self, request, *args, **kwargs):
         return JsonResponse()
 
     def post(self, request, *args, **kwargs):
+        newInfo = json.loads(request.body.decode('utf-8'))
+        userID = newInfo['username']
+
+        try:
+            theUser = Notifications.objects.get(user= userID)
+
+            theUser.gty_web_alert = newInfo['gty_web']
+            theUser.gty_email_alert = newInfo['gty_email']
+            theUser.ytr_web_alert = newInfo['ytr_web']
+            theUser.ytr_email_alert = newInfo['ytr_email']
+            theUser.clean_basin_web_alert = newInfo['clean_basin_web']
+            theUser.clean_basin_email_alert = newInfo['clean_basin_email']
+            theUser.gps_update_web_alert = newInfo['gps_update_web']
+            theUser.gps_update_email_alert = newInfo['gps_update_email']
+            theUser.save()
+
+            return HttpResponse("Information Saved!", status=200)
+
+
+        except User.DoesNotExist:
+            pass
+
 
 
         return JsonResponse()
