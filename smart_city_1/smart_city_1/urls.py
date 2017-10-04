@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^notification-settings', views.NotificationsSet.as_view()),
     url(r'^notifications', views.NotificationAlertList.as_view()),
     url(r'^admin/', admin.site.urls),
+    url(r'^register/', views.RegisterAccount.as_view()),
 ]

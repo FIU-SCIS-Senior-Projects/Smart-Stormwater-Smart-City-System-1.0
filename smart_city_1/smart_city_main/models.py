@@ -51,4 +51,3 @@ class NotificationAlerts(models.Model):
     alert_date = models.DateTimeField(auto_now=False, auto_now_add=False)
 
 
-

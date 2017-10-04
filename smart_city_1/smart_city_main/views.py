@@ -44,8 +44,31 @@ class Login(APIView):
 #This post should taken the given information from the json and save the information to the database. Give an 'OK' if saved, error if not.
 class RegisterAccount(APIView):
     def post(self, request, *args, **kwargs):
+        account = json.loads(request.body.decode('utf-8'))
+        accID = account['username']
+        accPass = account['password']
+        accEmail = account['email']
+        accNumber = account['number']
+        #accLanguage = account['language']
+        accGYthresh = account['gy_thresh']
+        accYRthresh = account['yr_thresh']
 
-        return JsonResponse()
+        #creates a new user from input data and stores it into database
+        newAcc = User(username = accID, password = accPass, email = accEmail, number = accNumber, gy_thresh = accGYthresh, yr_thresh = accYRthresh)
+        newAcc.save()
+
+        #creates default notifications with web notifications set to true, email and sms set to false
+        newAccNotif = Notifications(user = newAcc, gty_web_alert = True, gty_email_alert = False, ytr_web_alert = True, ytr_email_alert = False,
+                                    clean_basin_web_alert = True, clean_basin_email_alert = False, gps_update_web_alert = True, gps_update_email_alert = False)
+        newAccNotif.save()
+
+        #delete the account after testing that it works
+        deleteTest = User.objects.get(username = accID)
+        deleteTest.delete()
+
+        accountCreated = {"username" : "account created"}
+        return JsonResponse(accountCreated)
+            #return HttpResponse("Account created and deleted", status=200)
 
 #This is for the account settings, the get method gets the information from the database for a user and the post is to be used to update the user account information.
 class AccountSetDetails(APIView):
