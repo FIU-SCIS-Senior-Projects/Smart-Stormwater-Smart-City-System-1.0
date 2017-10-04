@@ -45,5 +45,10 @@ class Notifications(models.Model):
     gps_update_web_alert = models.BooleanField(default=True)
     gps_update_email_alert = models.BooleanField(default=False)
 
+class NotificationAlerts(models.Model):
+    device_identifier = models.ForeignKey("Device", on_delete=models.CASCADE, max_length=20)
+    notification_type = models.CharField(max_length=250)
+    alert_date = models.DateTimeField(auto_now=False, auto_now_add=False)
+
 
 

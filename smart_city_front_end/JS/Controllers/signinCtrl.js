@@ -34,15 +34,16 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, A
                 if ($scope.datareceived.username == "nonexistant") {
                     //$location.path('/overview');
 //<<<<<<< HEAD
-                    $scope.decision = "doesn't exist";
+                    $scope.decision = "Username not found!";
                 } else if($scope.datareceived.username == "incorrect_password"){
-                    $scope.decision = "wrong password";
+                    $scope.decision = "Incorrect Password!";
                 } else {
-                    $scope.decision = $location.path();
-                    Authentication.SetCredentials($scope.username, $scope.password);
+                    $rootScope.loggedIn = true;
+                    $rootScope.username = $scope.username;
+                    //Authentication.SetCredentials($scope.username, $scope.password);
                     $location.url("/overview");
                     //window.location = '/HTML/index.html#!/overview'
-                    $scope.$apply();
+                    //$scope.$apply();
 /*=======
                     $scope.decision = "doesn't exist"
                 } else if ($scope.datareceived.username == "incorrect_password") {
