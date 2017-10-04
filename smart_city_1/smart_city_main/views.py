@@ -145,6 +145,55 @@ class NotificationsSet(APIView):
 
         return JsonResponse()
 
+class NotificationAlertList(APIView):
+    def get(self, request, *args, **kwargs):
+        # This section takes the params that is given in the url as the query string and
+        # takes out the "username=" part to get the actual username of the user to then be able to search with it.
+        # I was initially gonna do it with JSON but nothing I tried worked.
+        # Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
+
+        theMeta = request.META['QUERY_STRING']  # Got the query string, aka "username=(enterusernamehere)"
+
+        cutOff = "username="  # Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
+
+        userID = theMeta[theMeta.index(cutOff) + len(cutOff):]  # This cuts out the "username=" part and just has the actually username left
+
+        # -------------------------------------------------------------------------------------------------
+
+        #Get all the devices that the user has assigned to them
+        assignmentList = AssignedTo.objects.filter(user = userID)
+
+        allAlerts = []
+
+        #For each device assigned, get all alerts pertaining to that device
+        for assignment in assignmentList:
+            theDevice = Device.objects.get(identifier = assignment.assigned_device)
+            devAlerts = NotificationAlerts.objects.filter(device_identifier = assignment.assigned_device).values('device_identifier', 'notification_type', 'alert_date')
+            devAlertsList = list(devAlerts)
+
+            #Add all sets of alerts to the "allAlerts" list
+            for alert in devAlertsList:
+                print(alert)
+                alert['location'] = theDevice.location
+                #alert.insert(0,{'location': theDevice.location})
+                print(alert)
+
+                #alert.location = theDevice.location
+                #Try to add the location info from the device to each alert before it is sent back.
+
+
+                print("this is " + alert['location'])
+
+                allAlerts.append(alert)
+
+        #Sort the alerts by Date, which should be in index [2] for each alert
+        #sorted(allAlerts, key = lambda x: x[2])
+
+
+        return JsonResponse(allAlerts, safe=False)
+
+
+
 #This post method should take the given information from the json and store it to the database, linking the device to its owner.
 class RegisterDevice(APIView):
     def post(self, request, *args, **kwargs):

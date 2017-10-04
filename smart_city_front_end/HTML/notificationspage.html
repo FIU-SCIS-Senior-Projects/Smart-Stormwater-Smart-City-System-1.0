@@ -11,7 +11,7 @@
     <script src="../JS/angular/angular-route.min.js"></script>
 
     <script type="text/javascript" src="../JS/app.js"></script>
-    <script type="text/javascript" src="../JS/Controllers/notifsetCtrl.js"></script>
+    <script type="text/javascript" src="../JS/Controllers/notifpageCtrl.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
@@ -19,11 +19,10 @@
 
     <!--CSS: Bootstrap -> Html -->
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../CSS/notifications.css">
+    <link rel="stylesheet" href="../CSS/notificationspage.css">
 </head>
-biorasi, beckman-coulter(biomedical)
 
-<body class="main-body" ng-controller="notifsetCtrl">
+<body class="main-body" ng-controller="notifpageCtrl">
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -108,23 +107,14 @@ biorasi, beckman-coulter(biomedical)
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">User Settings</h1>
+                    <h1 class="page-header">Notifications {{exist}}</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <!-- /.row -->
             <div class="row">
-                <div class="navigator col-lg-4">
-                    <div class="sidebar-nav-fixed panel panel-default pull-left affix">
-                        <ul class="panel-body">
-                            <a href="#!account-settings" class="selectors col-md-12">Account Settings</a>
-                            <div class="divider"></div>
-                            <a href="#!notification-settings" class="selectors col-md-12">Notification Settings</a>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-8">
+                <div class="col-lg-12">
 
                     <!-- /.panel -->
                     <div class="panel panel-default">
@@ -139,39 +129,21 @@ biorasi, beckman-coulter(biomedical)
                                         <table class="table table-bordered  table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th class="col-md-4 center-header">Notification Types</th>
-                                                    <th class="col-md-4 center-header">Website Notifications</th>
-                                                    <th class="col-md-4 center-header">Email </th>
+                                                    <th class="col-md-3 center-header">Identifier</th>
+                                                    <th class="col-md-3 center-header">Notification Types</th>
+                                                    <th class="col-md-3 center-header">Location</th>
+                                                    <th class="col-md-3 center-header">Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="center-header">Green to Yellow Threshold: </td>
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gty_web" /></td>{{checkboxes.gty_web}}{{test}}
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gty_email" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="center-header">Yellow to Red Threshold: </td>
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.ytr_web" name="website" /></td>
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.ytr_email" name="website" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="center-header">Cleaned Catch Basin: </td>
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.clean_basin_web" name="website" /></td>
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.clean_basin_email" name="website" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="center-header">GPS Updates: </td>
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gps_update_web" name="website" /></td>
-                                                    <td><input class="form-control" type="checkbox" ng-model="checkboxes.gps_update_email" name="website" /></td>
+                                                <tr ng-repeat="entry in allNotifs">
+                                                    <td class="center-header">{{entry.identifier}} </td>
+                                                    <td class="center-header"><p>{{entry.notifType}}</p></td>
+                                                    <td class="center-header"><p>{{entry.location}}</p></td>
+                                                    <td class="center-header"><p>{{entry.date}}</p></td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-xs-12">
-                                            <button class="btn btn-primary" ng-click="saveNotif()" type="submit" style="color: aqua; width: 100%;">Save</button>
-                                        </div>
                                     </div>
                                     <!-- Enter Inputs here -->
                                     <!-- /.table-responsive -->
@@ -204,19 +176,7 @@ biorasi, beckman-coulter(biomedical)
         <!--Might have to make a table and display the format that Emilio wants-->
     </div>
 
-    <script>
-        var scApp = angular.module("scApp", []);
-
-        scApp.controller("notifsetCtrl", function($scope) {
-            $scope.username = "";
-            $scope.password = "";
-
-            $scope.signInUser = function() {
-                $scope.hasSignedIn = $scope.username + ", " + $scope.password;
-            }
-
-        });
-    </script>
+    
 
 </body>
 

@@ -209,20 +209,6 @@ biorasi, beckman-coulter(biomedical)
         <!--Might have to make a table and display the format that Emilio wants-->
     </div>
 
-    <script>
-        var scApp = angular.module("scApp", []);
-
-        scApp.controller("notifsetCtrl", function($scope) {
-            $scope.username = "";
-            $scope.password = "";
-
-            $scope.signInUser = function() {
-                $scope.hasSignedIn = $scope.username + ", " + $scope.password;
-            }
-
-        });
-    </script>
-
 </body>
 
 </html>
