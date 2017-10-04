@@ -52,36 +52,22 @@ class RegisterAccount(APIView):
         accGYthresh = account['gy_thresh']
         accYRthresh = account['yr_thresh']
 
-        #if accPass != confirmPass:
-            #return HttpResponse("Password do not match", status=409)
-            #return JsonResponse(account)
+        #creates a new user from input data and stores it into database
+        newAcc = User(username = accID, password = accPass, email = accEmail, number = accNumber, gy_thresh = accGYthresh, yr_thresh = accYRthresh)
+        newAcc.save()
 
-        #else:
-        try:
-            #creates a new user from input data and stores it into database
-            newAcc = User(username = accID, password = accPass, email = accEmail, number = accNumber, gy_thresh = accGYthresh, yr_thresh = accYRthresh)
-            newAcc.save()
+        #creates default notifications with web notifications set to true, email and sms set to false
+        newAccNotif = Notifications(user = newAcc, gty_web_alert = True, gty_email_alert = False, ytr_web_alert = True, ytr_email_alert = False,
+                                    clean_basin_web_alert = True, clean_basin_email_alert = False, gps_update_web_alert = True, gps_update_email_alert = False)
+        newAccNotif.save()
 
-            #creates default notifications with web notifications set to true, email and sms set to false
-            newAccNotif = Notifications(user = newAcc, gty_web_alert = True, gty_email_alert = False, ytr_web_alert = True, ytr_email_alert = False,
-                                        clean_basin_web_alert = True, clean_basin_email_alert = False, gps_update_web_alert = True, gps_update_email_alert = False)
-            newAccNotif.save()
+        #delete the account after testing that it works
+        deleteTest = User.objects.get(username = accID)
+        deleteTest.delete()
 
-            # delete the account after testing that it works
-            deleteTest = User.objects.get(username = accID)
-
-            #not needed?
-            # deleteTest = setUpDelete.choice_set.filter(username__startwith = 'accID')
-
-            deleteTest.delete()
-
-            #accountCreated = {'username' : 'accID'}
-            return JsonResponse(deleteTest)
+        accountCreated = {"username" : "account created"}
+        return JsonResponse(accountCreated)
             #return HttpResponse("Account created and deleted", status=200)
-
-        except account.cannotbecreated:
-            accNotCreated = {"account" : 'false'}
-            return JsonResponse(accNotCreated)
 
 #This is for the account settings, the get method gets the information from the database for a user and the post is to be used to update the user account information.
 class AccountSetDetails(APIView):
