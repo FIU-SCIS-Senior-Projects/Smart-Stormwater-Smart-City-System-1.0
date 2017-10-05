@@ -85,10 +85,10 @@ scApp.config(['$routeProvider',
                 templateUrl: './notificationspage.html',
                 controller: 'notifpageCtrl',
                 resolve: {
-                    allNotifications: function ($location, $rootScope) {
+                    allNotifications: function ($http, $location, $rootScope) {
                         if (!$rootScope.loggedIn) {
                             $location.path('/');
-                        }/* else {
+                        } else {
                             return $http.get("http://127.0.0.1:8000/notifications", {
                                     params: {
                                         username:  $rootScope.username
@@ -98,7 +98,7 @@ scApp.config(['$routeProvider',
                                     return response.data;
                                 })
 
-                        }*/
+                        }
                     }
                 }
                 /*,

@@ -2,7 +2,10 @@ var scApp = angular.module("scApp");
 
 scApp.controller("notifpageCtrl", function ($scope, $http, allNotifications) {
     
-    $scope.allNotifs = [
+    $scope.allNotifs = allNotifications
+        
+        /*[
+        
         {
             "identifier": "ID001", 
             "notifType": "Basin Cleaned", 

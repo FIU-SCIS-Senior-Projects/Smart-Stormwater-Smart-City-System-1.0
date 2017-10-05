@@ -14,7 +14,6 @@ def index(request):
 #Might have to be a get() method instead to return user account data needed for the following page.
 class Login(APIView):
     def post(self, request, *args, **kwargs):
-        print("inside API")
         user = json.loads(request.body.decode('utf-8'))
         userID = user['username']
         userPass = user['password']
@@ -170,6 +169,7 @@ class NotificationsSet(APIView):
 
 class NotificationAlertList(APIView):
     def get(self, request, *args, **kwargs):
+
         # This section takes the params that is given in the url as the query string and
         # takes out the "username=" part to get the actual username of the user to then be able to search with it.
         # I was initially gonna do it with JSON but nothing I tried worked.
@@ -196,16 +196,7 @@ class NotificationAlertList(APIView):
 
             #Add all sets of alerts to the "allAlerts" list
             for alert in devAlertsList:
-                print(alert)
                 alert['location'] = theDevice.location
-                #alert.insert(0,{'location': theDevice.location})
-                print(alert)
-
-                #alert.location = theDevice.location
-                #Try to add the location info from the device to each alert before it is sent back.
-
-
-                print("this is " + alert['location'])
 
                 allAlerts.append(alert)
 
