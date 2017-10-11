@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html ng-app="scApp">
+
+<head>
+    <title>Testing File</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!--JS: Angular->App&Controller->Bootstrap -->
+    <script src="../JS/angular/angular.js"></script>
+    <script src="../JS/angular/angular-route.min.js"></script>
+
+    <script type="text/javascript" src="../JS/app.js"></script>
+    <script src="../JS/Controllers/subusersCtrl.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../JS/Bootstrap_js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+
+    <!--CSS: Bootstrap -> Custom CSS -->
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../CSS/subusers.css">
+
+</head>
+
+<body ng-controller="subusersCtrl">
+
+
+    <div id="wrapper">
+        <div class="col-lg-2">
+
+        </div>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Sub-Users</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Registered Devices
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Sort by Serial Number</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-8">
+
+                                    <div class="list-group" ng-repeat="sub in subUsersList">
+                                        <a href="#" class="list-group-item"><input class="check-position" type="checkbox"><span class="text-position">{{sub.username}}</span> <button class="btn btn-primary modify pull-right" type="button">Modify</button></a>
+                                    </div>
+
+                                    <!--<div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2 center-header">Select Sub-User</th>
+                                                    <th class="col-md-10 center-header">Sub-User Username</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="sub in subUsersList">
+                                                    <td class="center-header"><input type="checkbox">
+                                                    </td>
+                                                    <td class="center-header">{{sub.username}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>-->
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                                <div class="col-lg-8">
+                                    <div id="morris-bar-chart"></div>
+                                </div>
+                                <!-- /.col-lg-8 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../JS/Bootstrap_js/metisMenu.min.js"></script>
+
+
+    <!-- Custom Theme JavaScript -->
+    <!--<script src="../dist/js/sb-admin-2.js"></script>-->
+</body>
+
+</html>

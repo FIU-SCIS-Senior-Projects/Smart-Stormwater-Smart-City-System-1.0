@@ -8,9 +8,11 @@ class Device(models.Model):
     #assigned_to = models.ForeignKey(on_delete=models.CASCADE, max_length=50)
     identifier = models.CharField(primary_key=True, max_length=20)
     location = models.CharField(max_length=50)
+    battery_level = models.IntegerField(default=100)
+    fill_level = models.IntegerField(default=0)
     waste_type = models.CharField(max_length=20)
     custom = models.CharField(max_length=255)
-    #add "interval" column
+    report_interval = models.IntegerField(default=15)
 
 #AssignedTo is a table tha records which user has been assigned which device.
 #This is needed since multiple users can have access to one device and one user can have access to multiple devices
@@ -25,10 +27,10 @@ class User(models.Model):
     username = models.CharField(primary_key=True, unique=True, max_length=50)
     password = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
-    number = models.CharField(max_length=15)
+    number = models.CharField(max_length=15, blank=True)
     language = models.CharField(max_length=20)
-    gy_thresh = models.IntegerField(max_length=2) #Green to yellow threshold
-    yr_thresh = models.IntegerField(max_length=2) #Yellow to red threshold
+    gy_thresh = models.IntegerField(default=30) #Green to yellow threshold
+    yr_thresh = models.IntegerField(default=60) #Yellow to red threshold
     parent_user = models.CharField(max_length=50)
 
 

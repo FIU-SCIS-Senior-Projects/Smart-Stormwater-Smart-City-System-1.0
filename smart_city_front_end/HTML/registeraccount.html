@@ -5,7 +5,6 @@
     <title>Smart City System 1.0 - Register Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <!--JS: Angular->App&Controller->Bootstrap -->
     <script src="../JS/angular/angular.js"></script>
     <script src="../JS/angular/angular-route.min.js"></script>
@@ -16,21 +15,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../JS/Bootstrap_js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
     <!--CSS: Html-> Bootstrap -->
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../CSS/regacc.css">
 
-    <!-- Website Font style -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-
-
     <!-- Website CSS style -->
     <link rel="shortcut icon" href="">
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-
 
 </head>
 
@@ -154,28 +148,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 
-    <script>
-        var scApp = angular.module("scApp", []);
-
-        scApp.controller("regaccCtrl", function($scope) {
-            $scope.userID = "";
-            $scope.username = "";
-            $scope.password = "";
-            $scope.contactEmail = "";
-            $scope.contactNumber = "";
-            $scope.gtythresh = 30;
-            $scope.ytrthresh = 60;
-            $scope.ccn = false;
-            $scope.email = false;
-            $scope.sms = false;
-
-            $scope.register = function() {
-                $scope.hasRegistered = $scope.userID + ", " + $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
-            }
-
-        });
-
-    </script>
+   
 </body>
 
 </html>

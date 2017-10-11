@@ -17,7 +17,7 @@ scApp.controller("accsetCtrl", function ($scope) {
         $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
     }
     
-    $scope.submitLogIn = function ($location) {
+    $scope.submitLogIn = function () {
         $http.post("http://127.0.0.1:8000/", JSON.stringify({
                 username: $scope.username,
                 password: $scope.password

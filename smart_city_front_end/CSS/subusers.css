@@ -1,45 +1,3 @@
-/*.information-grouping{
-    margin: 80px 50px;
-    text-align: center;
-    background-color: lightblue;
-    border: 3pt solid black;
-}
-
-.notif-devices-grouping{
-    margin: 80px 50px;
-    text-align: center;
-    background-color: lightblue;
-    border: 3pt solid black;
-}
-
-.edit-entry-combo{
-    display: inline-block;
-    text-align: center;
-    margin: 10px 40px;    
-}
-
-#accset-title{
-    text-align: center; 
-    text-decoration: underline;
-}
-
-#notifset-title{
-    text-align: center;
-    text-decoration: underline;
-}
-
-.threshold-input{
-    
-}
-
-button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-        
-}*/
-
 /*.horizontal-collapse {
     height: 70px;
 }
@@ -95,31 +53,11 @@ nav ul li {
 }
 
 
-
 /*!
  * Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
-
-.selectors{
-    font-size: 28px;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-.selectors:hover{
-    color: darkseagreen;
-}
-
-.two-in-three{
-    margin-left: 100px;
-}
-
-
-.navigator{
-    position: relative;
-}
 
 body {
     background-color: #f8f8f8;
@@ -144,7 +82,43 @@ body {
     }
 }
 
+.check-position {
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}
 
+.text-position{
+    margin-top:10px;
+    padding: 0px 50px 0px 50px;
+    vertical-align: middle;
+}
+
+.btn{
+    padding: 0px 10px;
+}
+
+.modify{
+    color: black;
+    background-color: orange;
+}
+
+.panel-default>.panel-heading {
+    color: aqua;
+    background-color: #337ab7;
+}
+
+.center-header {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-striped {
+    background-color: lightblue;
+}
 
 .navbar-top-links {
     margin-right: 0;
@@ -642,5 +616,5 @@ table.dataTable thead .sorting:after {
 }
 
 .glyphicon {
-    font-size: 25px;
+    font-size: 24px;
 }

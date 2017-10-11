@@ -47,7 +47,11 @@
     background-color: #e5e5e5;
 }
 
+.glyphicon {
+    font-size: 15px;
+}
+
+/*This part below makes sure the navbar does not show when on the sign in page*/
 .navbar.navbar-default.navbar-static-top{
     display:none;
 }
-

@@ -1,8 +1,8 @@
 var scApp = angular.module('scApp');
 
-scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, Authentication) {
-    $scope.username = "";
-    $scope.password = "";
+scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope) {
+    $scope.username = "testuser";
+    $scope.password = "testpassword";
     $scope.decision = "";
 
     $scope.toBeSent = {
@@ -17,11 +17,6 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, A
         console.log("Clear")
     })();*/
 
-    
-    $scope.signInUser = function () {
-        $scope.hasSignedIn = $scope.username + ", " + $scope.password;
-    }
-
     $scope.submitLogIn = function () {
         $http.post("http://127.0.0.1:8000/", JSON.stringify({
                 username: $scope.username,
@@ -32,28 +27,28 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, A
                 //document.getElementById("demo").innerHTML = $scope.datareceived.username;
 
                 if ($scope.datareceived.username == "nonexistant") {
-                    //$location.path('/overview');
-//<<<<<<< HEAD
                     $scope.decision = "Username not found!";
-                } else if($scope.datareceived.username == "incorrect_password"){
+                } else if ($scope.datareceived.username == "incorrect_password") {
                     $scope.decision = "Incorrect Password!";
                 } else {
+                    
                     $rootScope.loggedIn = true;
                     $rootScope.username = $scope.username;
-                    //Authentication.SetCredentials($scope.username, $scope.password);
+                    $rootScope.deviceList = $scope.datareceived.deviceList;
+
+                    /*$http.get("http://127.0.0.1:8000/overview", {
+                            params: {
+                                username: $scope.username
+                            }
+                        })
+                        .then(function (response) {
+                            $rootScope.deviceList = response.data;
+                        })*/
+
                     $location.url("/overview");
                     //window.location = '/HTML/index.html#!/overview'
                     //$scope.$apply();
-/*=======
-                    $scope.decision = "doesn't exist"
-                } else if ($scope.datareceived.username == "incorrect_password") {
-                    $scope.decision = "wrong password"
-                } else {
-                    $scope.decision = "passed!"
-                    Authentication.SetCredentials($scope.username, $scope.password);
-                    window.location = '/HTML/index.html#!/overview'
-                    //$scope.$apply()
->>>>>>> logInRestriction*/
+
                 }
             })
 
