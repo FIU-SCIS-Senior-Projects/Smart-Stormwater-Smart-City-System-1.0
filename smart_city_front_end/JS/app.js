@@ -1,4 +1,4 @@
-var scApp = angular.module("scApp", ['ngRoute', 'ngCookies', 'ui.bootstrap']);
+var scApp = angular.module("scApp", ['ngRoute', 'ui.bootstrap']);
 
 scApp.controller("registerCtrl", function ($scope) {
     $scope.username = "";

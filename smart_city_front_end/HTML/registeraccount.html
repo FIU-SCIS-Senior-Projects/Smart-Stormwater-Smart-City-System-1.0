@@ -5,7 +5,6 @@
     <title>Smart City System 1.0 - Register Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <!--JS: Angular->App&Controller->Bootstrap -->
     <script src="../JS/angular/angular.js"></script>
     <script src="../JS/angular/angular-route.min.js"></script>
@@ -25,16 +24,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
 
-    <!-- Website CSS style -->
-    <link rel="shortcut icon" href="">
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-
 
 </head>
 
-<body ng-controller="regaccCtrl">
+<body class="main-body" ng-controller="regaccCtrl">
     <div class="container">
         <div class="row main">
             <div class="main-login main-center">
@@ -48,12 +41,12 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" ng-model="userID" name="name" id="name" placeholder="Choose a user ID" />
+                                <input type="text" class="form-control" ng-model="username" name="name" id="name" placeholder="Choose a user ID" />
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group col-xs-6 padding-w-15 padding-left-0">
+                    <div class="form-group col-xs-12">
                         <label for="email" class="cols-sm-2 control-label">Your Email</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
@@ -63,15 +56,15 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-xs-6 padding-w-15 padding-right-0">
+                    <!--<div class="form-group col-xs-6 padding-w-15 padding-right-0">
                         <label for="username" class="cols-sm-2 control-label">Username</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" ng-model="username" name="username" id="username" placeholder="Choose a Username" />
+                                <input type="text" class="form-control" ng-model="userID" name="username" id="username" placeholder="Choose a Username" />
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group col-xs-12">
                         <label for="password" class="cols-sm-2 control-label">Password</label>
@@ -98,7 +91,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-phone fa-lg" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" ng-model="contactNumber" name="phoneNumber" id="phoneNumber" placeholder="Enter Phone Number" />
+                                <input type="text" class="form-control" ng-model="contactNumber" name="phoneNumber" id="phoneNumber" placeholder="Insert Only Numbers" />
                             </div>
                         </div>
                     </div>
@@ -109,7 +102,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-tint fa" aria-hidden="true"></i></span>
-                                <input type="number" class="form-control" ng-model="gtythresh" value="30" max="99" placeholder="Choose a Green to Yellow Threshold Limit" />
+                                <input type="number" class="form-control" ng-model="gtythresh" value="30" placeholder="Choose a Green to Yellow Threshold Limit" />
                             </div>
                         </div>
                     </div>
@@ -119,63 +112,24 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-tint fa" aria-hidden="true"></i></span>
-                                <input type="number" class="form-control" ng-model="ytrthresh" value="60" max="99" placeholder="Choose a Yellow to Red Threshold Limit" />
+                                <input type="number" class="form-control" ng-model="ytrthresh" value="60" placeholder="Choose a Yellow to Red Threshold Limit" />
                             </div>
                         </div>
                     </div>
-
-
 
                     <div style="visibility: hidden;">
                         <h6>This is dumb and removing this div causes format issues.</h6>
                     </div>
 
                     <div class="form-group ">
-                        <type="button" id="button" ng-click="register()" class="btn btn-primary btn-lg btn-block login-button" />Register
+                        <type="button" id="button" ng-click="submitRegister()" class="btn btn-primary btn-lg btn-block login-button" />Register
                     </div>
-            </div>
-
-            <div class="registration_entry_combo_notif" style="display: none;">
-                <h4>Please select the types of notifications you wish to receive when thresholds are met:</h4>
-                <h5>CCN Notification: <input type="checkbox" ng-model="ccn" /> </h5>
-                <h5>Email Notification: <input type="checkbox" ng-model="email" /> </h5>
-                <h5>SMS Notification: <input type="checkbox" ng-model="sms" /> </h5>
-            </div>
-
-
-
 
             </form>
         </div>
     </div>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-
-    <script>
-        var scApp = angular.module("scApp", []);
-
-        scApp.controller("regaccCtrl", function($scope) {
-            $scope.userID = "";
-            $scope.username = "";
-            $scope.password = "";
-            $scope.contactEmail = "";
-            $scope.contactNumber = "";
-            $scope.gtythresh = 30;
-            $scope.ytrthresh = 60;
-            $scope.ccn = false;
-            $scope.email = false;
-            $scope.sms = false;
-
-            $scope.register = function() {
-                $scope.hasRegistered = $scope.userID + ", " + $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
-            }
-
-        });
-
-    </script>
 </body>
 
 </html>

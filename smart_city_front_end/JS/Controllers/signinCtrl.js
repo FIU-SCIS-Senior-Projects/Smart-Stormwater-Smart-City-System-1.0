@@ -1,6 +1,6 @@
 var scApp = angular.module('scApp');
 
-scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, Authentication) {
+scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope) {
     $scope.username = "";
     $scope.password = "";
     $scope.decision = "";
@@ -41,7 +41,8 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, A
                     $rootScope.loggedIn = true;
                     $rootScope.username = $scope.username;
                     //Authentication.SetCredentials($scope.username, $scope.password);
-                    $location.url("/overview");
+                    window.location = '/smart_city_front_end/HTML/accountsettings.html#!/'
+                    //$location.url("/overview");
                     //window.location = '/HTML/index.html#!/overview'
                     //$scope.$apply();
 /*=======
