@@ -20,11 +20,11 @@ from smart_city_main import views
 urlpatterns = [
     url(r'^smart_city_main/', include('smart_city_main.urls')),
     url(r'^$', views.Login.as_view()),
-    url(r'^account-settings$', views.AccountSetDetails.as_view()),
+    url(r'^account-settings', views.AccountSetDetails.as_view()),
     url(r'^notification-settings', views.NotificationsSet.as_view()),
     url(r'^notifications', views.NotificationAlertList.as_view()),
     url(r'^overview', views.DeviceOperations.as_view()),
     url(r'^sub-users-list', views.SubUsersList.as_view()),
     url(r'^admin/', admin.site.urls),
-    url(r'^register/', views.RegisterAccount.as_view()),
+    url(r'^register', views.RegisterAccount.as_view()),
 ]

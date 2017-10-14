@@ -1,44 +1,43 @@
 var scApp = angular.module("scApp");
 
-scApp.controller("accsetCtrl", function ($scope) {
-    $scope.username = "newComp";
-    $scope.password = "newCompPW";
-    $scope.confirmpw = ""
-    $scope.contactEmail = "ceoguy@newcomp.com";
-    $scope.contactNumber = "7861234567";
-    $scope.gtythresh = 35;
-    $scope.ytrthresh = 75;
-    $scope.ccn = false;
-    $scope.email = false;
-    $scope.sms = false;
-    $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
-
-    $scope.updateInfo = function () {
-        $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh) + ", " + $scope.ccn + ", " + $scope.email + ", " + $scope.sms;
-    }
+scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope) {
+    $scope.userID = "";
+    $scope.username = "123";
+    $scope.password = "";
+    $scope.confirmPassword = "";
+    $scope.contactEmail = "";
+    $scope.contactNumber = "";
+    $scope.gtythresh = 30;
+    $scope.ytrthresh = 60;
     
-    $scope.submitLogIn = function () {
-        $http.post("http://127.0.0.1:8000/", JSON.stringify({
+
+    $scope.changeInfo = function () {
+        if ($scope.password != $scope.confirmPassword) {
+            alert("Passwords do not match.")
+        }
+        else if ($scope.gtythresh <= -1 | $scope.gtythresh >= 101) {
+            alert("Green to Yellow threshold must be between 0-100.")
+        }
+        else if ($scope.ytrthresh <= -1 | $scope.ytrthresh >= 101) {
+            alert("Yellow to Red threshold must be between 0-100.")
+        }
+        else if ($scope.gtythresh >= $scope.ytrthresh) {
+            alert("Green to Yellow threshold must be lower than Yellow to Red Threshold.")
+        }
+        else {
+            $http.post("http://127.0.0.1:8000/account-settings", JSON.stringify({
+                userID: $scope.userID,
                 username: $scope.username,
-                password: $scope.password
+                password: $scope.password,
+                email: $scope.contactEmail,
+                number: $scope.contactNumber,
+                gy_thresh: $scope.gtythresh,
+                yr_thresh: $scope.ytrthresh,
+                parent_user: $rootScope.username
             }))
-            .then(function (response) {
-                $scope.datareceived = response.data;
-                //document.getElementById("demo").innerHTML = $scope.datareceived.username;
+            window.location = '/smart_city_front_end/HTML/overview.html#!/'
+        }
 
-                if ($scope.datareceived.username == "nonexistant") {
-                    //$location.path('/overview');
-                    $scope.decision = "doesn't exist"
-                } else if($scope.datareceived.username == "incorrect_password"){
-                    $scope.decision = "wrong password"
-                } else {
-                    $scope.decision = "passed!"
-                    $location.path('/overview')
-                    $scope.$apply()
-                }
-            })
-
-
-    };
+    }
 
 });

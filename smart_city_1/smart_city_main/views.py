@@ -66,7 +66,7 @@ class Login(APIView):
 class RegisterAccount(APIView):
     def post(self, request, *args, **kwargs):
         account = json.loads(request.body.decode('utf-8'))
-        accID = account['username']
+        accUsername = account['username']
         accPass = account['password']
         accEmail = account['email']
         accNumber = account['number']
@@ -74,22 +74,23 @@ class RegisterAccount(APIView):
         accGYthresh = account['gy_thresh']
         accYRthresh = account['yr_thresh']
 
-        #creates a new user from input data and stores it into database
-        newAcc = User(username = accID, password = accPass, email = accEmail, number = accNumber, gy_thresh = accGYthresh, yr_thresh = accYRthresh)
-        newAcc.save()
+        try:
+            checkUser = User.objects.get(username = accUsername)
+            usernameUnavailable = {'username' : 'username already taken'}
+            return JsonResponse(usernameUnavailable)
 
-        #creates default notifications with web notifications set to true, email and sms set to false
-        newAccNotif = Notifications(user = newAcc, gty_web_alert = True, gty_email_alert = False, ytr_web_alert = True, ytr_email_alert = False,
-                                    clean_basin_web_alert = True, clean_basin_email_alert = False, gps_update_web_alert = True, gps_update_email_alert = False)
-        newAccNotif.save()
+        except User.DoesNotExist:
+            #creates a new user from input data and stores it into database
+            newAcc = User(username = accUsername, password = accPass, email = accEmail, number = accNumber, language = "English", gy_thresh = accGYthresh, yr_thresh = accYRthresh)
+            newAcc.save()
 
-        #delete the account after testing that it works
-        deleteTest = User.objects.get(username = accID)
-        deleteTest.delete()
+            #creates default notifications with web notifications set to true, email and sms set to false
+            newAccNotif = Notifications(user = newAcc, gty_web_alert = True, gty_email_alert = False, ytr_web_alert = True, ytr_email_alert = False,
+                                        clean_basin_web_alert = True, clean_basin_email_alert = False, gps_update_web_alert = True, gps_update_email_alert = False)
+            newAccNotif.save()
 
-        accountCreated = {"username" : "account created"}
-        return JsonResponse(accountCreated)
-            #return HttpResponse("Account created and deleted", status=200)
+            accountCreated = {"username" : accUsername + ' created'}
+            return JsonResponse(accountCreated)
 
 #This is for the account settings, the get method gets the information from the database for a user and the post is to be used to update the user account information.
 class AccountSetDetails(APIView):
@@ -102,25 +103,32 @@ class AccountSetDetails(APIView):
     #Assumes that all the input fields are returned from the front end. Can be changed to first check.
     def post(self, request, *args, **kwargs):
         userInfo = json.loads(request.body.decode('utf-8'))
+        updateUsername = userInfo['username']
+        updatePass = userInfo['password']
+        updateEmail = userInfo['email']
+        updateNumber = userInfo['number']
+        #updateLanguage = userInfo['language']
+        updateGYthresh = userInfo['gy_thresh']
+        updateYRthresh = userInfo['yr_thresh']
         try:
-            theUser = User.objects.get(pk = userInfo['username'])
-            theUser.password = userInfo['password']
-            theUser.email = userInfo['email']
-            theUser.number = userInfo['phone']
-            theUser.language = userInfo['language']
-            theUser.gy_thresh = userInfo['gy_thresh']
-            theUser.yr_thresh = userInfo['yr_thresh']
+            theUser = User.objects.get(username = updateUsername)
+
+            if (updatePass != ""):
+                theUser.password = updatePass
+
+            theUser.email = updateEmail
+            theUser.number = updateNumber
+            #theUser.language = userInfo['language']
+            theUser.gy_thresh = updateGYthresh
+            theUser.yr_thresh = updateYRthresh
             theUser.save()
-            return HttpResponse("Success", status=200)
 
+            updateInfo = {"username": theUser.username + 'updated'}
+            return JsonResponse(updateInfo)
 
-        except:
-            return HttpResponse("Success", status=417)
-
-
-
-
-        return JsonResponse()
+        except User.DoesNotExist:
+            errorInfo = {"username": 'user does not exist'}
+            return JsonResponse(errorInfo)
 
 
 #this is for the notifications page where the get method is for retrieving the devices and the notifications per device. The post method is used to update the notifications for each device

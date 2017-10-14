@@ -19,155 +19,122 @@
     <!--CSS: Html-> Bootstrap -->
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../CSS/accsettings.css">
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
 </head>
+
 
 <body class="main-page" ng-controller="accsetCtrl">
 
-
-    <div id="wrapper">
-
-
-        <div class="col-lg-2">
-
-        </div>
-
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">User Settings</h1>
+    <div class="container col-lg-8">
+        <div class="row main">
+            <div class="main-login main-center">
+                <div align="center">
+                    <h2>Account Information</h2>
                 </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <!-- /.row -->
-            <div class="row">
-                <div class="navigator col-lg-4">
-                    <div class="sidebar-nav-fixed panel panel-default pull-left affix">
-                        <ul class="panel-body">
-                            <a href="#!account-settings" class="selectors col-md-12">Account Settings</a>
-                            <div class="divider"></div>
-                            <a href="#!notification-settings" class="selectors col-md-12">Notification Settings</a>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-8">
+                <form class="" method="post" action="#">
 
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Account Settings
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="form-group col-xs-4">
-                                            <label for="password"><span  style="margin-right:5px;"></span>User ID:</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="password" ng-model="username" name="userID" placeholder="User ID" disabled/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-xs-4">
-                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>Password:</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="password" ng-model="password" name="password" placeholder="Password" required/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-xs-4">
-                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>Username:</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="password" ng-model="username" name="username" placeholder="Password" required/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="form-group col-md-4 col-offset-3 two-in-three">
-                                            <label for="password"><span  style="margin-right:5px;"></span>Contact Email:</label>
-                                            <div class="input-group">
-                                                <input class="form-control for-group-lg col-xs-6 longer-input" id="password" type="email" ng-model="contactEmail" name="userID" placeholder="Email" required/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-md-4 two-in-three">
-                                            <label for="password"><span class="text-danger" style="margin-right:5px;"></span>Contact Phone:</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="password" type="number" ng-model="contactPhone" name="password" placeholder="Phone" required/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Enter Inputs here -->
-                                    <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
-                                <!-- /.col-lg-8 (nested) -->
+                    <div class="form-group col-xs-12">
+                        <label for="name" class="cols-sm-2 control-label">User ID</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" ng-model="username" name="name" id="name" placeholder="Choose a user ID" disabled />
                             </div>
-                            <!-- /.row -->
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
 
-                </div>
-                <!-- /.col-lg-8 -->
-            </div>
-            <!-- /.row -->
+                    <div class="form-group col-xs-12">
+                        <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" ng-model="contactEmail" name="email" id="email" placeholder="Enter your Email" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group col-xs-6 padding-w-15 padding-right-0">
+                        <label for="username" class="cols-sm-2 control-label">Username</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" ng-model="username" name="username" id="username" placeholder="Choose a Username" />
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="form-group col-xs-12">
+                        <label for="password" class="cols-sm-2 control-label">Password</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" ng-model="password" name="password" id="password" placeholder="Choose a Password" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12">
+                        <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" ng-model="confirmPassword" name="confirm" id="confirm" placeholder="Confirm Password" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12">
+                        <label for="confirm" class="cols-sm-2 control-label">Contact Number (Optional)</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone fa-lg" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" ng-model="contactNumber" name="phoneNumber" id="phoneNumber" placeholder="Insert Only Numbers" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-xs-6 padding-w-15 padding-left-0">
+                        <label for="name" class="cols-sm-2 control-label">Green to Yellow Threshold (Percentage)</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-tint fa" aria-hidden="true"></i></span>
+                                <input type="number" class="form-control" ng-model="gtythresh" value="30" placeholder="Choose a Green to Yellow Threshold Limit" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-6 padding-w-15 padding-right-0">
+                        <label for="name" class="cols-sm-2 control-label">Yellow to Red Threshold (Percentage)</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-tint fa" aria-hidden="true"></i></span>
+                                <input type="number" class="form-control" ng-model="ytrthresh" value="60" placeholder="Choose a Yellow to Red Threshold Limit" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="visibility: hidden;">
+                        <h6>This is dumb and removing this div causes format issues.</h6>
+                    </div>
+
+                    <div class="form-group ">
+                        <type="button" id="button" ng-click="changeInfo()" class="btn btn-primary btn-lg btn-block login-button" />Save Information
+                    </div>
+
+            </form>
+
         </div>
-        <!-- /#page-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
+    </div>
+
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../JS/Bootstrap_js/metisMenu.min.js"></script>
-
-
-
-    <!--<div class="information-grouping">
-        <h2 id="accset-title">Account Settings</h2>
-        <br/>
-        <div class="edit-entry-combo">
-            <!-- combo meaning input box and corresponding label 
-            <h4>Password: <input type="text" ng-model="password" /> </h4>
-        </div>
-        <div class="edit-entry-combo">
-            <h4>Contact Email: <input type="text" ng-model="contactEmail" /> </h4>
-        </div>
-        <div class="edit-entry-combo">
-            <h4>Contact Number: <input type="text" ng-model="contactNumber" /> </h4>
-        </div>
-        <div class="edit-entry-combo">
-            <div class="thresh-only">
-                <h4>Green-to-Yellow Threshold: <input type="number" class="threshold-input" ng-model="gtythresh" value="30" max="99" /> </h4>
-                <!--Find how to set limit on number
-                <!-- combo meaning input box and corresponding label
-                <h4>Yellow-To-Red Threshold: <input type="number" class="threshold-input" ng-model="ytrthresh" value="60" max="100" /> </h4>
-            </div>
-        </div>
-        <br/>
-        <div>
-            <button ng-click="updateInfo()">Update Account Information</button>
-        </div>
-        <br/> 
-        {{hasRegistered}}
-    </div>
-    <div class="notif-devices-grouping">
-        <h2 id="notifset-title">Notification Settings</h2>
-        <div class="registration_entry_combo_notif">
-            <p>Below you will find all your registered devices. Please select which notification to send to each threshold per device.</p>
-            <br/>
-            <!--Make a fake device and make a table to order things right
-            <h5>CCN Notification: <input type="checkbox" ng-model="ccn" /> </h5>
-            <h5>Email Notification: <input type="checkbox" ng-model="email" /> </h5>
-            <h5>SMS Notification: <input type="checkbox" ng-model="sms" /> </h5>
-        </div>
-    </div>-->
-
 
 </body>
 
