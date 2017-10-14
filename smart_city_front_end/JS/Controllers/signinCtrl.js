@@ -10,13 +10,6 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope) {
         password: $scope.password
     }
 
-
-    /*(function initController() {
-        // reset login status
-        Authentication.ClearCredentials();
-        console.log("Clear")
-    })();*/
-
     $scope.submitLogIn = function () {
         $http.post("http://127.0.0.1:8000/", JSON.stringify({
                 username: $scope.username,
