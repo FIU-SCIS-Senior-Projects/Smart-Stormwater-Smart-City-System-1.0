@@ -10,7 +10,7 @@ class Device(models.Model):
     location = models.CharField(max_length=50)
     battery_level = models.IntegerField(default=100)
     fill_level = models.IntegerField(default=0)
-    waste_type = models.CharField(max_length=20)
+    device_type = models.CharField(max_length=20)
     custom = models.CharField(max_length=255)
     report_interval = models.IntegerField(default=15)
 
@@ -32,6 +32,8 @@ class User(models.Model):
     gy_thresh = models.IntegerField(default=30) #Green to yellow threshold
     yr_thresh = models.IntegerField(default=60) #Yellow to red threshold
     parent_user = models.CharField(max_length=50)
+    permission = models.CharField(max_length=5, default='User') #Can only be "admin" or "user" hence limit is 5
+    organization = models.CharField(max_length=150, default='Not Assigned')
 
 
 #Notifications, which can have CCN, email, SMS

@@ -2,7 +2,7 @@
     https://www.w3schools.com/angular/angular_controllers.asp    */
 var scApp = angular.module('scApp');
 
-scApp.controller("subusersCtrl", function ($http, $scope, $rootScope, allSubUsers) {
+scApp.controller("seeassignmentsCtrl", function ($http, $scope, $rootScope, allSubUsers) {
     
     $scope.subUsersList = allSubUsers;
     $scope.allDevicesList = $rootScope.deviceList;

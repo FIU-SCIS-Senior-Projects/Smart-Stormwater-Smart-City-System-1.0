@@ -32,7 +32,7 @@ class Login(APIView):
 
                     newEntry = {'identifier': theDev.identifier, 'location': theDev.location,
                                 'battery_level': theDev.battery_level, 'fill_level': theDev.fill_level,
-                                'waste_type': theDev.waste_type, 'custom': theDev.custom, 'report_interval': theDev.report_interval}
+                                'device_type': theDev.device_type, 'custom': theDev.custom, 'report_interval': theDev.report_interval}
                     deviceList.append(newEntry)
 
                 #finalList = list(deviceList)
@@ -234,17 +234,18 @@ class NotificationAlertList(APIView):
 
 #This post method should take the given information from the json and store it to the database, linking the device to its owner.
 class DeviceOperations(APIView):
+
+    #"get" retrieves all devices that have been assigned to a user
     def get(self, request, *args, **kwargs):
         # This section takes the params that is given in the url as the query string and
         # takes out the "username=" part to get the actual username of the user to then be able to search with it.
         # I was initially gonna do it with JSON but nothing I tried worked.
         # Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
-        print("Hi dev op")
+
+
         theMeta = request.META['QUERY_STRING']  # Got the query string, aka "username=(enterusernamehere)"
-        print(theMeta + " is the meta")
 
         cutOff = "username="  # Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
-        print(cutOff + " is the cutOff")
 
         userID = theMeta[theMeta.index(cutOff) + len(cutOff):]  # This cuts out the "username=" part and just has the actually username left
 
@@ -260,6 +261,7 @@ class DeviceOperations(APIView):
 
 
         return JsonResponse(list(deviceList), safe=False)
+
 
     def post(self, request, *args, **kwargs):
         return JsonResponse()
@@ -280,9 +282,28 @@ class SubUsersList(APIView):
 
         # -------------------------------------------------------------------------------------------------
 
-        ImmediateSubUsers = User.objects.filter(parent_user=userID).values('username')
+        ImmediateSubUsers = User.objects.filter(parent_user=userID).values('username', 'permission', 'organization')
 
         return JsonResponse(list(ImmediateSubUsers), safe=False)
 
+    # "post" gets a JSON that has 2 lists: a list of usernames and a list of devices that are to be assigned to those list of usernames
+    # Not under "Device Operations" due to this class is the class assigned to the sub-users list page
     def post(self, request, *args, **kwargs):
-        return JsonResponse()
+        twoLists = json.loads(request.body.decode('utf-8'))
+        subList = twoLists['usersChecked']
+        devList = twoLists['devicesChecked']
+
+        for sub in subList:
+            for dev in devList:
+
+                try:
+                    #If a particular assignment doesn't exist, then create that assignment and save to the database.
+                    if not (AssignedTo.objects.filter(user=sub, assigned_device=dev).exists()):
+                        newAssignment = AssignedTo(user=sub, assigned_device=dev)
+                        newAssignment.save()
+
+
+                except:
+                    return HttpResponse("Couldn't Save. Errors Occurred", status=417)
+
+        return HttpResponse("Assignments Saved!", status=200)

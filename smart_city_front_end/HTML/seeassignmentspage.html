@@ -2,7 +2,7 @@
 <html ng-app="scApp">
 
 <head>
-    <title>Testing File</title>
+    <title>SmartCity - See Device Assignemtns</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,7 @@
     <script src="../JS/angular/angular-route.min.js"></script>
 
     <script type="text/javascript" src="../JS/app.js"></script>
-    <script src="../JS/Controllers/subusersCtrl.js"></script>
+    <script src="../JS/Controllers/seeassignmentsCtrl.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
@@ -21,11 +21,11 @@
 
     <!--CSS: Bootstrap -> Custom CSS -->
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../CSS/subusers.css">
+    <link rel="stylesheet" href="../CSS/seeassignmentspage.css">
 
 </head>
 
-<body ng-controller="subusersCtrl">
+<body ng-controller="seeassignmentsCtrl">
 
 
     <div id="wrapper">
@@ -36,7 +36,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Sub-Users and Devices
+                    <h1 class="page-header">See Device Assignments
                     </h1>
                 </div>
 
@@ -44,8 +44,8 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Below is the list of sub-users under you. To register a new user, select the "Register" brutton. </p>
-                    <p>To assign a device, select all the sub-users you wish to assign a device to, then select all the devices you wish to assign to those sub-users, and finally click the "Assign Devices" button.</p>
+                    <p>Below you can see all of your devices. You can select multiple devices to see which sub-users have been assigned that device. </p>
+                    <p>To assign a device to a sub-user, click on the "Sub-Users and Devices" option on the navigation bar. </p>
                 </div>
             </div>
             <!-- /.row -->
@@ -82,58 +82,21 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <button class="btn btn-primary special-btn pull-left" type="button">Register</button>
-                                    <button class="btn btn-primary checker-btn pull-right" type="button" ng-click="deselectAllSubs()">Uncheck All</button>
-                                    <button class="btn btn-primary checker-btn pull-right" type="button" ng-click="selectAllSubs()" style="margin-left: 100px;">Check All</button>
+                                    <button class="btn btn-primary checker-btn pull-right" type="button" ng-click="deselectAllDevs()">Uncheck All</button>
+                                    <button class="btn btn-primary checker-btn pull-right" type="button" ng-click="selectAllDevs()" style="margin-left: 100px;">Check All</button>
                                 </div>
                                 <div class="col-lg-6">
-                                    <button class="btn btn-primary special-btn pull-left" type="button" ng-click="submitAssignments()">Assign Devices</button> <span class="" style="color:red; padding-left: 21px;">{{databaseResponse}}</span> 
-                                    <button class="btn btn-primary checker-btn pull-right" type="button" ng-click="deselectAllDevs()">Uncheck All</button>
-                                    <button class="btn btn-primary checker-btn pull-right" type="button" ng-click="selectAllDevs()">Check All</button>
+                                    <button class="btn btn-primary special-btn pull-left" type="button">Unassign</button> <span class="" style="color:red; padding-left: 21px;">{{databaseResponse}}</span> 
+                                    <button class="btn btn-primary checker-btn pull-right" type="button" ng-click="deselectAllSubs()">Uncheck All</button>
+                                    <button class="btn btn-primary checker-btn pull-right" type="button" ng-click="selectAllSubs()">Check All</button>
                                     
                                 </div>
                                 
-                            </div>
-                            
+                            </div>-
+
                             <div class="row" style="margin-top: 0px; padding-top: 0px;">
                                 <div class="col-lg-6">
-                                    <h1 class="page-header">Sub-Users List</h1>
-                                    <!--<div class="list-group" ng-repeat="sub in subUsersList">
-                                        <a href="#" class="list-group-item"><input class="check-position" type="checkbox"><span class="text-position">{{sub.username}}</span> <button class="btn btn-primary modify pull-right" type="button">Modify</button></a>
-                                    </div>-->
-
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-md-1 center-header">Select</th>
-                                                    <th class="col-md-1 center-header">Permission</th>
-                                                    <th class="col-md-4 center-header">Sub-User Username</th>
-                                                    <th class="col-md-5 center-header">Sub-User Organization</th>
-                                                    <th class="col-md-5 center-header">Modify</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-repeat="sub in subUsersList">
-                                                    <td class="center-header"><input class="check-position" type="checkbox" value="{{sub.username}}" ng-checked="subUsersChecked.indexOf(sub.username) > -1" ng-click="selectSub(sub)">
-                                                    </td>
-                                                    <td class="center-header">User
-                                                    </td>
-                                                    <td class="center-header">{{sub.username}}
-                                                    </td>
-                                                    <td class="center-header">{{sub.organization}}
-                                                    </td>
-                                                    <td class="center-header"><button class="btn btn-primary modify pull-right" type="button">Modify</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <h1 class="page-header">Device List </h1>
-                                    
+                                    <h1 class="page-header">Device List</h1>
                                     <!--<div class="list-group" ng-repeat="sub in subUsersList">
                                         <a href="#" class="list-group-item"><input class="check-position" type="checkbox"><span class="text-position">{{sub.username}}</span> <button class="btn btn-primary modify pull-right" type="button">Modify</button></a>
                                     </div>-->
@@ -159,6 +122,41 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <h1 class="page-header">Assigned Sub-Users</h1>
+
+                                    <!--<div class="list-group" ng-repeat="sub in subUsersList">
+                                        <a href="#" class="list-group-item"><input class="check-position" type="checkbox"><span class="text-position">{{sub.username}}</span> <button class="btn btn-primary modify pull-right" type="button">Modify</button></a>
+                                    </div>-->
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1 center-header">Select</th>
+                                                    <th class="col-md-1 center-header">Permission</th>
+                                                    <th class="col-md-4 center-header">Sub-User Username</th>
+                                                    <th class="col-md-5 center-header">Sub-User Organization</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="sub in subUsersList">
+                                                    <td class="center-header"><input class="check-position" type="checkbox" value="{{sub.username}}" ng-checked="subUsersChecked.indexOf(sub.username) > -1" ng-click="selectSub(sub)">
+                                                    </td>
+                                                    <td class="center-header">User
+                                                    </td>
+                                                    <td class="center-header">{{sub.username}}
+                                                    </td>
+                                                    <td class="center-header">{{sub.organization}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
 
 

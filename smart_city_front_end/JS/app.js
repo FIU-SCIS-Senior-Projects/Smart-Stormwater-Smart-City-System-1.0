@@ -92,6 +92,17 @@ scApp.config(['$routeProvider',
                     }
                 }
             })
+            .when('/see-device-assignments', {
+                templateUrl: './seeassignmentspage.html',
+                controller: 'seeassignmentsCtrl',
+                resolve: {
+                    "check": function ($location, $rootScope) {
+                        if (!$rootScope.loggedIn) {
+                            $location.path('/');
+                        }
+                    }
+                }
+            })
             .when('/notification-settings', {
                 templateUrl: './notificationsettings.html',
                 controller: 'notifsetCtrl',

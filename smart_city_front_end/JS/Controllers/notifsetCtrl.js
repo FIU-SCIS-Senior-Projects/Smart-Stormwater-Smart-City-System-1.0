@@ -1,6 +1,6 @@
 var scApp = angular.module("scApp");
 
-scApp.controller("notifsetCtrl", function ($scope, $http, allNotificationSettings) {
+scApp.controller("notifsetCtrl", function ($scope, $http, $rootScope, allNotificationSettings) {
     
     $scope.checkboxes = allNotificationSettings;
         /*{
@@ -31,10 +31,9 @@ scApp.controller("notifsetCtrl", function ($scope, $http, allNotificationSetting
     $scope.exist = "I exist"
     
     //At the time of this upload, this function hasn't been completely developed
-    //"username" must be used from a service to then send instead of having it be hardcoded
-    $scope.saveNotif = function ($location) {
+    $scope.saveNotif = function () {
         $http.post("http://127.0.0.1:8000/notification-settings", JSON.stringify({
-            username: "testuser",
+            username: $rootScope.username,
             gty_web: $scope.checkboxes.gty_web,
             gty_email: $scope.checkboxes.gty_email,
             ytr_web: $scope.checkboxes.ytr_web,

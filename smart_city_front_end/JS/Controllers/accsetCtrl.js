@@ -2,7 +2,8 @@ var scApp = angular.module("scApp");
 
 scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope) {
     $scope.userID = "";
-    $scope.username = "123";
+    $scope.username = $rootScope.username;
+    console.log($rootScope.username);
     $scope.password = "";
     $scope.confirmPassword = "";
     $scope.contactEmail = "";
