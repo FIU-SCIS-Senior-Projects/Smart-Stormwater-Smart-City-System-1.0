@@ -25,7 +25,6 @@ scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope, $
     $scope.gtythresh = parseInt(currentGY);
     $scope.ytrthresh = parseInt(currentYR);
 
-
     $scope.changeInfo = function () {
         if ($scope.password != $scope.confirmPassword) {
             alert("Passwords do not match.")

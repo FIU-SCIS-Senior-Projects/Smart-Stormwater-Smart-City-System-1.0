@@ -27,9 +27,21 @@ scApp.config(['$routeProvider',
                 controller: 'overviewCtrl',
                 css: 'overview.css',
                 resolve: {
-                    "check": function ($location, $rootScope) {
+                    allOverview: function ($location, $rootScope) {
                         if (!$rootScope.loggedIn) {
                             $location.path('/');
+                        } else if (!$rootScope.deviceList) { //If user is logged in and the device list is not known, get it and put in $rootScope
+                            //console.log($rootScope.username);
+                            $http.get("http://127.0.0.1:8000/overview", {
+                                    params: {
+                                        username: $rootScope.username
+                                    }
+                                })
+                                .then(function (response) {
+
+                                    $rootScope.deviceList = response.data;
+                                })
+                            console.log("Got em");
                         }
                     }
                 }
@@ -41,6 +53,26 @@ scApp.config(['$routeProvider',
                     "check": function ($location, $rootScope) {
                         if (!$rootScope.loggedIn) {
                             $location.path('/');
+                        }
+                    }
+                }
+            })
+            .when('/sub-users-list', {
+                templateUrl: './subusers.html',
+                controller: 'subusersCtrl',
+                resolve: {
+                    allSubUsers: function ($http, $route, $rootScope) {
+                        if (!$rootScope.loggedIn) {
+                            $location.path('/');
+                        } else {
+                            return $http.get("http://127.0.0.1:8000/sub-users-list", {
+                                    params: {
+                                        username: $rootScope.username
+                                    }
+                                })
+                                .then(function (response) {
+                                    return response.data;
+                                })
                         }
                     }
                 }
@@ -66,6 +98,17 @@ scApp.config(['$routeProvider',
                                 .then(function (response) {
                                     return response.data;
                                 })
+                        }
+                    }
+                }
+            })
+            .when('/see-device-assignments', {
+                templateUrl: './seeassignmentspage.html',
+                controller: 'seeassignmentsCtrl',
+                resolve: {
+                    "check": function ($location, $rootScope) {
+                        if (!$rootScope.loggedIn) {
+                            $location.path('/');
                         }
                     }
                 }
@@ -101,7 +144,7 @@ scApp.config(['$routeProvider',
                         } else {
                             return $http.get("http://127.0.0.1:8000/notifications", {
                                     params: {
-                                        username:  $rootScope.username
+                                        username: $rootScope.username
                                     }
                                 })
                                 .then(function (response) {
@@ -127,6 +170,12 @@ scApp.config(['$routeProvider',
             })
     }
 ]);
+
+scApp.factory('DeviceList', function ($http) {
+    //$http.get
+
+    //var allDevices = 
+});
 
 /*scApp.run(['$rootScope', '$location', '$cookies', '$http', function ($rootScope, $location, $cookies, $http) {
 

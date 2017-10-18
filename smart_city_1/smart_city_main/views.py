@@ -22,9 +22,31 @@ class Login(APIView):
             person = User.objects.get(username= userID)
 
             if person.password == userPass:
+
+                allAssigned = AssignedTo.objects.filter(user=userID)
+
+                deviceList = []
+
+                for dev in allAssigned:
+                    theDev = Device.objects.get(identifier=dev.assigned_device)
+
+                    newEntry = {'identifier': theDev.identifier, 'location': theDev.location,
+                                'battery_level': theDev.battery_level, 'fill_level': theDev.fill_level,
+                                'device_type': theDev.device_type, 'custom': theDev.custom, 'report_interval': theDev.report_interval}
+                    deviceList.append(newEntry)
+
+                #finalList = list(deviceList)
+
                 #return HttpResponse("User found", status=200)
-                theUser = {'username': person.username, 'password': person.password, 'email': person.email, 'phone': person.number, 'language': person.language, 'gy_thresh': person.gy_thresh, 'yr_thresh': person.yr_thresh}
-                return JsonResponse(theUser)
+                theUser = {'username': person.username,
+                           'password': person.password,
+                           'email': person.email,
+                           'phone': person.number,
+                           'language': person.language,
+                           'gy_thresh': person.gy_thresh,
+                           'yr_thresh': person.yr_thresh,
+                           'deviceList': [dev for dev in deviceList]}
+                return JsonResponse(theUser, safe=False)
 
             else:
                 wrongUser = {'username': 'incorrect_password'}
@@ -173,9 +195,6 @@ class NotificationsSet(APIView):
         except:
             pass
 
-
-        return JsonResponse()
-
     def post(self, request, *args, **kwargs):
         newInfo = json.loads(request.body.decode('utf-8'))
         userID = newInfo['username']
@@ -236,15 +255,83 @@ class NotificationAlertList(APIView):
 
                 allAlerts.append(alert)
 
-        #Sort the alerts by Date, which should be in index [2] for each alert
-        #sorted(allAlerts, key = lambda x: x[2])
-
 
         return JsonResponse(allAlerts, safe=False)
 
 
 
 #This post method should take the given information from the json and store it to the database, linking the device to its owner.
-class RegisterDevice(APIView):
+class DeviceOperations(APIView):
+
+    #"get" retrieves all devices that have been assigned to a user
+    def get(self, request, *args, **kwargs):
+        # This section takes the params that is given in the url as the query string and
+        # takes out the "username=" part to get the actual username of the user to then be able to search with it.
+        # I was initially gonna do it with JSON but nothing I tried worked.
+        # Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
+
+
+        theMeta = request.META['QUERY_STRING']  # Got the query string, aka "username=(enterusernamehere)"
+
+        cutOff = "username="  # Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
+
+        userID = theMeta[theMeta.index(cutOff) + len(cutOff):]  # This cuts out the "username=" part and just has the actually username left
+
+        # -------------------------------------------------------------------------------------------------
+
+        allAssigned = AssignedTo.objects.filter(user=userID)
+
+        deviceList = []
+
+        for dev in allAssigned:
+            theDev = Device.objects.get(identifier = dev.assigned_device)
+            deviceList.append(theDev)
+
+
+        return JsonResponse(list(deviceList), safe=False)
+
+
     def post(self, request, *args, **kwargs):
         return JsonResponse()
+
+
+class SubUsersList(APIView):
+    def get(self, request, *args, **kwargs):
+        # This section takes the params that is given in the url as the query string and
+        # takes out the "username=" part to get the actual username of the user to then be able to search with it.
+        # I was initially gonna do it with JSON but nothing I tried worked.
+        # Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
+
+        theMeta = request.META['QUERY_STRING']  # Got the query string, aka "username=(enterusernamehere)"
+
+        cutOff = "username="  # Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
+
+        userID = theMeta[theMeta.index(cutOff) + len(cutOff):]  # This cuts out the "username=" part and just has the actually username left
+
+        # -------------------------------------------------------------------------------------------------
+
+        ImmediateSubUsers = User.objects.filter(parent_user=userID).values('username', 'permission', 'organization')
+
+        return JsonResponse(list(ImmediateSubUsers), safe=False)
+
+    # "post" gets a JSON that has 2 lists: a list of usernames and a list of devices that are to be assigned to those list of usernames
+    # Not under "Device Operations" due to this class is the class assigned to the sub-users list page
+    def post(self, request, *args, **kwargs):
+        twoLists = json.loads(request.body.decode('utf-8'))
+        subList = twoLists['usersChecked']
+        devList = twoLists['devicesChecked']
+
+        for sub in subList:
+            for dev in devList:
+
+                try:
+                    #If a particular assignment doesn't exist, then create that assignment and save to the database.
+                    if not (AssignedTo.objects.filter(user=sub, assigned_device=dev).exists()):
+                        newAssignment = AssignedTo(user=sub, assigned_device=dev)
+                        newAssignment.save()
+
+
+                except:
+                    return HttpResponse("Couldn't Save. Errors Occurred", status=417)
+
+        return HttpResponse("Assignments Saved!", status=200)

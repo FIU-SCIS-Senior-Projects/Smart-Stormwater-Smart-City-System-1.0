@@ -15,7 +15,7 @@ nav ul li{
     list-style-type: none;
     display: inline-block;
     float: left;
-    margin: 10px;
+    margin: 10px 0px 0px 0px;
 }
 
 .topnav{
@@ -32,8 +32,26 @@ nav ul li{
 }
 
 .topnav a:active{
-    background-color: green;
+    background-color: cadetblue;
 }
 .topnav a:hover{
-    background-color: lightgreen;
+    background-color: lightblue;
+}
+
+.center-header {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.navbar-text-padding{
+    padding-top: 0px;
+}
+
+.glyphicon {
+    font-size: 24px;
+}
+
+@media (min-width: 768px)
+.navbar-right {
+    float: right !important;
 }

@@ -82,7 +82,19 @@ body {
     }
 }
 
+.panel-default>.panel-heading{
+    color: aqua;
+    background-color: #337ab7;
+}
 
+.center-header {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-striped{
+    background-color: lightblue;
+}
 
 .navbar-top-links {
     margin-right: 0;
@@ -97,7 +109,6 @@ body {
 }
 
 .navbar-top-links li a {
-    padding: 15px;
     min-height: 50px;
 }
 
@@ -581,5 +592,5 @@ table.dataTable thead .sorting:after {
 }
 
 .glyphicon {
-    font-size: 25px;
+    font-size: 24px;
 }
