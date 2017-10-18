@@ -53,9 +53,19 @@ scApp.config(['$routeProvider',
                 templateUrl: './accountsettings.html',
                 controller: 'accsetCtrl',
                 resolve: {
-                    "check": function ($location, $rootScope) {
-                        if (!$rootScope.loggedIn) {
+                    userInfoAccountSettings: function ($http, $route, $rootScope) {
+                        if (!rootScope.loggedIn) {
                             $location.path('/');
+                        }
+                        else {
+                            return $http.get =("http://127.0.0.1:8000/account-settings", {
+                                params: {
+                                    username: $rootScope.username
+                                }
+                            })
+                                .then(function (response) {
+                                    return response.data;
+                                })
                         }
                     }
                 }

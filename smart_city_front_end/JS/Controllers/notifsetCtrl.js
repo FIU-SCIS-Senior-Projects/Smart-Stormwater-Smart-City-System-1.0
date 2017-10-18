@@ -34,7 +34,7 @@ scApp.controller("notifsetCtrl", function ($scope, $http, allNotificationSetting
     //"username" must be used from a service to then send instead of having it be hardcoded
     $scope.saveNotif = function ($location) {
         $http.post("http://127.0.0.1:8000/notification-settings", JSON.stringify({
-            username: "testuser",
+            username: "123",
             gty_web: $scope.checkboxes.gty_web,
             gty_email: $scope.checkboxes.gty_email,
             ytr_web: $scope.checkboxes.ytr_web,
