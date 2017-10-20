@@ -96,9 +96,18 @@ scApp.config(['$routeProvider',
                 templateUrl: './seeassignmentspage.html',
                 controller: 'seeassignmentsCtrl',
                 resolve: {
-                    "check": function ($location, $rootScope) {
+                    allSubUsers: function ($http, $route, $rootScope) {
                         if (!$rootScope.loggedIn) {
                             $location.path('/');
+                        } else {
+                            return $http.get("http://127.0.0.1:8000/see-device-assignments", {
+                                    params: {
+                                        username: $rootScope.username
+                                    }
+                                })
+                                .then(function (response) {
+                                    return response.data;
+                                })
                         }
                     }
                 }

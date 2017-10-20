@@ -116,7 +116,7 @@
                                                 <tr ng-repeat="sub in subUsersList">
                                                     <td class="center-header"><input class="check-position" type="checkbox" value="{{sub.username}}" ng-checked="subUsersChecked.indexOf(sub.username) > -1" ng-click="selectSub(sub)">
                                                     </td>
-                                                    <td class="center-header">User
+                                                    <td class="center-header">{{sub.permission}}
                                                     </td>
                                                     <td class="center-header">{{sub.username}}
                                                     </td>

@@ -3,7 +3,6 @@
 var scApp = angular.module('scApp');
 
 scApp.controller("overviewCtrl", function ($scope, $rootScope) {
-    console.log($rootScope.username);
     $scope.dev1 = 1;
     $scope.dev2 = 3;
     $scope.username = "VIPUser";
