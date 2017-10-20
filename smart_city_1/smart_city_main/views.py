@@ -96,7 +96,35 @@ class RegisterAccount(APIView):
 class AccountSetDetails(APIView):
 
     def get(self, request, *args, **kwargs):
-        #Fill this in to return appropriate information for main page once logged in
+        # Fill this in to return appropriate information for main page once logged in
+        # This section takes the params that is given in the url as the query string and
+        # takes out the "username=" part to get the actual username of the user to then be able to search with it.
+        # I was initially gonna do it with JSON but nothing I tried worked.
+        # Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
+
+        theMeta = request.META['QUERY_STRING']  # Got the query string, aka "username=(enterusernamehere)"
+
+        cutOff = "username="  # Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
+
+        userID = theMeta[theMeta.index(cutOff) + len(cutOff):]  # This cuts out the "username=" part and just has the actually username left
+
+        # -------------------------------------------------------------------------------------------------
+        try:
+            thisUser = User.objects.get(username=userID)
+            userAccountSettings = {
+                'username': thisUser.username,
+                'password': thisUser.password,
+                'email': thisUser.email,
+                'number': thisUser.number,
+                'language': thisUser.language,
+                'gy_thresh': thisUser.gy_thresh,
+                'yr_thresh': thisUser.yr_thresh,
+                'parent_user': thisUser.parent_user
+            }
+            return JsonResponse(userAccountSettings)
+
+        except:
+            pass
 
         return JsonResponse()
 

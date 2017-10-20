@@ -1,16 +1,29 @@
 var scApp = angular.module("scApp");
 
-scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope) {
+scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope, $window) {
+
+    currentUser = JSON.parse($window.sessionStorage.getItem("currentAccount"));
+    currentUsername = currentUser.username;
+    currentEmail = currentUser.email;
+    currentPhone = currentUser.phone;
+    currentGY = currentUser.gy_thresh;
+    currentYR = currentUser.yr_thresh;
+
+    console.log(currentUser);
+    console.log(currentUsername);
+    console.log(currentEmail);
+    console.log(currentPhone);
+    console.log(currentGY);
+    console.log(currentYR);
+
     $scope.userID = "";
-    $scope.username = $rootScope.username;
-    console.log($rootScope.username);
+    $scope.username = currentUsername;
     $scope.password = "";
     $scope.confirmPassword = "";
-    $scope.contactEmail = "";
-    $scope.contactNumber = "";
-    $scope.gtythresh = 30;
-    $scope.ytrthresh = 60;
-    
+    $scope.contactEmail = currentEmail;
+    $scope.contactNumber = currentPhone;
+    $scope.gtythresh = parseInt(currentGY);
+    $scope.ytrthresh = parseInt(currentYR);
 
     $scope.changeInfo = function () {
         if ($scope.password != $scope.confirmPassword) {
@@ -33,8 +46,7 @@ scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope) {
                 email: $scope.contactEmail,
                 number: $scope.contactNumber,
                 gy_thresh: $scope.gtythresh,
-                yr_thresh: $scope.ytrthresh,
-                parent_user: $rootScope.username
+                yr_thresh: $scope.ytrthresh
             }))
             window.location = '/smart_city_front_end/HTML/overview.html#!/'
         }
