@@ -168,6 +168,17 @@ scApp.config(['$routeProvider',
                                     }
                                 }*/
             })
+            .when('/modifysubuser', {
+                templateUrl: './modifysubuser.html',
+                controller: 'modifysubuserCtrl',
+                resolve: {
+                    "check": function ($location, $rootScope) {
+                        if (!$rootScope.loggedIn) {
+                            $location.path('/');
+                        }
+                    }
+                }
+            })
     }
 ]);
 

@@ -24,6 +24,7 @@ scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope, $
     $scope.contactNumber = currentPhone;
     $scope.gtythresh = parseInt(currentGY);
     $scope.ytrthresh = parseInt(currentYR);
+    $scope.organization = "Not Assigned";
 
     $scope.changeInfo = function () {
         if ($scope.password != $scope.confirmPassword) {

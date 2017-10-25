@@ -73,6 +73,14 @@ class RegisterAccount(APIView):
         #accLanguage = account['language']
         accGYthresh = account['gy_thresh']
         accYRthresh = account['yr_thresh']
+        accOrganization = account['organization']
+        accPermission = account['permission']
+        accParentUser = account['parent_user']
+
+        if (accPermission == ""):
+            setPermission = {'username': 'Need to set account type'}
+            return JsonResponse (setPermission);
+
 
         try:
             checkUser = User.objects.get(username = accUsername)
@@ -81,7 +89,8 @@ class RegisterAccount(APIView):
 
         except User.DoesNotExist:
             #creates a new user from input data and stores it into database
-            newAcc = User(username = accUsername, password = accPass, email = accEmail, number = accNumber, language = "English", gy_thresh = accGYthresh, yr_thresh = accYRthresh)
+            newAcc = User(username = accUsername, password = accPass, email = accEmail, number = accNumber, language = "English", gy_thresh = accGYthresh, yr_thresh = accYRthresh,
+                          organization = accOrganization, permission = accPermission, parent_user = accParentUser)
             newAcc.save()
 
             #creates default notifications with web notifications set to true, email and sms set to false
@@ -335,3 +344,54 @@ class SubUsersList(APIView):
                     return HttpResponse("Couldn't Save. Errors Occurred", status=417)
 
         return HttpResponse("Assignments Saved!", status=200)
+
+class ModifySubUser(APIView):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse();
+
+    def post(self, request, *args, **kwargs):
+        userInfo = json.loads(request.body.decode('utf-8'))
+        updateUsername = userInfo['username']
+        updatePass = userInfo['password']
+        updateEmail = userInfo['email']
+        updateNumber = userInfo['number']
+        # updateLanguage = userInfo['language']
+        updateGYthresh = userInfo['gy_thresh']
+        updateYRthresh = userInfo['yr_thresh']
+        updatePermission = userInfo['permission']
+        try:
+            theUser = User.objects.get(username=updateUsername)
+
+            if (updatePass != ""):
+                theUser.password = updatePass
+
+            theUser.email = updateEmail
+            theUser.number = updateNumber
+            # theUser.language = userInfo['language']
+            theUser.gy_thresh = updateGYthresh
+            theUser.yr_thresh = updateYRthresh
+
+            #checks if the user is being changed to a "user" type account by going through the database
+            #and searching for any user that has this user as a "parent_user" and if that subuser has
+            #an "admin" type account.
+            if (updatePermission == "User"):
+                try:
+                    subUserSearch = User.objects.get(parent_user=updateUsername, permission="Admin")
+                    permissionError = {"username": '1'}
+                    return JsonResponse(permissionError);
+
+                except User.DoesNotExist:
+                    theUser.permission = updatePermission
+
+            if (updatePermission == "Admin"):
+                theUser.permission = updatePermission
+
+
+            theUser.save()
+            updateInfo = {"username": theUser.username + 'updated'}
+            return JsonResponse(updateInfo)
+
+        except User.DoesNotExist:
+            errorInfo = {"username": 'user does not exist'}
+            return JsonResponse(errorInfo)
+
