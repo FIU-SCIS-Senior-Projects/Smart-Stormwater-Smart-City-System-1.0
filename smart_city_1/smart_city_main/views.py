@@ -395,3 +395,65 @@ class ModifySubUser(APIView):
             errorInfo = {"username": 'user does not exist'}
             return JsonResponse(errorInfo)
 
+
+class SeeDeviceAssignments(APIView):
+
+    #Get all the sub-users and pairs them with the devices they are assigned to
+    def get(self, request, *args, **kwargs):
+        # This section takes the params that is given in the url as the query string and
+        # takes out the "username=" part to get the actual username of the user to then be able to search with it.
+        # I was initially gonna do it with JSON but nothing I tried worked.
+        # Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
+
+        theMeta = request.META['QUERY_STRING']  # Got the query string, aka "username=(enterusernamehere)"
+
+        cutOff = "username="  # Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
+
+        userID = theMeta[theMeta.index(cutOff) + len(cutOff):]  # This cuts out the "username=" part and just has the actually username left
+
+        # -------------------------------------------------------------------------------------------------
+
+        SubsWithDevice = []
+
+        ImmediateSubUsers = User.objects.filter(parent_user=userID).values('username', 'permission', 'organization')
+        MyDevices = AssignedTo.objects.filter(user=userID)
+
+        for sub in ImmediateSubUsers:
+            for dev in MyDevices:
+                alreadyExists = AssignedTo.objects.filter(user=sub['username'], assigned_device=dev.assigned_device).exists()
+                if alreadyExists:
+                    newEntry = {
+                        'assigned_device': dev.assigned_device,
+                        'username': sub['username'],
+                        'permission': sub['permission'],
+                        'organization': sub['organization']
+                    }
+                    SubsWithDevice.append(newEntry)
+
+
+        return JsonResponse(SubsWithDevice, safe=False)
+
+    # This deals with deleting the assignments between the user's sub-users and a device they chose.
+    def post(self, request, *args, **kwargs):
+        twoLists = json.loads(request.body.decode('utf-8'))
+        subList = twoLists['usersChecked']
+        devSelected = twoLists['deviceChecked']
+
+        for sub in subList:
+
+            #This gets all the sub-user's sub-users to then add to the list of sub-users to unassign. If their parent's are unassigned, they are unassigned.
+            AnotherSubUserLayer = User.objects.filter(parent_user=sub)
+            for underSub in AnotherSubUserLayer:
+                subList.append(underSub.username)
+
+            try:
+                #This assumes that each assignment that was passed in the request, is in the database
+                subQuerySet = AssignedTo.objects.filter(user=sub, assigned_device=devSelected)
+                if subQuerySet.exists():
+                    subQuerySet.delete()
+
+            except:
+                return HttpResponse("Couldn't Delete. Errors Occurred", status=417)
+
+
+        return HttpResponse("Assignments Deleted!", status=200)

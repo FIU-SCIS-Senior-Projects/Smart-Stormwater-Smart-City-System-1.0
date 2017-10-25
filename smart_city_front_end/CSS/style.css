@@ -1,6 +1,11 @@
 /* For tutorials, this is a good website to look at:
  https://www.w3schools.com/css/default.asp           */
 
+.center-header {
+    text-align: center;
+    vertical-align: middle;
+}
+
 .title{
     margin: 10px;
     color: lightgreen;

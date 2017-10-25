@@ -26,6 +26,8 @@
 
 
     <!--Controllers-->
+    <script src="../JS/Controllers/navbarCtrl.js"></script>
+    
     <script src="../JS/Controllers/signinCtrl.js"></script>
     <script src="../JS/Controllers/regaccCtrl.js"></script>
     <script src="../JS/Controllers/overviewCtrl.js"></script>
@@ -39,7 +41,7 @@
 
 <body>
 
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; height: 70px;">
+    <nav ng-controller="navbarCtrl" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; height: 70px;">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -86,10 +88,10 @@
                     <i class="fa fa-user fa-fw glyphicon glyphicon-user" style="font-size: 24px;"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#!account-settings"><i class="fa fa-gear fa-fw"></i>User Settings</a>
+                    <li class="col-xs-12"><a href="#!account-settings"><i class="fa fa-gear fa-fw"></i>User Settings</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <li class="col-xs-12 center-header"><a href="#!" ng-click="logOff()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
