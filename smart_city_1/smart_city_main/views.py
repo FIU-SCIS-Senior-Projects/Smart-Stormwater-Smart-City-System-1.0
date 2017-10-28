@@ -65,8 +65,16 @@ class Login(APIView):
 #This post should taken the given information from the json and save the information to the database. Give an 'OK' if saved, error if not.
 class RegisterAccount(APIView):
     def get(self, request, *args, **kwargs):
-        Organization = User.objects.order_by('organization').values_list('organization').distinct()
+        Organization = User.objects.order_by('organization').values_list('organization').distinct();
         return JsonResponse(list(Organization));
+
+        #Try this one if the above doesn't return a list
+        #Organization = User.objects.order_by('organization').values('organization').distinct();
+        #return JsonResponse(list(Organization));
+
+        #same for this one
+        #Organization = User.objects.order_by('organization').values('organization').distinct();
+        #return JsonResponse(Organization);
 
     def post(self, request, *args, **kwargs):
         account = json.loads(request.body.decode('utf-8'))
