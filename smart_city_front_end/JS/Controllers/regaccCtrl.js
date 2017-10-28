@@ -1,9 +1,13 @@
 var scApp = angular.module('scApp');
 
-scApp.controller("regaccCtrl", function ($scope, $http, $location, $rootScope, $window) {
+scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allOrg) {
     currentUser = JSON.parse($window.sessionStorage.getItem("currentAccount"));
     //parentUser = currentUser.username;
     parentUser = "admin"; //for testing
+
+    console.log(allOrg);
+    $scope.organizationList = allOrg;
+    console.log($scope.organizationList);
 
     $scope.userID = "";
     $scope.username = "";
@@ -16,7 +20,7 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $rootScope, $
     $scope.organization = "";
     $scope.permission = "";
 
-    $scope.organizationList = ["FL", "Miami", "Hollywood"];
+    //$scope.organizationList = ["FL", "Miami", "Hollywood"];
 
     $scope.submitRegister = function () {
         if ($scope.password != $scope.confirmPassword) {

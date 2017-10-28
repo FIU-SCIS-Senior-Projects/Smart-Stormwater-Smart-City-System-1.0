@@ -1,19 +1,5 @@
 var scApp = angular.module("scApp", ['ngRoute', 'ui.bootstrap']);
 
-scApp.controller("registerCtrl", function ($scope) {
-    $scope.username = "";
-    $scope.password = "";
-    $scope.contactEmail = "";
-    $scope.contactNumber = "";
-    $scope.gtythresh = 30;
-    $scope.ytrthresh = 60;
-
-    $scope.register = function () {
-        $scope.hasRegistered = $scope.username + ", " + $scope.password + ", " + $scope.contactEmail + ", " + $scope.contactNumber + ", " + (+$scope.gtythresh + +$scope.ytrthresh);
-    }
-
-});
-
 scApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
@@ -47,12 +33,21 @@ scApp.config(['$routeProvider',
                 }
             })
             .when('/register-account', {
-                templateUrl: './registeraccount.html',
+                templateUrl: 'registeraccount.html',
                 controller: 'regaccCtrl',
                 resolve: {
-                    "check": function ($location, $rootScope) {
+                    allOrg: function ($http, $route, $rootScope) {
                         if (!$rootScope.loggedIn) {
                             $location.path('/');
+                        } else {
+                            return $http.get("http://127.0.0.1:8000/register", {
+                                    params: {
+                                        username: $rootScope.username
+                                    }
+                                })
+                                .then(function (response) {
+                                    return response.data;
+                                })
                         }
                     }
                 }
