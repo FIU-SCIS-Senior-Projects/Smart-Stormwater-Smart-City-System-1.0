@@ -60,7 +60,7 @@ scApp.config(['$routeProvider',
                         if (!$rootScope.loggedIn) {
                             $location.path('/');
                         } else {
-                            return $http.get("http://127.0.0.1:8000/sub-users-list", {
+                            return $http.get("http://127.0.0.1:8000/sub-users-list/", {
                                     params: {
                                         username: $rootScope.username
                                     }
