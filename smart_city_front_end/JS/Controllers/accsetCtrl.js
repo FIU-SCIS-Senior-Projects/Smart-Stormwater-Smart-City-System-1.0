@@ -1,14 +1,14 @@
 var scApp = angular.module("scApp");
 
-scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope, $window) {
-
+scApp.controller("accsetCtrl", function ($scope, $http, $location, $rootScope, $window, userInfoAccountSettings) {
+    console.log("In ctrl")
     currentUser = JSON.parse($window.sessionStorage.getItem("currentAccount"));
     currentUsername = currentUser.username;
     currentEmail = currentUser.email;
     currentPhone = currentUser.phone;
     currentGY = currentUser.gy_thresh;
     currentYR = currentUser.yr_thresh;
-
+    console.log("after initial")
     console.log(currentUser);
     console.log(currentUsername);
     console.log(currentEmail);

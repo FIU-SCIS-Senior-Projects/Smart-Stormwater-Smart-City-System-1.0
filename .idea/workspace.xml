@@ -3,9 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="e1f2404e-e6b0-40f3-8dba-fb577a9a9cfb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/CSS/style.css" afterPath="$PROJECT_DIR$/smart_city_front_end/CSS/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/index.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/signinCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/signinCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/notificationsettings.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/notificationsettings.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/seeassignmentspage.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/seeassignmentspage.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/subusers.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/subusers.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/accsetCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/accsetCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/seeassignmentsCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/seeassignmentsCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/subusersCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/subusersCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/app.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/app.js" />
     </list>
     <ignored path="SmartCity Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,23 +74,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-309">
+            <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6239">
-              <caret line="374" column="42" selection-start-line="374" selection-start-column="42" selection-end-line="374" selection-end-column="42" />
+            <state relative-caret-position="-588">
+              <caret line="314" column="34" selection-start-line="314" selection-start-column="33" selection-end-line="314" selection-end-column="34" />
               <folding>
-                <marker date="1508533353592" expanded="true" signature="2793:2864" ph="..." />
+                <marker date="1508951165378" expanded="true" signature="2793:2864" ph="..." />
               </folding>
             </state>
           </provider>
@@ -316,7 +321,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -726,21 +731,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/views.py">
+    <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6239">
-          <caret line="374" column="42" selection-start-line="374" selection-start-column="42" selection-end-line="374" selection-end-column="42" />
-          <folding>
-            <marker date="1508533353592" expanded="true" signature="2793:2864" ph="..." />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/models.py">
+    <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-309">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="-588">
+          <caret line="314" column="34" selection-start-line="314" selection-start-column="33" selection-end-line="314" selection-end-column="34" />
+          <folding>
+            <marker date="1508951165378" expanded="true" signature="2793:2864" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

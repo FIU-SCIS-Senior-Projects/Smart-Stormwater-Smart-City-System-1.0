@@ -85,12 +85,14 @@ scApp.controller("subusersCtrl", function ($http, $scope, $rootScope, allSubUser
     }
 
     $scope.submitAssignments = function () {
-        $scope.databaseResponse = "";
-        console.log($scope.subUsersChecked.length + " is users checked followed by devices: " + $scope.devicesChecked.length)
+       // $scope.databaseResponse = "";
+        //console.log($scope.subUsersChecked.length + " is users checked followed by devices: " + $scope.devicesChecked.length)
         if ($scope.subUsersChecked.length == 0) {
-            $scope.databaseResponse = "Please selects at least 1 sub-user.";
+            //$scope.databaseResponse = "Please selects at least 1 sub-user.";
+            alert("Please selects at least 1 sub-user.")
         } else if ($scope.devicesChecked.length == 0) {
-            $scope.databaseResponse = "Please select at least 1 device.";
+            //$scope.databaseResponse = "Please select at least 1 device.";
+            alert("Please select at least 1 device.")
         } else {
             $http.post("http://127.0.0.1:8000/sub-users-list", JSON.stringify({
                     usersChecked: $scope.subUsersChecked,
@@ -98,9 +100,16 @@ scApp.controller("subusersCtrl", function ($http, $scope, $rootScope, allSubUser
                 }))
                 .then(function (response) {
                     $scope.datareceived = response.data;
-                    $scope.databaseResponse = $scope.datareceived;
+                    //$scope.databaseResponse = $scope.datareceived;
+                    alert(response.data)
                 })
         }
+    }
+    
+    $scope.modifySub = function(user){
+        $sessionScope.subUsername = user.username;
+        $window.sessionStorage.setItem('subUserChosen', user.username);
+        $location.url('/modify-sub-user')
     }
 
 

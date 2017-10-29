@@ -44,8 +44,8 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Below you can see all of your devices. You can select multiple devices to see which sub-users have been assigned that device. </p>
-                    <p>To assign a device to a sub-user, click on the "Sub-Users and Devices" option on the navigation bar. </p>
+                    <p>Below you can see all of your devices. You can select multiple devices to see which users have been assigned that device. </p>
+                    <p>To assign a device to a user, click on the "Users and Devices" option on the navigation bar. </p>
                 </div>
             </div>
             <!-- /.row -->
@@ -125,7 +125,7 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <h1 class="page-header">Assigned Sub-Users</h1>
+                                    <h1 class="page-header">Assigned Users</h1>
 
                                     <!--<div class="list-group" ng-repeat="sub in subUsersList">
                                         <a href="#" class="list-group-item"><input class="check-position" type="checkbox"><span class="text-position">{{sub.username}}</span> <button class="btn btn-primary modify pull-right" type="button">Modify</button></a>
@@ -137,12 +137,12 @@
                                                 <tr>
                                                     <th class="col-md-1 center-header">Select</th>
                                                     <th class="col-md-1 center-header">Permission</th>
-                                                    <th class="col-md-4 center-header">Sub-User Username</th>
-                                                    <th class="col-md-5 center-header">Sub-User Organization</th>
+                                                    <th class="col-md-4 center-header">User Username</th>
+                                                    <th class="col-md-5 center-header">User Organization</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="sub in subUsersToShow">
+                                                <tr ng-repeat="sub in subUsersToShow track by $index">
                                                     <td class="center-header"><input class="check-position" type="checkbox" value="{{sub.username}}" ng-checked="subUsersChecked.indexOf(sub.username) > -1" ng-click="selectSub(sub)">
                                                     </td>
                                                     <td class="center-header">{{sub.permission}}
