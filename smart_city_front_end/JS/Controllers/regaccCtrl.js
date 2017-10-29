@@ -2,12 +2,8 @@ var scApp = angular.module('scApp');
 
 scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allOrg) {
     currentUser = JSON.parse($window.sessionStorage.getItem("currentAccount"));
-    //parentUser = currentUser.username;
+    parentUser = currentUser.username;
     parentUser = "admin"; //for testing
-
-    console.log(allOrg);
-    $scope.organizationList = allOrg;
-    console.log($scope.organizationList);
 
     $scope.userID = "";
     $scope.username = "";
@@ -20,7 +16,15 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
     $scope.organization = "";
     $scope.permission = "";
 
-    //$scope.organizationList = ["FL", "Miami", "Hollywood"];
+    /*
+    $scope.organizationList = [
+        {organization: "FL"},
+        {organization: "Miami"},
+        {organization: "Hollywood"}
+    ];
+    */
+    $scope.organizationList = allOrg;
+    $scope.organization = $scope.organizationList[0];
 
     $scope.submitRegister = function () {
         if ($scope.password != $scope.confirmPassword) {
@@ -34,6 +38,9 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
         }
         else if ($scope.gtythresh >= $scope.ytrthresh) {
             alert("Green to Yellow threshold must be lower than Yellow to Red Threshold.")
+        }
+        else if ($scope.organization == "") {
+            alert("Choose an Organization")
         }
         else {
             $http.post("http://127.0.0.1:8000/register", JSON.stringify({

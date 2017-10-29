@@ -33,7 +33,7 @@ scApp.config(['$routeProvider',
                 }
             })
             .when('/register-account', {
-                templateUrl: 'registeraccount.html',
+                templateUrl: './registeraccount.html',
                 controller: 'regaccCtrl',
                 resolve: {
                     allOrg: function ($http, $route, $rootScope) {
