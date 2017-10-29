@@ -1,16 +1,9 @@
-var scApp = angular.module('scApp');
+var scApp = angular.module("scApp");
 
-scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allOrg) {
-    currentUser = JSON.parse($window.sessionStorage.getItem("currentAccount"));
-    //parentUser = currentUser.username;
-    parentUser = "admin"; //for testing
-
-    console.log(allOrg);
-    $scope.organizationList = allOrg;
-    console.log($scope.organizationList);
+scApp.controller("modifysubuserCtrl", function ($scope, $http, $location, $rootScope, $window) {
 
     $scope.userID = "";
-    $scope.username = "";
+    $scope.username = "123"; //for testing
     $scope.password = "";
     $scope.confirmPassword = "";
     $scope.contactEmail = "";
@@ -20,9 +13,7 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
     $scope.organization = "";
     $scope.permission = "";
 
-    //$scope.organizationList = ["FL", "Miami", "Hollywood"];
-
-    $scope.submitRegister = function () {
+    $scope.changeSubUser = function () {
         if ($scope.password != $scope.confirmPassword) {
             alert("Passwords do not match.")
         }
@@ -36,7 +27,7 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
             alert("Green to Yellow threshold must be lower than Yellow to Red Threshold.")
         }
         else {
-            $http.post("http://127.0.0.1:8000/register", JSON.stringify({
+            $http.post("http://127.0.0.1:8000/modifysubuser", JSON.stringify({
                 userID: $scope.userID,
                 username: $scope.username,
                 password: $scope.password,
@@ -45,16 +36,12 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
                 gy_thresh: $scope.gtythresh,
                 yr_thresh: $scope.ytrthresh,
                 organization: $scope.organization,
-                permission: $scope.permission,
-                parent_user: "admin"
+                permission: $scope.permission
             }))
             .then (function (response){
                 $scope.checkData = response.data;
-                if ($scope.checkData.username == 'username already taken'){
-                    alert("Username unavailable")
-                }
-                else if ($scope.checkData.username == 'Need to set account type'){
-                    alert("Account type needs to be set")
+                if ($scope.checkData.username == '1'){
+                    alert("Can not change this account to a \"User\" because a subuser of this account is an \"Admin\"")
                 }
                 else
                     window.location = '/smart_city_front_end/HTML/signin.html#!/'
@@ -63,4 +50,5 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
         }
 
     }
-});
+}
+)
