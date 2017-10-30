@@ -32,7 +32,6 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $
                     $rootScope.deviceList = $scope.datareceived.deviceList;
                     //Authentication.SetCredentials($scope.username, $scope.password);
                     $location.url("/overview");
-                    //window.location = '/smart_city_front_end/HTML/registeraccount.html'
 
                     $rootScope.deviceList = $scope.datareceived.deviceList;
 

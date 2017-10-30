@@ -52,8 +52,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <select class="form-control" ng-model="Organization">
-                                    <option ng-repeat="organization in allOrg">{{organization}}</option>
+                                <select class="form-control" ng-model="organization" ng-options="organization as organization.organization for organization in organizationList">
                                 </select>
                             </div>
                         </div>
