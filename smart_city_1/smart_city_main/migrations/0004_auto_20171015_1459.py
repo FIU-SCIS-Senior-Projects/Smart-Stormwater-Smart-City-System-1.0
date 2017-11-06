@@ -27,4 +27,19 @@ class Migration(migrations.Migration):
             name='permission',
             field=models.CharField(default='User', max_length=5),
         ),
+		migrations.AddField(
+            model_name='device',
+            name='battery_level',
+            field=models.IntegerField(default=100),
+        ),
+        migrations.AddField(
+            model_name='device',
+            name='fill_level',
+            field=models.IntegerField(default=0),
+        ),
+        migrations.AddField(
+            model_name='device',
+            name='report_interval',
+            field=models.IntegerField(default=15),
+        ),
     ]

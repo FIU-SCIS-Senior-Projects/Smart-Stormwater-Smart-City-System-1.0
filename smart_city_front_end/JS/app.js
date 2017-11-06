@@ -40,7 +40,7 @@ scApp.config(['$routeProvider',
                         if (!$rootScope.loggedIn) {
                             $location.path('/');
                         } else {
-                            return $http.get("http://127.0.0.1:8000/register", {
+                            return $http.get("http://127.0.0.1:8000/register-account", {
                                     params: {
                                         username: $rootScope.username
                                     }
