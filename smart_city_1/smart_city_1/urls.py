@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^register-account', views.RegisterAccount.as_view()),
     url(r'^modifysubuser', views.ModifySubUser.as_view()),
+    url(r'^email', views.Email.as_view()),
 ]

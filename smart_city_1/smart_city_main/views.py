@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from smart_city_main.models import *
 from itertools import chain
+from django.core.mail import send_mail
 import json
 
 def index(request):
@@ -73,8 +74,12 @@ class RegisterAccount(APIView):
         #return JsonResponse(list(Organization));
 
         #same for this one
-        Organization = User.objects.order_by('organization').values('organization').distinct();
-        return JsonResponse(Organization);
+        try:
+            Organization = User.objects.order_by('organization').values('organization').distinct();
+        except:
+            pass
+
+        return JsonResponse(list(Organization), safe=False);
 
     def post(self, request, *args, **kwargs):
         account = json.loads(request.body.decode('utf-8'))
@@ -201,6 +206,8 @@ class NotificationsSet(APIView):
         try:
             theUser = User.objects.get(username=userID)
             userNT = Notifications.objects.get(user=theUser)
+            thirdPartyEmail = EmailList.objects.filter(elist_parent_user = theUser).order_by('third_party_email').values_list('third_party_email', flat = True).distinct()
+
             allNotif = {
                 'gty_web': userNT.gty_web_alert,
                 'gty_email': userNT.gty_email_alert,
@@ -209,7 +216,8 @@ class NotificationsSet(APIView):
                 'clean_basin_web': userNT.clean_basin_web_alert,
                 'clean_basin_email': userNT.clean_basin_email_alert,
                 'gps_update_web': userNT.gps_update_web_alert,
-                'gps_update_email': userNT.gps_update_email_alert
+                'gps_update_email': userNT.gps_update_email_alert,
+                'EmailList': thirdPartyEmail
             }
             return JsonResponse(allNotif)
 
@@ -219,6 +227,8 @@ class NotificationsSet(APIView):
     def post(self, request, *args, **kwargs):
         newInfo = json.loads(request.body.decode('utf-8'))
         userID = newInfo['username']
+        email_delete = newInfo['email_delete']
+        newEmail = newInfo['newEmail']
 
         try:
             theUserNotif = Notifications.objects.get(user= userID)
@@ -232,6 +242,13 @@ class NotificationsSet(APIView):
             theUserNotif.gps_update_web_alert = newInfo['gps_update_web']
             theUserNotif.gps_update_email_alert = newInfo['gps_update_email']
             theUserNotif.save()
+
+            for email in email_delete:
+                EmailList.objects.filter(elist_parent_user = userID, third_party_email = email).delete()
+
+            if newEmail != "":
+                newThirdEmail = EmailList(elist_parent_user = userID, third_party_email = newEmail)
+                newThirdEmail.save()
 
             return HttpResponse("Information Saved!", status=200)
 
@@ -469,3 +486,83 @@ class SeeDeviceAssignments(APIView):
 
 
         return HttpResponse("Assignments Deleted!", status=200)
+
+class Email(APIView):
+    def post(self, request, *args, **kwargs):
+        DeviceInfo = json.loads(request.body.decode('utf-8'))
+        DeviceID = DeviceInfo['DeviceID']
+        Fill_Level = DeviceInfo['Fill_Level']
+
+        Message = "The Device: " + DeviceID + " is " + Fill_Level + "% full."
+
+        UserAssignedToDevice = AssignedTo.objects.filter(assigned_device = DeviceID).values_list('user', flat = True).order_by('user')
+        #Green to Yellow threshold email list
+        GY_EmailList = []
+        #Yellow to Red threshold email list
+        YR_EmailList = []
+        try:
+            for user in UserAssignedToDevice:
+                    #checks if the user has threshold levels of Green To Yellow and compares it to the Fill_Level info being sent in.
+                    #checks if the user has Green To Yellow email notifications
+                    GY_ThreshCheckFilter = User.objects.filter(username=user, gy_thresh__lte=Fill_Level, yr_thresh__gt=Fill_Level)
+                    GY_EmailCheck = Notifications.objects.filter(user = user, gty_email_alert = True)
+
+                    #checks the EmailList and sees if any third party emails are associated with the current user
+                    EmailListCheck = EmailList.objects.filter(elist_parent_user = user).values_list('third_party_email', flat = True).order_by('third_party_email')
+
+                    #checks if the user has threshold levels of Yellow to Red and compares it to the Fill_Level info being sent in.
+                    #checks if the user has Yellow To Red email notifications
+                    YR_ThreshCheckFilter = User.objects.filter(username=user, yr_thresh__lte=Fill_Level)
+                    YR_EmailCheck = Notifications.objects.filter(user=user, ytr_email_alert=True)
+
+
+
+                    #checks if the following has something in it. If it does, get the email for the assoicated user and send the email.
+                    if (GY_ThreshCheckFilter.exists() & GY_EmailCheck.exists()):
+                        GY_ThreshCheck = User.objects.get(username=user, gy_thresh__lte=Fill_Level, yr_thresh__gt=Fill_Level)
+                        GY_EmailRecipient = GY_ThreshCheck.email
+                        GY_EmailList.append(GY_EmailRecipient)
+
+                        if EmailListCheck.exists():
+                            for third_email in EmailListCheck:
+                                EmailListRecipient = EmailList.objects.get(elist_parent_user=user, third_party_email=third_email)
+                                #Green to Yellow Email List Recipient's Email
+                                GY_ELREmail = EmailListRecipient.third_party_email
+                                GY_EmailList.append(GY_ELREmail)
+
+
+                    if (YR_ThreshCheckFilter.exists() & YR_EmailCheck.exists()):
+                        YR_ThreshCheck = User.objects.get(username=user, gy_thresh__lte=Fill_Level, yr_thresh__gt=Fill_Level)
+                        YR_EmailRecipient = YR_ThreshCheck.email
+                        YR_EmailList.append(YR_EmailRecipient)
+
+                        if EmailListCheck.exists():
+                            for third_email in EmailListCheck:
+                                EmailListRecipient = EmailList.objects.get(elist_parent_user=user, third_party_email=third_email)
+                                YR_ELREmail = EmailListRecipient.third_party_email
+                                YR_EmailList.append(YR_ELREmail)
+
+
+            GY_EmailListUnique = list(set(GY_EmailList))
+            send_mail(
+                'Smart City Yellow Threshold Alert',
+                Message,
+                'DoNotReply@smartcity.com',
+                GY_EmailListUnique,
+                fail_silently = False,
+            )
+
+            YR_EmailListUnique = list(set(YR_EmailList))
+            send_mail(
+                'Smart City Yellow Threshold Alert',
+                Message,
+                'DoNotReply@smartcity.com',
+                YR_EmailListUnique,
+                fail_silently = False,
+            )
+
+
+            return HttpResponse('Emails Sent', status = 200);
+
+        except:
+            return HttpResponse('Error', status = 417);

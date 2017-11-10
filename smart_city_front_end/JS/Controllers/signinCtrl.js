@@ -1,8 +1,8 @@
 var scApp = angular.module('scApp');
 
 scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $window) {
-    $scope.username = "123";
-    $scope.password = "abc";
+    $scope.username = "User1";
+    $scope.password = "password";
     $scope.decision = "";
 
     $scope.toBeSent = {
@@ -31,8 +31,8 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $
                     $window.sessionStorage.setItem("currentAccount", JSON.stringify($scope.datareceived));
                     $rootScope.deviceList = $scope.datareceived.deviceList;
                     //Authentication.SetCredentials($scope.username, $scope.password);
-                    //$location.url("/overview");
-                    window.location = '/smart_city_front_end/HTML/overview.html#!/'
+                    $location.url("/overview");
+                    //window.location = '/smart_city_front_end/HTML/overview.html#!/'
 
                     $rootScope.deviceList = $scope.datareceived.deviceList;
 
