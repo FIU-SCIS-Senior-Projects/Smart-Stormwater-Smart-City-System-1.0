@@ -7,6 +7,31 @@ from smart_city_main.models import *
 from itertools import chain
 from django.core.mail import send_mail
 import json
+from django.utils import timezone
+import datetime
+from django.utils import timezone
+import requests
+import pytz
+
+APIAccessKey = "081ce403aa2d9a2671c0e725ed9a43aa"
+ContentType = "application/json"
+HeaderWithAccessKey = {"authorization":APIAccessKey}
+HeaderWithAccessKeyAndContentType = {"authorization":APIAccessKey, "Content-Type":ContentType}
+
+NotificationCodes = {29:"Compaction",
+                     30:"Door Opened",
+                     31:"Turned On",
+                     32:"Collection",
+                     34:"GPS Updated",
+                     35:"Battery Recovery",
+                     49:"Turned Off",
+                     64:"Media on",
+                     65:"LED on",
+                     68:"LED off",
+                     69:"Medie off",
+                     70:"LED issue",
+                     71:"Media issue",
+                     72:"Collection Required"}
 
 def index(request):
     return HttpResponse("Hello, world. And all those who inhabit it!")
@@ -27,6 +52,7 @@ class Login(APIView):
                 allAssigned = AssignedTo.objects.filter(user=userID)
 
                 deviceList = []
+                deviceSerials = []
 
                 for dev in allAssigned:
                     theDev = Device.objects.get(identifier=dev.assigned_device)
@@ -35,8 +61,42 @@ class Login(APIView):
                                 'battery_level': theDev.battery_level, 'fill_level': theDev.fill_level,
                                 'device_type': theDev.device_type, 'custom': theDev.custom, 'report_interval': theDev.report_interval}
                     deviceList.append(newEntry)
+                    deviceSerials.append(theDev.identifier)
 
-                #finalList = list(deviceList)
+                #print("Start date: " + timezone.now() + " and end date: " + timezone.now()-datetime.timedelta(days = 365))
+                payload = {'group_by_serial': True,'end_date':timezone.now(), 'start_date':(timezone.now()-datetime.timedelta(days = 365))}
+                retrieved = requests.get('https://api.cleancitynetworks.com/v2/logs/event', headers=HeaderWithAccessKey, params=payload)
+                #print(retrieved.text)
+
+                logs = json.loads("["+retrieved.text + "]")
+                allLogs = logs[0]['logs']
+                #print(logs[0]['logs'])
+                #This part checks all the notifications and saves any new ones based on the last_notification_date------
+                saveDate = False
+                for log in allLogs:
+                    if log['serial'] in  deviceSerials:
+                        currDev = Device.objects.get(identifier=log['serial'])
+                        for entry in log['logs']:
+                            aware_datetime = pytz.utc.localize(datetime.datetime.strptime(entry['date'], '%Y-%m-%dT%H:%M:%S'))
+                            if (currDev.last_notification_date < aware_datetime):
+                                newNotif = NotificationAlerts(device_identifier=currDev,
+                                                              notification_type=NotificationCodes.get(
+                                                                  entry['event_code']), alert_date=aware_datetime)
+                                newNotif.save()
+                                currDev.last_notification_date = aware_datetime
+                                currDev.save()
+
+                    #if(currDev.last_notification_date < log['date']):
+                    #    newNotif = NotificationAlerts(device_identifier = log['serial'], notification_type = NotificationCodes.get(log['event_code']), alert_date = log['date'])
+                    #    newNotif.save()
+                    #    person.last_notification_date = log['date']
+                    #    saveDate = True
+
+
+
+
+                #------------------------------------------------------------------
+
 
                 #return HttpResponse("User found", status=200)
                 theUser = {'username': person.username,
@@ -75,11 +135,12 @@ class RegisterAccount(APIView):
 
         #same for this one
         try:
-            Organization = User.objects.order_by('organization').values('organization').distinct();
+            Organization = User.objects.order_by('organization').values('organization').distinct()
         except:
             pass
 
-        return JsonResponse(list(Organization), safe=False);
+        return JsonResponse(list(Organization), safe=False)
+
 
     def post(self, request, *args, **kwargs):
         account = json.loads(request.body.decode('utf-8'))
@@ -566,3 +627,52 @@ class Email(APIView):
 
         except:
             return HttpResponse('Error', status = 417);
+
+class DeviceGPS(APIView):
+    #For each device, use device API to update GPS location
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode('utf-8'))
+        devList = data['devList']
+
+        #updatedLoc stores each entry that holds the device and the updated location for that device
+        updatedLoc = []
+
+        for dev in devList:
+
+            #This request sends a get method to request the GPS of all device in devList
+            payload = {'serial':[dev],'action': "updateGPS"}
+            requests.post('https://api.cleancitynetworks.com/v2/products/request', headers=HeaderWithAccessKeyAndContentType,
+                                     params=payload)
+
+        #This is to get the new GPS location of all devices.
+        payload = {}
+        retrieved = requests.get('https://api.cleancitynetworks.com/v2/products/details',
+                                 headers=HeaderWithAccessKey,
+                                 params=payload)
+
+        logs = json.loads("[" + retrieved.text + "]")
+        allProd = logs[0]['products']
+
+        #This devCount could be used
+        #devCount = len(devList)
+
+        for prod in allProd:
+            if prod['serial'] in devList:
+                theDev = Device.objects.get(identifier = prod['serial'])
+                theDev.location = prod['address']
+                theDev.save()
+                updatedLoc.append({"identifier":prod['serial'], "location":prod['address']})
+                #devCount = devCount - 1
+
+            #if devCount == 0:
+                #break
+
+        print(updatedLoc)
+        return JsonResponse(updatedLoc, safe=False)
+
+class SetReportInterval(APIView):
+    def post(self, request, *args, **kwargs):
+
+
+        return HttpResponse("Set Intervals!", status=200)
+

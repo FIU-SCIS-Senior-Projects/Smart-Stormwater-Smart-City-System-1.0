@@ -209,9 +209,9 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Sort by Serial Number</a>
+                                        <li><a ng-click="updateGPS()">Update GPS</a>
                                         </li>
-                                        <li><a href="#">Another action</a>
+                                        <li ng-click="updateRepInterval()"><a href="#">Update Report Interval</a>
                                         </li>
                                         <li><a href="#">Something else here</a>
                                         </li>
@@ -230,8 +230,9 @@
                                         <table class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
+                                                    <th class="col-sm-1 center-header">Select</th>
                                                     <th class="col-sm-2 center-header">Device Identifier</th>
-                                                    <th class="col-sm-2 center-header">Battery Level</th>
+                                                    <th class="col-sm-1 center-header">Battery Level</th>
                                                     <th class="col-sm-2 center-header">Fill Level</th>
                                                     <th class="col-sm-2 center-header">Report Interval</th>
                                                     <th class="col-sm-4 center-header">Address</th>
@@ -239,6 +240,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="dev in devicesInfo">
+                                                    <td class="center-header"><input class="check-position" type="checkbox" value="{{dev.identifier}}" ng-checked="devicesChecked.indexOf(dev.identifier) > -1" ng-click="selectDev(dev)"></td>
                                                     <td class="center-header">{{dev.identifier}}</td>
                                                     <td class="center-header">TBD
                                                         <!--{{dev.batteryLevel}}-->

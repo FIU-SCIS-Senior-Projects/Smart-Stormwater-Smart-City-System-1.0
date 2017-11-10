@@ -40,7 +40,7 @@ scApp.config(['$routeProvider',
                         if (!$rootScope.loggedIn) {
                             $location.path('/');
                         } else {
-                            return $http.get("http://127.0.0.1:8000/register", {
+                            return $http.get("http://127.0.0.1:8000/register-account", {
                                     params: {
                                         username: $rootScope.username
                                     }
@@ -80,19 +80,9 @@ scApp.config(['$routeProvider',
                 templateUrl: './accountsettings.html',
                 controller: 'accsetCtrl',
                 resolve: {
-                    userInfoAccountSettings: function ($http, $route, $rootScope) {
-                        if (!rootScope.loggedIn) {
+                    "check": function ($location, $rootScope) {
+                        if (!$rootScope.loggedIn) {
                             $location.path('/');
-                        }
-                        else {
-                            return $http.get =("http://127.0.0.1:8000/account-settings", {
-                                params: {
-                                    username: $rootScope.username
-                                }
-                            })
-                                .then(function (response) {
-                                    return response.data;
-                                })
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 # Could make models for:
 
@@ -13,6 +14,7 @@ class Device(models.Model):
     device_type = models.CharField(max_length=20)
     custom = models.CharField(max_length=255)
     report_interval = models.IntegerField(default=15)
+    last_notification_date = models.DateTimeField(auto_now = False, auto_now_add=False, default=datetime.datetime(1999, 1, 1, 0, 0, 1))
 
 #AssignedTo is a table tha records which user has been assigned which device.
 #This is needed since multiple users can have access to one device and one user can have access to multiple devices
