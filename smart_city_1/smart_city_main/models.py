@@ -56,4 +56,8 @@ class NotificationAlerts(models.Model):
     notification_type = models.CharField(max_length=250)
     alert_date = models.DateTimeField(auto_now=False, auto_now_add=False)
 
+class EmailList(models.Model):
+    elist_parent_user = models.CharField(max_length=50)
+    third_party_email = models.CharField(max_length=50)
+
 

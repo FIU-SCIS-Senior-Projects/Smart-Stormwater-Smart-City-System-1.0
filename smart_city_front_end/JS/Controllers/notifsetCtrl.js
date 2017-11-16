@@ -1,7 +1,7 @@
 var scApp = angular.module("scApp");
 
 scApp.controller("notifsetCtrl", function ($scope, $http, $rootScope, allNotificationSettings) {
-    
+
     $scope.checkboxes = allNotificationSettings;
         /*{
         gty_web: true,
@@ -13,6 +13,7 @@ scApp.controller("notifsetCtrl", function ($scope, $http, $rootScope, allNotific
         gps_update_web: false,
         gps_update_email: false
     };*/
+
     
     $scope.allNotifs = [
         {
@@ -27,6 +28,24 @@ scApp.controller("notifsetCtrl", function ($scope, $http, $rootScope, allNotific
             "date": "Oct 1, 2017 12:00"
         }
     ]
+
+    $scope.EmailList = allNotificationSettings.EmailList
+    $scope.EmailList.sort()
+
+    $scope.SelectedEmailList = [];
+
+    $scope.toggleSelection = function (email) {
+        var index = $scope.SelectedEmailList.indexOf(email);
+
+        if (index > -1) {
+            $scope.SelectedEmailList.splice(index, 1);
+        }
+        else {
+            $scope.SelectedEmailList.push(email);
+        }
+    };
+
+    $scope.NewEmail = "";
     
     $scope.exist = "I exist"
     
@@ -43,6 +62,8 @@ scApp.controller("notifsetCtrl", function ($scope, $http, $rootScope, allNotific
             clean_basin_email: $scope.checkboxes.clean_basin_email,
             gps_update_web: $scope.checkboxes.gps_update_web,
             gps_update_email: $scope.checkboxes.gps_update_email,
+            email_delete:$scope.SelectedEmailList,
+            newEmail = $scope.NewEmail
             }))
             .then(function (response) {
                 $scope.statustext = response.data;
