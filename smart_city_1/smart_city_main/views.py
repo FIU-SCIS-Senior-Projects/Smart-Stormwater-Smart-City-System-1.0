@@ -58,7 +58,7 @@ class Login(APIView):
 
                     newEntry = {'identifier': theDev.identifier, 'location': theDev.location,
                                 'battery_level': theDev.battery_level, 'fill_level': theDev.fill_level,
-                                'device_type': theDev.device_type, 'custom': theDev.custom, 'report_interval': theDev.report_interval}
+                                'device_type': theDev.device_type, 'custom': theDev.custom, 'sensing_interval': theDev.sensing_interval}
                     deviceList.append(newEntry)
                     deviceSerials.append(theDev.identifier)
 
@@ -323,8 +323,11 @@ class NotificationAlertList(APIView):
 
         # -------------------------------------------------------------------------------------------------
 
-        #Get all the devices that the user has assigned to them
+        theUser = User.objects.get(username = userID)
+
+        #Get all the devices that the user has assigned to them and the user's settings
         assignmentList = AssignedTo.objects.filter(user = userID)
+        userSettings = Notifications.objects.get(user = theUser)
 
         allAlerts = []
 
@@ -332,13 +335,30 @@ class NotificationAlertList(APIView):
         for assignment in assignmentList:
             theDevice = Device.objects.get(identifier = assignment.assigned_device)
             devAlerts = NotificationAlerts.objects.filter(device_identifier = assignment.assigned_device).values('device_identifier', 'notification_type', 'alert_date')
+
+            #print(userSettings.gps_update_web_alert)
+            #if (not userSettings.gps_update_web_alert):
+                #print(devAlerts)
+                #devAlerts.exclude(notification_type='GPS Updated')
+                #print(devAlerts)
+
+
             devAlertsList = list(devAlerts)
 
             #Add all sets of alerts to the "allAlerts" list
             for alert in devAlertsList:
                 alert['location'] = theDevice.location
 
-                allAlerts.append(alert)
+                #Check if certain notification are allowed by seeing if the user set the settings to true, if so add to list
+                #This can break if the CCN folks changes what is written so it does not match the strings written in the if statements
+                if(alert['notification_type'] == "GPS Updated"):
+                    if(userSettings.gps_update_web_alert):
+                        allAlerts.append(alert)
+                elif(alert['notification_type'] == "Collection"):
+                    if(userSettings.clean_basin_web_alert):
+                        allAlerts.append(alert)
+                else:
+                    allAlerts.append(alert)
 
 
         return JsonResponse(allAlerts, safe=False)
@@ -574,11 +594,35 @@ class DeviceGPS(APIView):
             #if devCount == 0:
                 #break
 
-        print(updatedLoc)
+        #print(updatedLoc)
         return JsonResponse(updatedLoc, safe=False)
 
-class SetReportInterval(APIView):
+class SetSensingInterval(APIView):
     def post(self, request, *args, **kwargs):
+        info = json.loads(request.body.decode('utf-8'))
+        try:
+            for entry in info['data']:
+                #send device api request
+                theDev = Device.objects.get(identifier=entry['identifier'])
+                if(theDev.device_type == "Clean Cap"):
+                    payload = "{\"serial\" : [\"" + entry['identifier'] + "\"],\"cap_settings\" : {\"sensing_interval\": " + str(entry['interval']) + "}}"
+                    print(payload)
+                    retrieved = requests.request("PUT", 'https://api.cleancitynetworks.com/v2/products/settings', data=payload, headers=HeaderWithAccessKeyAndContentType)
+                    print(retrieved.status_code)
+                else:
+                    payload = {}
+                    retrieved = requests.put('https://api.cleancitynetworks.com/v2/products/settings',
+                                         headers=HeaderWithAccessKeyAndContentType,
+                                         params=payload)
+
+                if(retrieved.status_code == 200):
+                    theDev.sensing_interval = entry['interval']
+                    theDev.save()
+                    print("Saved")
+        except Exception as e:
+            print(e)
+            print("Error occurred")
+            return HttpResponse("Error Occurred When Setting Interval!", status=400)
 
 
-        return HttpResponse("Set Intervals!", status=200)
+        return HttpResponse("Intervals Set!", status=200)

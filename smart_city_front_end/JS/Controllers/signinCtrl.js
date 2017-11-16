@@ -4,6 +4,7 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $
     $scope.username = "testuser";
     $scope.password = "testpassword";
     $scope.decision = "";
+    
 
     $scope.toBeSent = {
         username: $scope.username,

@@ -13,7 +13,7 @@ class Device(models.Model):
     fill_level = models.IntegerField(default=0)
     device_type = models.CharField(max_length=20)
     custom = models.CharField(max_length=255)
-    report_interval = models.IntegerField(default=15)
+    sensing_interval = models.IntegerField(default=15)
     last_notification_date = models.DateTimeField(auto_now = False, auto_now_add=False, default=datetime.datetime(1999, 1, 1, 0, 0, 1))
 
 #AssignedTo is a table tha records which user has been assigned which device.

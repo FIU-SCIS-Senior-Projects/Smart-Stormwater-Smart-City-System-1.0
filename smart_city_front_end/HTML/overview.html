@@ -211,7 +211,7 @@
                                     <ul class="dropdown-menu pull-right" role="menu">
                                         <li><a ng-click="updateGPS()">Update GPS</a>
                                         </li>
-                                        <li ng-click="updateRepInterval()"><a href="#">Update Report Interval</a>
+                                        <li ng-click="updateRepInterval()"><a ng-click="updateSenInterval()">Update Sensing Interval</a>
                                         </li>
                                         <li><a href="#">Something else here</a>
                                         </li>
@@ -242,13 +242,39 @@
                                                 <tr ng-repeat="dev in devicesInfo">
                                                     <td class="center-header"><input class="check-position" type="checkbox" value="{{dev.identifier}}" ng-checked="devicesChecked.indexOf(dev.identifier) > -1" ng-click="selectDev(dev)"></td>
                                                     <td class="center-header">{{dev.identifier}}</td>
-                                                    <td class="center-header">TBD
+                                                    <td class="center-header">{{dev.battery_level}}%
                                                         <!--{{dev.batteryLevel}}-->
                                                     </td>
-                                                    <td class="center-header">TBD
+                                                    <td class="center-header">{{dev.fill_level}}%
                                                         <!--{{dev.fillLevel}}-->
                                                     </td>
-                                                    <td class="center-header">TBD
+                                                    <td class="center-header">
+                                                       <select ng-model="selectedOp" ng-init="selectedOp=intervalConversionToString[dev.sensing_interval]" ng-options="interval for interval in intervalValues" ng-change="intervalChange(dev, selectedOp)"></select>
+                                                        <!--<div class="btn-group">
+                                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">{{intervalDrop}}
+                                        <span class="caret"></span>
+                                    </button>
+                                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                                <li>Automatic <!--5
+                                                                </li>
+                                                                <li>5 Minutes <!--10
+                                                                </li>
+                                                                <li>10 Minutes <!--20
+                                                                </li>
+                                                                <li>20 Minutes <!--30
+                                                                </li>
+                                                                <li>30 Minutes <!--60
+                                                                </li>
+                                                                <li>1 Hour <!--180
+                                                                </li>
+                                                                <li>3 Hours <!--360
+                                                                </li>
+                                                                <li>6 Hours <!--720
+                                                                </li>
+                                                                <li>12 Hours <!--1440
+                                                                </li>
+                                                            </ul>
+                                                        </div>-->
                                                         <!--{{dev.report_interval}}-->
                                                     </td>
                                                     <td class="center-header">{{dev.location}}</td>
