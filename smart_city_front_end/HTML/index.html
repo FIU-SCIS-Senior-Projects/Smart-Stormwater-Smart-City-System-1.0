@@ -23,7 +23,6 @@
 
     <!-- CSS -->
 
-
     <!--Controllers-->
     <script src="../JS/app.js"></script>
     
@@ -38,6 +37,10 @@
     <script src="../JS/Controllers/subusersCtrl.js"></script>
     <script src="../JS/Controllers/seeassignmentsCtrl.js"></script>
     <script src="../JS/Controllers/modifysubuserCtrl.js"></script>
+    
+    
+    <script type="text/javascript" src="../JS/ChartJS/Chart.js"></script>
+    
 
 </head>
 
@@ -56,8 +59,8 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="navbar-text-padding"><a href="#!overview">Overview</a></li>
-            <li class="navbar-text-padding"><a href="#!sub-users-list">Users and Devices</a></li>
-            <li class="navbar-text-padding"><a href="#!see-device-assignments">See Device Assignments</a></li>
+            <li id="AdminUsersList" class="navbar-text-padding"><a href="#!sub-users-list">Users and Devices</a></li>
+            <li id="AdminAssignments" class="navbar-text-padding"><a href="#!see-device-assignments">See Device Assignments</a></li>
         </ul>
         <!-- /.navbar-header -->
         <ul class="nav navbar-top-links navbar-right">

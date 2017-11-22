@@ -4,7 +4,7 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $
     $scope.username = "testuser";
     $scope.password = "testpassword";
     $scope.decision = "";
-    
+
 
     $scope.toBeSent = {
         username: $scope.username,
@@ -25,9 +25,18 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $
                 } else if ($scope.datareceived.username == "incorrect_password") {
                     $scope.decision = "Incorrect Password!";
                 } else {
-                    
+
                     $rootScope.loggedIn = true;
                     $rootScope.username = $scope.username;
+                    $rootScope.permission = $scope.datareceived.permission;
+
+                    console.log("Role: " + $rootScope.permission)
+                    if ($rootScope.permission == "User") {
+                        console.log("Inside User")
+                        document.getElementById("AdminUsersList").style.display = 'none';
+                        document.getElementById("AdminAssignments").style.display = 'none';
+
+                    }
 
                     $window.sessionStorage.setItem("currentAccount", JSON.stringify($scope.datareceived));
                     $rootScope.deviceList = $scope.datareceived.deviceList;
@@ -35,6 +44,8 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $
                     $location.url("/overview");
 
                     $rootScope.deviceList = $scope.datareceived.deviceList;
+                    console.log($rootScope.deviceList);
+                    $rootScope.fillLevelLogs = $scope.datareceived.fill_level_logs;
 
                     /*$http.get("http://127.0.0.1:8000/overview", {
                             params: {
@@ -49,6 +60,8 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $
                     //$scope.$apply();
 
                 }
+
+
             })
 
 

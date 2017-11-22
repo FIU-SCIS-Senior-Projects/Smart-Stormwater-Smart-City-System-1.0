@@ -2,18 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1f2404e-e6b0-40f3-8dba-fb577a9a9cfb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/migrations/0002_auto_20171013_1646.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/migrations/0003_auto_20171013_1844.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/migrations/0004_auto_20171015_1459.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/migrations/0005_auto_20171101_1315.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_1/settings.py" afterPath="$PROJECT_DIR$/smart_city_1/smart_city_1/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_1/urls.py" afterPath="$PROJECT_DIR$/smart_city_1/smart_city_1/urls.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/angular/npm-debug.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/migrations/0006_auto_20171108_1539.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js.gzip" afterPath="$PROJECT_DIR$/node_modules/angular/angular.min.js.gzip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/angular/angular.js" afterPath="$PROJECT_DIR$/node_modules/angular/angular.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js" afterPath="$PROJECT_DIR$/node_modules/angular/angular.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js.map" afterPath="$PROJECT_DIR$/node_modules/angular/angular.min.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/angular/bower.json" afterPath="$PROJECT_DIR$/node_modules/angular/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/angular/package.json" afterPath="$PROJECT_DIR$/node_modules/angular/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/admin.py" afterPath="$PROJECT_DIR$/smart_city_1/smart_city_main/admin.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/smart_city_1/smart_city_main/migrations/0001_initial.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/models.py" afterPath="$PROJECT_DIR$/smart_city_1/smart_city_main/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_1/smart_city_main/views.py" afterPath="$PROJECT_DIR$/smart_city_1/smart_city_main/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/notificationsettings.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/notificationsettings.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/index.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/modifysubuser.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/modifysubuser.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/overview.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/overview.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/HTML/subusers.html" afterPath="$PROJECT_DIR$/smart_city_front_end/HTML/subusers.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/modifysubuserCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/modifysubuserCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/navbarCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/navbarCtrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/notifsetCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/notifsetCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/overviewCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/overviewCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/signinCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/signinCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/subusersCtrl.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/Controllers/subusersCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smart_city_front_end/JS/app.js" afterPath="$PROJECT_DIR$/smart_city_front_end/JS/app.js" />
     </list>
     <ignored path="SmartCity Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,7 +70,7 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_1/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
+            <state relative-caret-position="952">
               <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
               <folding />
             </state>
@@ -68,8 +80,8 @@
       <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+            <state relative-caret-position="153">
+              <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -80,8 +92,8 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="187">
+              <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -92,8 +104,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="693" column="45" selection-start-line="693" selection-start-column="45" selection-end-line="693" selection-end-column="45" />
+            <state relative-caret-position="219">
+              <caret line="106" column="85" selection-start-line="106" selection-start-column="85" selection-end-line="106" selection-end-column="85" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -104,7 +116,7 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_1/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
+            <state relative-caret-position="544">
               <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
               <folding>
                 <element signature="e#646#687#0" expanded="true" />
@@ -134,9 +146,9 @@
         <option value="$PROJECT_DIR$/smart_city_1/smart_city_main/urls.py" />
         <option value="$PROJECT_DIR$/smart_city_1/smart_city_1/settings.py" />
         <option value="$PROJECT_DIR$/../morsecode2.py" />
-        <option value="$PROJECT_DIR$/smart_city_1/smart_city_main/admin.py" />
-        <option value="$PROJECT_DIR$/smart_city_1/smart_city_main/models.py" />
         <option value="$PROJECT_DIR$/smart_city_1/smart_city_1/urls.py" />
+        <option value="$PROJECT_DIR$/smart_city_1/smart_city_main/models.py" />
+        <option value="$PROJECT_DIR$/smart_city_1/smart_city_main/admin.py" />
         <option value="$PROJECT_DIR$/smart_city_1/smart_city_main/views.py" />
       </list>
     </option>
@@ -326,8 +338,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -686,7 +698,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_1/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
+        <state relative-caret-position="952">
           <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding />
         </state>
@@ -711,20 +723,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+        <state relative-caret-position="153">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_1/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
-          <folding>
-            <element signature="e#646#687#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -737,10 +739,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_1/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+          <folding>
+            <element signature="e#646#687#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="187">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
@@ -749,8 +761,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/smart_city_1/smart_city_main/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="693" column="45" selection-start-line="693" selection-start-column="45" selection-end-line="693" selection-end-column="45" />
+        <state relative-caret-position="219">
+          <caret line="106" column="85" selection-start-line="106" selection-start-column="85" selection-end-line="106" selection-end-column="85" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
