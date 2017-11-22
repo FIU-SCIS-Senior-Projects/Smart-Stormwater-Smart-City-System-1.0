@@ -2,12 +2,13 @@
     https://www.w3schools.com/angular/angular_controllers.asp    */
 var scApp = angular.module('scApp');
 
-scApp.controller("overviewCtrl", function ($scope, $rootScope, $http) {
-    $scope.dev1 = 1;
-    $scope.dev2 = 3;
-    $scope.username = "VIPUser";
+scApp.controller("overviewCtrl", function ($scope, $rootScope, $window, $http) {
     $scope.Changed = "";
     $scope.devicesChecked = [];
+    currentUser = JSON.parse($window.sessionStorage.getItem("currentAccount"));
+
+    var devInfo = $rootScope.deviceList;
+    console.log(devInfo[0].location);
 
     var data = [];
 
@@ -38,7 +39,58 @@ scApp.controller("overviewCtrl", function ($scope, $rootScope, $http) {
     };
     $scope.intervalValues = ["Automatic", "5 Minutes", "10 Minutes", "20 Minutes", "30 Minutes", "1 Hour", "3 Hours", "6 Hours", "12 Hours"];
 
-    $scope.selectedOp = "";
+    //Split the fillData into labels (x-axis) and data (y-axis)
+    var fillData = $rootScope.fillLevelLogs;
+    /*[
+        {
+            fill_level: 20,
+            date: new Date(2012, 01, 3)
+        },
+        {
+            fill_level: 30,
+            date: new Date(2012, 02, 5)
+        },
+        {
+            fill_level: 40,
+            date: new Date(2012, 03, 6)
+        },
+        {
+            fill_level: 55,
+            date: new Date(2012, 04, 9)
+        },
+        {
+            fill_level: 76,
+            date: new Date(2012, 05, 12)
+        },
+    ];*/
+
+    var deviceInformation = $rootScope.deviceList;
+
+    var labels = [];
+    var data = [];
+
+    for (var i = 0; i < fillData.length; i++) {
+        var dt = new Date(fillData[i].date)
+        var min = "";
+        var sec = "";
+        if (dt.getSeconds() < 10) {
+            sec = "0" + parseInt(dt.getSeconds());
+        } else {
+            sec = parseInt(dt.getSeconds());
+        }
+        if (dt.getMinutes() < 10) {
+            min = "0" + parseInt(dt.getMinutes());
+        } else {
+            min = parseInt(dt.getMinutes());
+        }
+        labels.push(dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear() + " at " + dt.getHours() + ":" + min + ":" + sec);
+        //data.push(fillData[i].fill_level);
+    }
+
+    var ctx = document.getElementById("myChart");
+
+    var chart = updateChart(data, labels);
+
 
 
     $scope.devicesInfo = $rootScope.deviceList;
@@ -70,9 +122,46 @@ scApp.controller("overviewCtrl", function ($scope, $rootScope, $http) {
 
         if (index > -1) {
             $scope.devicesChecked.splice(index, 1);
+            var lastDevDataToShowInChart = $scope.devicesChecked[$scope.devicesChecked.length - 1];
+            allInfo = setDevToChart(lastDevDataToShowInChart);
         } else {
             $scope.devicesChecked.push(device.identifier);
+            allInfo = setDevToChart(device.identifier);
         }
+        var chart = updateChart(allInfo[0], allInfo[1]);
+
+
+    }
+
+    function setDevToChart(deviceIdentifier) {
+        var totalInfo = []
+        var dataRequired = [];
+        var labelsRequired = [];
+
+        for (var i = 0; i < fillData.length; i++) {
+            if (fillData[i].device_identifier == deviceIdentifier) {
+                var dt = new Date(fillData[i].date)
+                var min = "";
+                var sec = "";
+                if (dt.getSeconds() < 10) {
+                    sec = "0" + parseInt(dt.getSeconds());
+                } else {
+                    sec = parseInt(dt.getSeconds());
+                }
+                if (dt.getMinutes() < 10) {
+                    min = "0" + parseInt(dt.getMinutes());
+                } else {
+                    min = parseInt(dt.getMinutes());
+                }
+                labels.push(dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear() + " at " + dt.getHours() + ":" + min + ":" + sec);
+                //data.push(fillData[i].fill_level);
+                dataRequired.push(fillData[i].fill_level);
+                labelsRequired.push(dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear() + " at " + dt.getHours() + ":" + min + ":" + sec);
+            }
+        }
+        totalInfo.push(dataRequired)
+        totalInfo.push(labelsRequired);
+        return totalInfo;
     }
 
 
@@ -158,8 +247,8 @@ scApp.controller("overviewCtrl", function ($scope, $rootScope, $http) {
                     if (response.status == 200) {
 
                         for (var i = 0; i < data.length; i++) {
-                            for(var j = 0; j < $scope.devicesInfo.length; j++){
-                                if($scope.devicesInfo[j].identifier == data[i].identifier){
+                            for (var j = 0; j < $scope.devicesInfo.length; j++) {
+                                if ($scope.devicesInfo[j].identifier == data[i].identifier) {
                                     index = j;
                                     break;
                                 }
@@ -175,7 +264,41 @@ scApp.controller("overviewCtrl", function ($scope, $rootScope, $http) {
         }
     }
 
-    $scope.changeUsername = function () {
-        $scope.username = $scope.Changed;
+    function updateChart(newData, newLabels) {
+        return new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: newLabels,
+                datasets: [{
+                    label: 'Fill Level:',
+                    data: newData,
+                    backgroundColor: [
+                'rgba(54, 162, 235, 0.2)'
+            ],
+                    borderWidth: 1
+        }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Fill Level % (Percentage)'
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Date (Month/Day)'
+                        }
+                }]
+                }
+            }
+        });
     }
 });

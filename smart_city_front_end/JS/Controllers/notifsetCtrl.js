@@ -63,7 +63,7 @@ scApp.controller("notifsetCtrl", function ($scope, $http, $rootScope, allNotific
             gps_update_web: $scope.checkboxes.gps_update_web,
             gps_update_email: $scope.checkboxes.gps_update_email,
             email_delete:$scope.SelectedEmailList,
-            newEmail = $scope.NewEmail
+            newEmail: $scope.NewEmail,
             }))
             .then(function (response) {
                 $scope.statustext = response.data;

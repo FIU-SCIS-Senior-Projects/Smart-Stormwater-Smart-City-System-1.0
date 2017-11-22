@@ -3,7 +3,7 @@ var scApp = angular.module("scApp");
 scApp.controller("modifysubuserCtrl", function ($scope, $http, $location, $rootScope, $window) {
 
     $scope.userID = "";
-    $scope.username = "123"; //for testing
+    $scope.username = $rootScope.subUsername; //for testing
     $scope.password = "";
     $scope.confirmPassword = "";
     $scope.contactEmail = "";

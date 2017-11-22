@@ -18,7 +18,7 @@ scApp.config(['$routeProvider',
                             $location.path('/');
                         } else if (!$rootScope.deviceList) { //If user is logged in and the device list is not known, get it and put in $rootScope
                             //console.log($rootScope.username);
-                            $http.get("http://127.0.0.1:8000/overview", {
+                            return $http.get("http://127.0.0.1:8000/overview", {
                                     params: {
                                         username: $rootScope.username
                                     }
@@ -26,8 +26,8 @@ scApp.config(['$routeProvider',
                                 .then(function (response) {
 
                                     $rootScope.deviceList = response.data;
+                                return response.data;
                                 })
-                            console.log("Got em");
                         }
                     }
                 }
@@ -182,25 +182,21 @@ scApp.factory('DeviceList', function ($http) {
     //var allDevices = 
 });
 
-/*scApp.run(['$rootScope', '$location', '$cookies', '$http', function ($rootScope, $location, $cookies, $http) {
+angular.module('scApp').directive('hasPermission', function ($rootScope) {
+    return {
+        link: function (scope, element, attrs) {
 
-    $rootScope.globals = {};
-    $cookies.remove('globals');
+            function toggleVisibilityBasedOnPermission() {
+                var hasPermission = permissions.hasPermission(value);
+                if (hasPermission && !notPermissionFlag || !hasPermission && notPermissionFlag) {
+                    document.getElementById("AdminUserList").style.display = 'block';
+                } else {
+                    element[0].style.display = 'none';
+                }
+            }
 
-    // keep user logged in after page refresh
-    $rootScope.globals = $cookies.getObject('globals') || {};
-    if ($rootScope.globals.currentUser) {
-        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
-    }
-
-    $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray($location.path(), ['/']) === -1;
-        console.log(restrictedPage)
-        var loggedIn = $rootScope.globals.currentUser;
-        console.log(loggedIn)
-        if (restrictedPage && !loggedIn) {
-            $location.path('/');
+            toggleVisibilityBasedOnPermission();
+            scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
         }
-    });
-}]);*/
+    };
+});
