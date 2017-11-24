@@ -13,8 +13,9 @@ class Device(models.Model):
     fill_level = models.IntegerField(default=0)
     device_type = models.CharField(max_length=20)
     custom = models.CharField(max_length=255)
-    report_interval = models.IntegerField(default=15)
+    sensing_interval = models.IntegerField(default=15)
     last_notification_date = models.DateTimeField(auto_now = False, auto_now_add=False, default=datetime.datetime(1999, 1, 1, 0, 0, 1))
+    last_fill_log_date = models.DateTimeField(auto_now = False, auto_now_add=False, default=datetime.datetime(1999, 1, 1, 0, 0, 1))
 
 #AssignedTo is a table tha records which user has been assigned which device.
 #This is needed since multiple users can have access to one device and one user can have access to multiple devices
@@ -59,5 +60,10 @@ class NotificationAlerts(models.Model):
 class EmailList(models.Model):
     elist_parent_user = models.CharField(max_length=50)
     third_party_email = models.CharField(max_length=50)
+
+class FillLevelLog(models.Model):
+    device_identifier = models.ForeignKey("Device", on_delete=models.CASCADE, max_length=20)
+    fill_level = models.IntegerField(default = 0)
+    date_logged = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.datetime(1999, 1, 1, 0, 0, 1))
 
 

@@ -45,7 +45,8 @@
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw" ></i> <h5 class="center-header" style="color: aqua;">Notifications</h5>
+                            <i class="fa fa-bar-chart-o fa-fw"></i>
+                            <h5 class="center-header" style="color: aqua;">Notifications</h5>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -62,11 +63,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="entry in allNotifs | orderBy: '-alert_date'">
+                                                <tr ng-repeat="entry in allNotifs | orderBy: '-alert_date' | limitTo: 50">
                                                     <td class="center-header">{{entry.device_identifier}} </td>
-                                                    <td class="center-header"><p>{{entry.notification_type}}</p></td>
-                                                    <td class="center-header"><p>{{entry.location}}</p></td>
-                                                    <td class="center-header"><p>{{entry.alert_date | date: 'dd/MM/yyyy @ h:mma'}}</p></td>
+                                                    <td class="center-header">
+                                                        <p>{{entry.notification_type}}</p>
+                                                    </td>
+                                                    <td class="center-header">
+                                                        <p>{{entry.location}}</p>
+                                                    </td>
+                                                    <td class="center-header">
+                                                        <p>{{entry.alert_date | date: 'dd/MM/yyyy @ h:mma'}}</p>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -102,7 +109,7 @@
         <!--Might have to make a table and display the format that Emilio wants-->
     </div>
 
-    
+
 
 </body>
 

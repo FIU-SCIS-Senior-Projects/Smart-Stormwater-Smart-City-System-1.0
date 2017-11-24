@@ -31,4 +31,5 @@ urlpatterns = [
     url(r'^modifysubuser', views.ModifySubUser.as_view()),
     url(r'^email', views.Email.as_view()),
     url(r'^updateGPS', views.DeviceGPS.as_view()),
+    url(r'^updateSensingInterval', views.SetSensingInterval.as_view()),
 ]

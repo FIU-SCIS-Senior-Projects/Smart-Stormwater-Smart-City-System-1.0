@@ -53,28 +53,33 @@ class Login(APIView):
 
                 deviceList = []
                 deviceSerials = []
+                serialsForUrl = "?serial="  #Needed to send all devices
 
                 for dev in allAssigned:
                     theDev = Device.objects.get(identifier=dev.assigned_device)
 
                     newEntry = {'identifier': theDev.identifier, 'location': theDev.location,
                                 'battery_level': theDev.battery_level, 'fill_level': theDev.fill_level,
-                                'device_type': theDev.device_type, 'custom': theDev.custom, 'report_interval': theDev.report_interval}
+                                'device_type': theDev.device_type, 'custom': theDev.custom,
+                                'sensing_interval': theDev.sensing_interval}
                     deviceList.append(newEntry)
                     deviceSerials.append(theDev.identifier)
+                    serialsForUrl = serialsForUrl + theDev.identifier + ","
 
-                #print("Start date: " + timezone.now() + " and end date: " + timezone.now()-datetime.timedelta(days = 365))
+                serialsForUrl = serialsForUrl[:-1]
+                #serialsForUrl = serialsForUrl + "&"
+
                 payload = {'group_by_serial': True,'end_date':timezone.now(), 'start_date':(timezone.now()-datetime.timedelta(days = 365))}
-                retrieved = requests.get('https://api.cleancitynetworks.com/v2/logs/event', headers=HeaderWithAccessKey, params=payload)
+                retrieved = requests.get('https://api.cleancitynetworks.com/v2/logs/event' + serialsForUrl, headers=HeaderWithAccessKey, params=payload)
                 #print(retrieved.text)
 
                 logs = json.loads("["+retrieved.text + "]")
                 allLogs = logs[0]['logs']
-                #print(logs[0]['logs'])
+
                 #This part checks all the notifications and saves any new ones based on the last_notification_date------
                 saveDate = False
                 for log in allLogs:
-                    if log['serial'] in  deviceSerials:
+                    if log['serial'] in deviceSerials:
                         currDev = Device.objects.get(identifier=log['serial'])
                         for entry in log['logs']:
                             aware_datetime = pytz.utc.localize(datetime.datetime.strptime(entry['date'], '%Y-%m-%dT%H:%M:%S'))
@@ -92,13 +97,44 @@ class Login(APIView):
                     #    person.last_notification_date = log['date']
                     #    saveDate = True
 
-
-
-
                 #------------------------------------------------------------------
+                #print('https://api.cleancitynetworks.com/v2/logs/fill-level' + serialsForUrl)
 
 
-                #return HttpResponse("User found", status=200)
+                #This section serves to get the fill levels for all devices assigned to user since the last fill check date
+
+                payload = {'group_by_serial': True, 'end_date': timezone.now(),
+                           'start_date': (timezone.now() - datetime.timedelta(days=12)), 'include_prediction': True,
+                           'request_interval': 60}
+                retrieved = requests.get('https://api.cleancitynetworks.com/v2/logs/fill-level' + serialsForUrl,
+                                         headers=HeaderWithAccessKey,
+                                         params=payload)
+                #print("Fill Levels")
+                #print(retrieved.text)
+                fillLogs = json.loads("[" + retrieved.text + "]")
+                allFillLogs = fillLogs[0]['logs']
+
+                allFillLevels = []
+
+                for log in allFillLogs:
+                    currDev = Device.objects.get(identifier = log['serial'])
+                    for entry in log['logs']:
+                        aware_datetime = pytz.utc.localize(datetime.datetime.strptime(entry['date'], '%Y-%m-%dT%H:%M:%S'))
+
+                        allFillLevels.append({'device_identifier': currDev.identifier, 'fill_level': entry['fill_level'],
+                                              'date': datetime.datetime(aware_datetime.year,aware_datetime.month,aware_datetime.day, aware_datetime.hour, aware_datetime.minute, aware_datetime.second)})
+
+                        if (currDev.last_fill_log_date < aware_datetime):
+                            newFillLog = FillLevelLog(device_identifier=currDev,
+                                                          fill_level=entry['fill_level'], date_logged=aware_datetime)
+                            newFillLog.save()
+                            currDev.last_fill_log_date = aware_datetime
+                            currDev.save()
+
+
+                print(allFillLevels)
+
+                #---------------------------------------------------------------------
                 theUser = {'username': person.username,
                            'password': person.password,
                            'email': person.email,
@@ -106,7 +142,9 @@ class Login(APIView):
                            'language': person.language,
                            'gy_thresh': person.gy_thresh,
                            'yr_thresh': person.yr_thresh,
-                           'deviceList': [dev for dev in deviceList]}
+                           'deviceList': [dev for dev in deviceList],
+                           'fill_level_logs': [fill_log for fill_log in allFillLevels],
+                           'permission': person.permission}
                 return JsonResponse(theUser, safe=False)
 
             else:
@@ -374,8 +412,11 @@ class NotificationAlertList(APIView):
 
         # -------------------------------------------------------------------------------------------------
 
-        #Get all the devices that the user has assigned to them
+        theUser = User.objects.get(username = userID)
+
+        #Get all the devices that the user has assigned to them and the user's settings
         assignmentList = AssignedTo.objects.filter(user = userID)
+        userSettings = Notifications.objects.get(user = theUser)
 
         allAlerts = []
 
@@ -383,13 +424,30 @@ class NotificationAlertList(APIView):
         for assignment in assignmentList:
             theDevice = Device.objects.get(identifier = assignment.assigned_device)
             devAlerts = NotificationAlerts.objects.filter(device_identifier = assignment.assigned_device).values('device_identifier', 'notification_type', 'alert_date')
+
+            #print(userSettings.gps_update_web_alert)
+            #if (not userSettings.gps_update_web_alert):
+                #print(devAlerts)
+                #devAlerts.exclude(notification_type='GPS Updated')
+                #print(devAlerts)
+
+
             devAlertsList = list(devAlerts)
 
             #Add all sets of alerts to the "allAlerts" list
             for alert in devAlertsList:
                 alert['location'] = theDevice.location
 
-                allAlerts.append(alert)
+                #Check if certain notification are allowed by seeing if the user set the settings to true, if so add to list
+                #This can break if the CCN folks changes what is written so it does not match the strings written in the if statements
+                if(alert['notification_type'] == "GPS Updated"):
+                    if(userSettings.gps_update_web_alert):
+                        allAlerts.append(alert)
+                elif(alert['notification_type'] == "Collection"):
+                    if(userSettings.clean_basin_web_alert):
+                        allAlerts.append(alert)
+                else:
+                    allAlerts.append(alert)
 
 
         return JsonResponse(allAlerts, safe=False)
@@ -422,6 +480,7 @@ class DeviceOperations(APIView):
         for dev in allAssigned:
             theDev = Device.objects.get(identifier = dev.assigned_device)
             deviceList.append(theDev)
+            print(theDev)
 
         return JsonResponse(list(deviceList), safe=False)
 
@@ -673,20 +732,26 @@ class DeviceGPS(APIView):
         #updatedLoc stores each entry that holds the device and the updated location for that device
         updatedLoc = []
 
+        serialUrlPart = "?serial="
         for dev in devList:
 
+            serialUrlPart = serialUrlPart + dev + ","
             #This request sends a get method to request the GPS of all device in devList
             payload = {'serial':[dev],'action': "updateGPS"}
             requests.post('https://api.cleancitynetworks.com/v2/products/request', headers=HeaderWithAccessKeyAndContentType,
                                      params=payload)
 
+        #This removes the last comma at the end after adding all devices
+        serialUrlPart = serialUrlPart[:-1]
+
         #This is to get the new GPS location of all devices.
         payload = {}
-        retrieved = requests.get('https://api.cleancitynetworks.com/v2/products/details',
+        retrieved = requests.get('https://api.cleancitynetworks.com/v2/products/details' + serialUrlPart,
                                  headers=HeaderWithAccessKey,
                                  params=payload)
 
         logs = json.loads("[" + retrieved.text + "]")
+        print(logs)
         allProd = logs[0]['products']
 
         #This devCount could be used
@@ -703,12 +768,35 @@ class DeviceGPS(APIView):
             #if devCount == 0:
                 #break
 
-        print(updatedLoc)
+        #print(updatedLoc)
         return JsonResponse(updatedLoc, safe=False)
 
-class SetReportInterval(APIView):
+class SetSensingInterval(APIView):
     def post(self, request, *args, **kwargs):
+        info = json.loads(request.body.decode('utf-8'))
+        try:
+            for entry in info['data']:
+                #send device api request
+                theDev = Device.objects.get(identifier=entry['identifier'])
+                if(theDev.device_type == "Clean Cap"):
+                    payload = "{\"serial\" : [\"" + entry['identifier'] + "\"],\"cap_settings\" : {\"sensing_interval\": " + str(entry['interval']) + "}}"
+                    print(payload)
+                    retrieved = requests.request("PUT", 'https://api.cleancitynetworks.com/v2/products/settings', data=payload, headers=HeaderWithAccessKeyAndContentType)
+                    print(retrieved.status_code)
+                else:
+                    payload = {}
+                    retrieved = requests.put('https://api.cleancitynetworks.com/v2/products/settings',
+                                         headers=HeaderWithAccessKeyAndContentType,
+                                         params=payload)
+
+                if(retrieved.status_code == 200):
+                    theDev.sensing_interval = entry['interval']
+                    theDev.save()
+                    print("Saved")
+        except Exception as e:
+            print(e)
+            print("Error occurred")
+            return HttpResponse("Error Occurred When Setting Interval!", status=400)
 
 
-        return HttpResponse("Set Intervals!", status=200)
-
+        return HttpResponse("Intervals Set!", status=200)

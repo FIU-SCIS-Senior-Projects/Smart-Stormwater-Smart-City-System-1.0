@@ -101,10 +101,20 @@ body {
     padding: 0px 10px;
 }
 
+button>a{
+    color: white;
+}
+
 .modify{
     color: black;
     background-color: orange;
 }
+
+.delete{
+    color: black;
+    background-color: red;
+}
+
 .reg-box{
     border: 1px solid black; 
     padding: 10px 16px;

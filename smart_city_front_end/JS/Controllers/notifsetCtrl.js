@@ -51,6 +51,7 @@ scApp.controller("notifsetCtrl", function ($scope, $http, $rootScope, allNotific
     
     //At the time of this upload, this function hasn't been completely developed
     $scope.saveNotif = function () {
+        $scope.statustext = "";
         $http.post("http://127.0.0.1:8000/notification-settings", JSON.stringify({
             username: $rootScope.username,
             gty_web: $scope.checkboxes.gty_web,

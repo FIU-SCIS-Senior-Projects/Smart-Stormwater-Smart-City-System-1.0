@@ -2,7 +2,7 @@
     https://www.w3schools.com/angular/angular_controllers.asp    */
 var scApp = angular.module('scApp');
 
-scApp.controller("subusersCtrl", function ($http, $scope, $rootScope, allSubUsers) {
+scApp.controller("subusersCtrl", function ($http, $scope, $rootScope, $window, $location, allSubUsers) {
 
     $scope.subUsersList = allSubUsers;
     $scope.allDevicesList = $rootScope.deviceList;
@@ -107,9 +107,10 @@ scApp.controller("subusersCtrl", function ($http, $scope, $rootScope, allSubUser
     }
     
     $scope.modifySub = function(user){
-        $sessionScope.subUsername = user.username;
+        $rootScope.subUsername = user.username;
         $window.sessionStorage.setItem('subUserChosen', user.username);
         $location.url('/modify-sub-user')
+        console.log("end of modify");
     }
 
 

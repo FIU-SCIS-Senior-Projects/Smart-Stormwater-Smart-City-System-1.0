@@ -110,6 +110,7 @@
                                                     <th class="col-md-4 center-header">User Username</th>
                                                     <th class="col-md-5 center-header">User Organization</th>
                                                     <th class="col-md-5 center-header">Modify</th>
+                                                    <th class="col-md-5 center-header">Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -122,7 +123,9 @@
                                                     </td>
                                                     <td class="center-header">{{sub.organization}}
                                                     </td>
-                                                    <td class="center-header"><button class="btn btn-primary modify pull-right" type="button" ng-click="modifySub(sub)">Modify</button>
+                                                    <td class="center-header"><button class="btn btn-primary modify pull-right" type="button" ng-click="modifySub(sub)"><a href="#!modifysubuser"><span style="color:black">Modify</span></a></button>
+                                                    </td>
+                                                    <td class="center-header"><button class="btn btn-primary delete pull-right" type="button" ng-click="deleteSub(sub)"><a href="#!modifysubuser"><span style="color:black">Delete</span></a></button>
                                                     </td>
                                                 </tr>
                                             </tbody>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <!--JS: Angular->App&Controller->Bootstrap -->
+    <!--JS: Angular->App&Controller->Bootstrap->ChartJS -->
     <script src="../JS/angular/angular.js"></script>
     <script src="../JS/angular/angular-route.min.js"></script>
 
@@ -32,67 +32,6 @@
 
 
     <div id="wrapper">
-
-        <!-- Navigation -->
-        <!--<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" style="padding-top: 20px;">SOP</a>
-
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="navbar-text-padding"><a href="#!overview">Overview</a></li>
-                <li class="navbar-text-padding"><a href="#!register-account">Sub-Users</a></li>
-                <li class="navbar-text-padding"><a href="#contact">Contact</a></li>
-            </ul>
-            <!-- /.navbar-header 
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#!notifications">
-                        <i class="fa fa-tasks fa-fw glyphicon glyphicon-alert"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                </li>
-                <!-- /.dropdown 
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw glyphicon glyphicon-bell"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                    </ul>
-                    <!-- /.dropdown-alerts 
-                </li>
-                <!-- /.dropdown 
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user fa-fw glyphicon glyphicon-user"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#!account-settings"><i class="fa fa-gear fa-fw"></i>User Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user 
-                </li>
-                <!-- /.dropdown 
-            </ul>
-            <!-- /.navbar-top-links 
-        </nav>-->
 
 
         <div class="col-lg-2">
@@ -214,7 +153,7 @@
                                     <ul class="dropdown-menu pull-right" role="menu">
                                         <li><a ng-click="updateGPS()">Update GPS</a>
                                         </li>
-                                        <li ng-click="updateRepInterval()"><a href="#">Update Report Interval</a>
+                                        <li ng-click="updateRepInterval()"><a ng-click="updateSenInterval()">Update Sensing Interval</a>
                                         </li>
                                         <li><a href="#">Something else here</a>
                                         </li>
@@ -245,13 +184,39 @@
                                                 <tr ng-repeat="dev in devicesInfo">
                                                     <td class="center-header"><input class="check-position" type="checkbox" value="{{dev.identifier}}" ng-checked="devicesChecked.indexOf(dev.identifier) > -1" ng-click="selectDev(dev)"></td>
                                                     <td class="center-header">{{dev.identifier}}</td>
-                                                    <td class="center-header">TBD
+                                                    <td class="center-header">{{dev.battery_level}}%
                                                         <!--{{dev.batteryLevel}}-->
                                                     </td>
-                                                    <td class="center-header">TBD
+                                                    <td class="center-header">{{dev.fill_level}}%
                                                         <!--{{dev.fillLevel}}-->
                                                     </td>
-                                                    <td class="center-header">TBD
+                                                    <td class="center-header">
+                                                       <select ng-model="selectedOp" ng-init="selectedOp=intervalConversionToString[dev.sensing_interval]" ng-options="interval for interval in intervalValues" ng-change="intervalChange(dev, selectedOp)"></select>
+                                                        <!--<div class="btn-group">
+                                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">{{intervalDrop}}
+                                        <span class="caret"></span>
+                                    </button>
+                                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                                <li>Automatic <!--5
+                                                                </li>
+                                                                <li>5 Minutes <!--10
+                                                                </li>
+                                                                <li>10 Minutes <!--20
+                                                                </li>
+                                                                <li>20 Minutes <!--30
+                                                                </li>
+                                                                <li>30 Minutes <!--60
+                                                                </li>
+                                                                <li>1 Hour <!--180
+                                                                </li>
+                                                                <li>3 Hours <!--360
+                                                                </li>
+                                                                <li>6 Hours <!--720
+                                                                </li>
+                                                                <li>12 Hours <!--1440
+                                                                </li>
+                                                            </ul>
+                                                        </div>-->
                                                         <!--{{dev.report_interval}}-->
                                                     </td>
                                                     <td class="center-header">{{dev.location}}</td>
@@ -262,8 +227,8 @@
                                     <!-- /.table-responsive -->
                                 </div>
                                 <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
+                                <div class="col-lg-4">
+                                    <canvas id="myChart" width="40" height="40"></canvas>
                                 </div>
                                 <!-- /.col-lg-8 (nested) -->
                             </div>
@@ -280,11 +245,15 @@
             <div id="map"></div>
         </div>
         <!-- /#page-wrapper -->
+
     </div>
     <!-- /#wrapper -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../JS/Bootstrap_js/metisMenu.min.js"></script>
+    
+    <script type="text/javascript" src="../JS/ChartJS/Chart.js"></script>
+    <script type="text/javascript" src="../JS/ChartJS/OverviewChart.js"></script>
 
 
     <!-- Custom Theme JavaScript -->
