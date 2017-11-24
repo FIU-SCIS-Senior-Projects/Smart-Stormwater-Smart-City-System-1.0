@@ -800,3 +800,27 @@ class SetSensingInterval(APIView):
 
 
         return HttpResponse("Intervals Set!", status=200)
+
+class DeleteSubUser(APIView):
+    def post(self, request, *args, **kwargs):
+        userInfo = json.loads(request.body.decode('utf-8'))
+        subUser = userInfo['subUser']
+        currentUser = userInfo['currentUser']
+
+        try:
+            SubUserFilter = User.objects.filter(parent_user = subUser).values_list('username', flat = True).order_by('username')
+            SubUserFilterList = list(SubUserFilter)
+
+            for user in SubUserFilterList:
+                NewParentUser = User.objects.get(username = user)
+                NewParentUser.parent_user = currentUser
+                NewParentUser.save()
+
+            User.objects.filter(username = subUser).delete()
+
+
+            userDeleted = {'username' :'User:' + subUser + ' deleted'}
+            return JsonResponse(userDeleted);
+
+        except:
+            return HttpResponse("Unexepected Error", status = 417)

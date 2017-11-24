@@ -109,8 +109,25 @@ scApp.controller("subusersCtrl", function ($http, $scope, $rootScope, $window, $
     $scope.modifySub = function(user){
         $rootScope.subUsername = user.username;
         $window.sessionStorage.setItem('subUserChosen', user.username);
-        $location.url('/modify-sub-user')
-        console.log("end of modify");
+        //$location.url('/modifysubuser')
+        //console.log("end of modify");
+    }
+
+    $scope.deleteSub = function(user) {
+        var subUserToDelete;
+        var parentUser;
+        /*
+        currentUser = JSON.parse($window.sessionStorage.getItem("currentAccount"));
+        parentUser = currentUser.username
+        */
+        subUserToDelete = user.username;
+        parentUser = $rootScope.username;
+        $http.post("http://127.0.0.1:8000/deleteSubUser", JSON.stringify({
+                subUser: subUserToDelete,
+                currentUser: parentUser
+            }))
+        //$location.url('/sub-users-list')
+
     }
 
 

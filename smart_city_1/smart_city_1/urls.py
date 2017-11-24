@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'^email', views.Email.as_view()),
     url(r'^updateGPS', views.DeviceGPS.as_view()),
     url(r'^updateSensingInterval', views.SetSensingInterval.as_view()),
+    url(r'^delete-subuser', views.DeleteSubUser.as_view()),
 ]
