@@ -126,20 +126,49 @@ class Login(APIView):
 #This post should taken the given information from the json and save the information to the database. Give an 'OK' if saved, error if not.
 class RegisterAccount(APIView):
     def get(self, request, *args, **kwargs):
-        #Organization = User.objects.order_by('organization').values_list('organization').distinct();
-        #return JsonResponse(list(Organization));
+        # Fill this in to return appropriate information for main page once logged in
+        # This section takes the params that is given in the url as the query string and
+        # takes out the "username=" part to get the actual username of the user to then be able to search with it.
+        # I was initially gonna do it with JSON but nothing I tried worked.
+        # Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
 
-        #Try this one if the above doesn't return a list
-        #Organization = User.objects.order_by('organization').values('organization').distinct();
-        #return JsonResponse(list(Organization));
+        theMeta = request.META['QUERY_STRING']  # Got the query string, aka "username=(enterusernamehere)"
 
-        #same for this one
+        cutOff = "username="  # Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
+
+        userID = theMeta[theMeta.index(cutOff) + len(cutOff):]  # This cuts out the "username=" part and just has the actually username left
+
+        # -------------------------------------------------------------------------------------------------
+
+        Username = userID
+        OrganizationList = []
+        UserList = [Username]
+
         try:
-            Organization = User.objects.order_by('organization').values('organization').distinct()
+            #Gets all the sub user's username and place it into the UserList
+            for user in UserList:
+                UserCheck = User.objects.filter(parent_user = user)
+                if UserCheck.exists():
+                    for subUser in UserCheck:
+                        subUserName = subUser.username
+                        UserList.append(subUserName)
+
+            #Onces the list is filled with Subusers, get the organization of everybody in the UserList
+            for userName in UserList:
+                GetOrganization = User.objects.get(username = userName).organization
+                OrganizationList.append(GetOrganization)
+
+            #Makes all strings unique
+            OrganizationList = list(set(OrganizationList))
+            #Sorts them in alphabetical order
+            OrganizationList.sort()
+            #Adds "Create New Organization" in the front of the list to make a new organization
+            OrganizationList.insert(0, "Create New Organization")
+
         except:
             pass
 
-        return JsonResponse(list(Organization), safe=False)
+        return JsonResponse(OrganizationList, safe=False)
 
 
     def post(self, request, *args, **kwargs):
@@ -154,6 +183,14 @@ class RegisterAccount(APIView):
         accOrganization = account['organization']
         accPermission = account['permission']
         accParentUser = account['parent_user']
+        newOrganization = account['newOrganization']
+
+        if (accOrganization == 'Create New Organization'):
+            accOrganization = newOrganization
+            checkOrganization = User.objects.filter(organization = newOrganization)
+            if checkOrganization.exists():
+                organizationAlreadyExists = {'organization' : 'Organization already exists'}
+                return JsonResponse(organizationAlreadyExists)
 
         if (accPermission == ""):
             setPermission = {'username': 'Need to set account type'}
@@ -385,7 +422,6 @@ class DeviceOperations(APIView):
         for dev in allAssigned:
             theDev = Device.objects.get(identifier = dev.assigned_device)
             deviceList.append(theDev)
-
 
         return JsonResponse(list(deviceList), safe=False)
 

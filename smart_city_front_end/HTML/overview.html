@@ -19,6 +19,9 @@
     <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../JS/Bootstrap_js/ui-bootstrap-tpls-2.5.0.min.js"></script>
 
+    <!-- API for Google Maps with API key. Needed for GPS locations  -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg7-t5C8wGj5QzgiAf3bM4sD-kuSkuE9Q" ></script>
+
     <!--CSS: Bootstrap -> Custom CSS -->
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../CSS/overview.css">
@@ -273,9 +276,10 @@
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
+            <!-- Gets the GPS Map locations -->
+            <div id="map"></div>
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 

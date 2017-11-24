@@ -3,7 +3,7 @@ var scApp = angular.module('scApp');
 scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allOrg) {
     currentUser = JSON.parse($window.sessionStorage.getItem("currentAccount"));
     parentUser = currentUser.username;
-    parentUser = "admin"; //for testing
+    parentUser = 'admin'
 
     $scope.userID = "";
     $scope.username = "";
@@ -15,13 +15,10 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
     $scope.ytrthresh = 60;
     $scope.organization = "";
     $scope.permission = "";
+    $scope.newOrganization
 
     /*
-    $scope.organizationList = [
-        {organization: "FL"},
-        {organization: "Miami"},
-        {organization: "Hollywood"}
-    ];
+    $scope.organizationList = ['FL', 'Miami', 'Hollywood'];
     */
     $scope.organizationList = allOrg;
     $scope.organization = $scope.organizationList[0];
@@ -53,7 +50,8 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
                 yr_thresh: $scope.ytrthresh,
                 organization: $scope.organization,
                 permission: $scope.permission,
-                parent_user: "admin"
+                parent_user: parentUser,
+                newOrganization: $scope.newOrganization
             }))
             .then (function (response){
                 $scope.checkData = response.data;
@@ -62,6 +60,9 @@ scApp.controller("regaccCtrl", function ($scope, $http, $location, $window, allO
                 }
                 else if ($scope.checkData.username == 'Need to set account type'){
                     alert("Account type needs to be set")
+                }
+                else if ($scope.checkData.organization == 'Organization already exists') {
+                    alert("Organization Name is unavailable. Choose another name. ")
                 }
                 else
                     window.location = '/smart_city_front_end/HTML/signin.html#!/'
