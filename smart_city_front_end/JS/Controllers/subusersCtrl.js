@@ -108,7 +108,13 @@ scApp.controller("subusersCtrl", function ($http, $scope, $rootScope, $window, $
     
     $scope.modifySub = function(user){
         $rootScope.subUsername = user.username;
-        $window.sessionStorage.setItem('subUserChosen', user.username);
+	$rootScope.subUserEmail = user.email;
+	$rootScope.subUserNumber = user.number;
+	$rootScope.subUserGY = user.gy_thresh;
+	$rootScope.subUserYR = user.yr_thresh;
+	$rootScope.subUserorg = user.organization;
+	$rootScope.subUserPermission = user.permission;
+        //$window.sessionStorage.setItem('subUserChosen', user);
         //$location.url('/modifysubuser')
         //console.log("end of modify");
     }

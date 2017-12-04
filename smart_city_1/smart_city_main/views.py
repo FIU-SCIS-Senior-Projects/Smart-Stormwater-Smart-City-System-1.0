@@ -144,7 +144,9 @@ class Login(APIView):
                            'yr_thresh': person.yr_thresh,
                            'deviceList': [dev for dev in deviceList],
                            'fill_level_logs': [fill_log for fill_log in allFillLevels],
-                           'permission': person.permission}
+                           'permission': person.permission,
+                           'organization': person.organization
+                           }
                 return JsonResponse(theUser, safe=False)
 
             else:
@@ -342,7 +344,8 @@ class NotificationsSet(APIView):
         try:
             theUser = User.objects.get(username=userID)
             userNT = Notifications.objects.get(user=theUser)
-            thirdPartyEmail = EmailList.objects.filter(elist_parent_user = theUser).order_by('third_party_email').values_list('third_party_email', flat = True).distinct()
+            thirdPartyEmail = EmailList.objects.filter(elist_parent_user = theUser.username).order_by('third_party_email').values_list('third_party_email', flat = True).distinct()
+            thirdPartyEmailList = list(set(thirdPartyEmail))
 
             allNotif = {
                 'gty_web': userNT.gty_web_alert,
@@ -353,7 +356,7 @@ class NotificationsSet(APIView):
                 'clean_basin_email': userNT.clean_basin_email_alert,
                 'gps_update_web': userNT.gps_update_web_alert,
                 'gps_update_email': userNT.gps_update_email_alert,
-                'EmailList': thirdPartyEmail
+                'EmailList': thirdPartyEmailList
             }
             return JsonResponse(allNotif)
 
@@ -504,7 +507,7 @@ class SubUsersList(APIView):
 
         # -------------------------------------------------------------------------------------------------
 
-        ImmediateSubUsers = User.objects.filter(parent_user=userID).values('username', 'permission', 'organization')
+        ImmediateSubUsers = User.objects.filter(parent_user=userID).values('username', 'permission', 'organization', 'email', 'number', 'gy_thresh', 'yr_thresh')
 
         return JsonResponse(list(ImmediateSubUsers), safe=False)
 
@@ -560,12 +563,12 @@ class ModifySubUser(APIView):
             #and searching for any user that has this user as a "parent_user" and if that subuser has
             #an "admin" type account.
             if (updatePermission == "User"):
-                try:
-                    subUserSearch = User.objects.get(parent_user=updateUsername, permission="Admin")
+                subUserSearch = User.objects.filter(parent_user=updateUsername)
+                if subUserSearch.exists():
                     permissionError = {"username": '1'}
                     return JsonResponse(permissionError);
 
-                except User.DoesNotExist:
+                else:
                     theUser.permission = updatePermission
 
             if (updatePermission == "Admin"):
@@ -649,7 +652,7 @@ class Email(APIView):
         DeviceID = DeviceInfo['DeviceID']
         Fill_Level = DeviceInfo['Fill_Level']
 
-        Message = "The Device: " + DeviceID + " is " + Fill_Level + "% full."
+        Message = "The Device: " + str(DeviceID) + " is " + str(Fill_Level) + "% full."
 
         UserAssignedToDevice = AssignedTo.objects.filter(assigned_device = DeviceID).values_list('user', flat = True).order_by('user')
         #Green to Yellow threshold email list
@@ -688,7 +691,7 @@ class Email(APIView):
 
 
                     if (YR_ThreshCheckFilter.exists() & YR_EmailCheck.exists()):
-                        YR_ThreshCheck = User.objects.get(username=user, gy_thresh__lte=Fill_Level, yr_thresh__gt=Fill_Level)
+                        YR_ThreshCheck = User.objects.get(username=user, yr_thresh__lte=Fill_Level)
                         YR_EmailRecipient = YR_ThreshCheck.email
                         YR_EmailList.append(YR_EmailRecipient)
 
@@ -710,7 +713,7 @@ class Email(APIView):
 
             YR_EmailListUnique = list(set(YR_EmailList))
             send_mail(
-                'Smart City Yellow Threshold Alert',
+                'Smart City Red Threshold Alert',
                 Message,
                 'DoNotReply@smartcity.com',
                 YR_EmailListUnique,
