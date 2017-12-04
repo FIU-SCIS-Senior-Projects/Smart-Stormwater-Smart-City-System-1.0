@@ -63,6 +63,10 @@ scApp.controller("signinCtrl", function ($scope, $http, $location, $rootScope, $
 
 
             })
+            $http.post("http://127.0.0.1:8000/email", JSON.stringify({
+                DeviceID: "",
+                Fill_Level: 50
+            }))
 
 
     };

@@ -3,15 +3,15 @@ var scApp = angular.module("scApp");
 scApp.controller("modifysubuserCtrl", function ($scope, $http, $location, $rootScope, $window) {
 
     $scope.userID = "";
-    $scope.username = $rootScope.subUsername; //for testing
+    $scope.username = $rootScope.subUsername;
     $scope.password = "";
     $scope.confirmPassword = "";
-    $scope.contactEmail = "";
-    $scope.contactNumber = "";
-    $scope.gtythresh = 30;
-    $scope.ytrthresh = 60;
-    $scope.organization = "";
-    $scope.permission = "";
+    $scope.contactEmail = $rootScope.subUserEmail;
+    $scope.contactNumber = $rootScope.subUserNumber;
+    $scope.gtythresh = $rootScope.subUserGY;
+    $scope.ytrthresh = $rootScope.subUserYR;
+    $scope.organization = $rootScope.subUserorg;
+    $scope.permission = $rootScope.subUserPermission;
 
     $scope.changeSubUser = function () {
         if ($scope.password != $scope.confirmPassword) {

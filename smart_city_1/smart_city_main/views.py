@@ -144,7 +144,9 @@ class Login(APIView):
                            'yr_thresh': person.yr_thresh,
                            'deviceList': [dev for dev in deviceList],
                            'fill_level_logs': [fill_log for fill_log in allFillLevels],
-                           'permission': person.permission}
+                           'permission': person.permission,
+                           'organization': person.organization
+                           }
                 return JsonResponse(theUser, safe=False)
 
             else:
@@ -164,20 +166,49 @@ class Login(APIView):
 #This post should taken the given information from the json and save the information to the database. Give an 'OK' if saved, error if not.
 class RegisterAccount(APIView):
     def get(self, request, *args, **kwargs):
-        #Organization = User.objects.order_by('organization').values_list('organization').distinct();
-        #return JsonResponse(list(Organization));
+        # Fill this in to return appropriate information for main page once logged in
+        # This section takes the params that is given in the url as the query string and
+        # takes out the "username=" part to get the actual username of the user to then be able to search with it.
+        # I was initially gonna do it with JSON but nothing I tried worked.
+        # Got this idea from: https://stackoverflow.com/questions/12572362/get-a-string-after-a-specific-substring
 
-        #Try this one if the above doesn't return a list
-        #Organization = User.objects.order_by('organization').values('organization').distinct();
-        #return JsonResponse(list(Organization));
+        theMeta = request.META['QUERY_STRING']  # Got the query string, aka "username=(enterusernamehere)"
 
-        #same for this one
+        cutOff = "username="  # Sets up a variable to use so it takes out the "username=" part of the query string in the next operation
+
+        userID = theMeta[theMeta.index(cutOff) + len(cutOff):]  # This cuts out the "username=" part and just has the actually username left
+
+        # -------------------------------------------------------------------------------------------------
+
+        Username = userID
+        OrganizationList = []
+        UserList = [Username]
+
         try:
-            Organization = User.objects.order_by('organization').values('organization').distinct()
+            #Gets all the sub user's username and place it into the UserList
+            for user in UserList:
+                UserCheck = User.objects.filter(parent_user = user)
+                if UserCheck.exists():
+                    for subUser in UserCheck:
+                        subUserName = subUser.username
+                        UserList.append(subUserName)
+
+            #Onces the list is filled with Subusers, get the organization of everybody in the UserList
+            for userName in UserList:
+                GetOrganization = User.objects.get(username = userName).organization
+                OrganizationList.append(GetOrganization)
+
+            #Makes all strings unique
+            OrganizationList = list(set(OrganizationList))
+            #Sorts them in alphabetical order
+            OrganizationList.sort()
+            #Adds "Create New Organization" in the front of the list to make a new organization
+            OrganizationList.insert(0, "Create New Organization")
+
         except:
             pass
 
-        return JsonResponse(list(Organization), safe=False)
+        return JsonResponse(OrganizationList, safe=False)
 
 
     def post(self, request, *args, **kwargs):
@@ -192,6 +223,14 @@ class RegisterAccount(APIView):
         accOrganization = account['organization']
         accPermission = account['permission']
         accParentUser = account['parent_user']
+        newOrganization = account['newOrganization']
+
+        if (accOrganization == 'Create New Organization'):
+            accOrganization = newOrganization
+            checkOrganization = User.objects.filter(organization = newOrganization)
+            if checkOrganization.exists():
+                organizationAlreadyExists = {'organization' : 'Organization already exists'}
+                return JsonResponse(organizationAlreadyExists)
 
         if (accPermission == ""):
             setPermission = {'username': 'Need to set account type'}
@@ -305,7 +344,8 @@ class NotificationsSet(APIView):
         try:
             theUser = User.objects.get(username=userID)
             userNT = Notifications.objects.get(user=theUser)
-            thirdPartyEmail = EmailList.objects.filter(elist_parent_user = theUser).order_by('third_party_email').values_list('third_party_email', flat = True).distinct()
+            thirdPartyEmail = EmailList.objects.filter(elist_parent_user = theUser.username).order_by('third_party_email').values_list('third_party_email', flat = True).distinct()
+            thirdPartyEmailList = list(set(thirdPartyEmail))
 
             allNotif = {
                 'gty_web': userNT.gty_web_alert,
@@ -316,7 +356,7 @@ class NotificationsSet(APIView):
                 'clean_basin_email': userNT.clean_basin_email_alert,
                 'gps_update_web': userNT.gps_update_web_alert,
                 'gps_update_email': userNT.gps_update_email_alert,
-                'EmailList': thirdPartyEmail
+                'EmailList': thirdPartyEmailList
             }
             return JsonResponse(allNotif)
 
@@ -445,7 +485,6 @@ class DeviceOperations(APIView):
             deviceList.append(theDev)
             print(theDev)
 
-
         return JsonResponse(list(deviceList), safe=False)
 
 
@@ -468,7 +507,7 @@ class SubUsersList(APIView):
 
         # -------------------------------------------------------------------------------------------------
 
-        ImmediateSubUsers = User.objects.filter(parent_user=userID).values('username', 'permission', 'organization')
+        ImmediateSubUsers = User.objects.filter(parent_user=userID).values('username', 'permission', 'organization', 'email', 'number', 'gy_thresh', 'yr_thresh')
 
         return JsonResponse(list(ImmediateSubUsers), safe=False)
 
@@ -524,12 +563,12 @@ class ModifySubUser(APIView):
             #and searching for any user that has this user as a "parent_user" and if that subuser has
             #an "admin" type account.
             if (updatePermission == "User"):
-                try:
-                    subUserSearch = User.objects.get(parent_user=updateUsername, permission="Admin")
+                subUserSearch = User.objects.filter(parent_user=updateUsername)
+                if subUserSearch.exists():
                     permissionError = {"username": '1'}
                     return JsonResponse(permissionError);
 
-                except User.DoesNotExist:
+                else:
                     theUser.permission = updatePermission
 
             if (updatePermission == "Admin"):
@@ -613,7 +652,7 @@ class Email(APIView):
         DeviceID = DeviceInfo['DeviceID']
         Fill_Level = DeviceInfo['Fill_Level']
 
-        Message = "The Device: " + DeviceID + " is " + Fill_Level + "% full."
+        Message = "The Device: " + str(DeviceID) + " is " + str(Fill_Level) + "% full."
 
         UserAssignedToDevice = AssignedTo.objects.filter(assigned_device = DeviceID).values_list('user', flat = True).order_by('user')
         #Green to Yellow threshold email list
@@ -652,7 +691,7 @@ class Email(APIView):
 
 
                     if (YR_ThreshCheckFilter.exists() & YR_EmailCheck.exists()):
-                        YR_ThreshCheck = User.objects.get(username=user, gy_thresh__lte=Fill_Level, yr_thresh__gt=Fill_Level)
+                        YR_ThreshCheck = User.objects.get(username=user, yr_thresh__lte=Fill_Level)
                         YR_EmailRecipient = YR_ThreshCheck.email
                         YR_EmailList.append(YR_EmailRecipient)
 
@@ -674,7 +713,7 @@ class Email(APIView):
 
             YR_EmailListUnique = list(set(YR_EmailList))
             send_mail(
-                'Smart City Yellow Threshold Alert',
+                'Smart City Red Threshold Alert',
                 Message,
                 'DoNotReply@smartcity.com',
                 YR_EmailListUnique,
@@ -764,3 +803,27 @@ class SetSensingInterval(APIView):
 
 
         return HttpResponse("Intervals Set!", status=200)
+
+class DeleteSubUser(APIView):
+    def post(self, request, *args, **kwargs):
+        userInfo = json.loads(request.body.decode('utf-8'))
+        subUser = userInfo['subUser']
+        currentUser = userInfo['currentUser']
+
+        try:
+            SubUserFilter = User.objects.filter(parent_user = subUser).values_list('username', flat = True).order_by('username')
+            SubUserFilterList = list(SubUserFilter)
+
+            for user in SubUserFilterList:
+                NewParentUser = User.objects.get(username = user)
+                NewParentUser.parent_user = currentUser
+                NewParentUser.save()
+
+            User.objects.filter(username = subUser).delete()
+
+
+            userDeleted = {'username' :'User:' + subUser + ' deleted'}
+            return JsonResponse(userDeleted);
+
+        except:
+            return HttpResponse("Unexepected Error", status = 417)
